@@ -10,20 +10,49 @@ const App = () => {
   const part3 = 'State of a component'
   const exercises3 = 14
 
+  const parts = [ {part1, exercises1}, {part2, exercises2}, {part3, exercises3} ]
+
   return (
     <div>
-      <h1>{course}</h1>
-      <p>
-        {part1} {exercises1}
-      </p>
-      <p>
-        {part2} {exercises2}
-      </p>
-      <p>
-        {part3} {exercises3}
-      </p>
-      <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
+      <Header course={course} />
+      <Content parts={parts} />
+      <Total exercises={[exercises1, exercises2, exercises3]} />
     </div>
+  )
+}
+
+const Header = (props) => {
+  return (
+    <h1>{ props.course }</h1>
+  )
+}
+
+const Content = (props) => {
+  const parts = Array.from(props.parts)
+  const p1 = parts[0];
+  const p2 = parts[1];
+  const p3 = parts[2];
+
+  return (
+    <div>
+      <Part name={p1.part1} exercises={p1.exercises1} />
+      <Part name={p2.part2} exercises={p2.exercises2} />
+      <Part name={p3.part3} exercises={p3.exercises3} />
+    </div>
+  )
+}
+
+const Part = (props) => {
+  return (
+    <p>{ props.name } { props.exercises }</p>
+  )
+}
+
+const Total = (props) => {
+  const sum = props.exercises.reduce((current, previous) => current + previous, 0)
+
+  return (
+    <p>Number of exercises { sum }</p>
   )
 }
 
