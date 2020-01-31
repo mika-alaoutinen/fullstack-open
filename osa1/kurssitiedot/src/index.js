@@ -2,21 +2,29 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 const App = () => {
-  const course = 'Half Stack application development'
-  const part1 = 'Fundamentals of React'
-  const exercises1 = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'State of a component'
-  const exercises3 = 14
-
-  const parts = [ {part1, exercises1}, {part2, exercises2}, {part3, exercises3} ]
+  const course = {
+    name: 'Half Stack application development',
+    parts: [
+      {
+        name: 'Fundamentals of React',
+        exercises: 10
+      },
+      {
+        name: 'Using props to pass data',
+        exercises: 7
+      },
+      {
+        name: 'State of a component',
+        exercises: 14
+      }
+    ]
+  }
 
   return (
     <div>
-      <Header course={course} />
-      <Content parts={parts} />
-      <Total exercises={[exercises1, exercises2, exercises3]} />
+      <Header course={course.name} />
+      <Content parts={course.parts} />
+      <Total parts={course.parts} />
     </div>
   )
 }
@@ -28,16 +36,15 @@ const Header = (props) => {
 }
 
 const Content = (props) => {
-  const parts = Array.from(props.parts)
-  const p1 = parts[0];
-  const p2 = parts[1];
-  const p3 = parts[2];
+  const p1 = props.parts[0];
+  const p2 = props.parts[1];
+  const p3 = props.parts[2];
 
   return (
     <div>
-      <Part name={p1.part1} exercises={p1.exercises1} />
-      <Part name={p2.part2} exercises={p2.exercises2} />
-      <Part name={p3.part3} exercises={p3.exercises3} />
+      <Part name={p1.name} exercises={p1.exercises} />
+      <Part name={p2.name} exercises={p2.exercises} />
+      <Part name={p3.name} exercises={p3.exercises} />
     </div>
   )
 }
@@ -49,7 +56,9 @@ const Part = (props) => {
 }
 
 const Total = (props) => {
-  const sum = props.exercises.reduce((current, previous) => current + previous, 0)
+  const sum = props.parts
+      .map(part => part.exercises)
+      .reduce((current, previous) => current + previous, 0)
 
   return (
     <p>Number of exercises { sum }</p>
