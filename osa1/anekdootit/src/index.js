@@ -7,25 +7,34 @@ import ReactDOM from 'react-dom'
 
 const App = ({ anecdotes }) => {
   const getRandom = () => Math.floor((Math.random() * anecdotes.length))
-  const anecdoteIndex = getRandom();
 
   // State management:
-  const [selected, setSelected] = useState(anecdoteIndex)
-  const [votes] = useState(new Array(anecdotes.length).fill(0))
+  const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
+  const [selected, setSelected] = useState(getRandom)
 
   // Event listeners:
-  const enterVote = () => votes[anecdoteIndex] += 1
+  const enterVote = () => {
+    const copy = [...votes]
+    copy[selected] += 1
+    setVotes(copy)
+  }
+
   const nextAnecdote = () => setSelected(getRandom)
+
+  const mostVotedIndex = votes.indexOf(Math.max(...votes))
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       {anecdotes[selected]}
-      <p>has {votes[anecdoteIndex]} votes</p>
+      <p>has {votes[selected]} votes</p>
       <p>
         <button onClick={enterVote}>vote</button>
         <button onClick={nextAnecdote}>next anecdote</button>
       </p>
-      <p>{votes}</p>
+      
+      <h1>Anecdote with most votes</h1>
+        {anecdotes[mostVotedIndex]}
     </div>
   )
 }
