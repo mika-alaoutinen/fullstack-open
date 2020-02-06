@@ -1,9 +1,33 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-// const MostVoted = ({text}) => {
+const Anecdote = ({anecdote, votes}) => {
+  return (
+    <>
+      {anecdote}
+      <p>has {votes} votes</p>
+    </>
+  )
+}
 
-// }
+const VoteButton = ({votes, setVotes, selected}) => {
+  const enterVote = () => {
+    const copy = [...votes]
+    copy[selected] += 1
+    setVotes(copy)
+  }
+  return <button onClick={enterVote}>vote</button>
+}
+
+const NextAnecdoteButton = ({setSelected, getRandom}) => {
+  const nextAnecdote = () => setSelected(getRandom)
+  return <button onClick={nextAnecdote}>next anecdote</button>
+}
+
+const MostVoted = ({anecdotes, votes}) => {
+  const mostVotedIndex = votes.indexOf(Math.max(...votes)) 
+  return anecdotes[mostVotedIndex]
+}
 
 const App = ({ anecdotes }) => {
   const getRandom = () => Math.floor((Math.random() * anecdotes.length))
@@ -12,29 +36,16 @@ const App = ({ anecdotes }) => {
   const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
   const [selected, setSelected] = useState(getRandom)
 
-  // Event listeners:
-  const enterVote = () => {
-    const copy = [...votes]
-    copy[selected] += 1
-    setVotes(copy)
-  }
-
-  const nextAnecdote = () => setSelected(getRandom)
-
-  const mostVotedIndex = votes.indexOf(Math.max(...votes))
-
   return (
     <div>
       <h1>Anecdote of the day</h1>
-      {anecdotes[selected]}
-      <p>has {votes[selected]} votes</p>
+      <Anecdote anecdote={anecdotes[selected]} votes={votes[selected]} />
       <p>
-        <button onClick={enterVote}>vote</button>
-        <button onClick={nextAnecdote}>next anecdote</button>
+        <VoteButton votes={votes} setVotes={setVotes} selected={selected} />
+        <NextAnecdoteButton setSelected={setSelected} getRandom={getRandom} />
       </p>
-      
       <h1>Anecdote with most votes</h1>
-        {anecdotes[mostVotedIndex]}
+      <MostVoted anecdotes={anecdotes} votes={votes} />
     </div>
   )
 }
