@@ -16,53 +16,50 @@ const App = () => {
       {
         name: 'State of a component',
         exercises: 14
+      },
+      {
+        name: 'Redux',
+        exercises: 11
       }
     ]
   }
 
+  return <div> <Course course={course} /> </div>
+}
+
+// Components:
+const Course = ({course}) => {
   return (
     <div>
-      <Header course={course.name} />
+      <Header name={course.name} />
       <Content parts={course.parts} />
       <Total parts={course.parts} />
     </div>
   )
 }
 
-const Header = (props) => {
-  return (
-    <h1>{ props.course }</h1>
+const Header = ({name}) => <h1>{name}</h1>
+
+const Content = ({parts}) => {
+  const partRows = parts.map(part =>
+    <Part
+      key={part.name}
+      name={part.name}
+      exercises={part.exercises}
+    />
   )
+
+  return <div>{partRows}</div>
 }
 
-const Content = (props) => {
-  const p1 = props.parts[0];
-  const p2 = props.parts[1];
-  const p3 = props.parts[2];
+const Part = ({name, exercises}) => <p>{name} {exercises}</p>
 
-  return (
-    <div>
-      <Part name={p1.name} exercises={p1.exercises} />
-      <Part name={p2.name} exercises={p2.exercises} />
-      <Part name={p3.name} exercises={p3.exercises} />
-    </div>
-  )
-}
-
-const Part = (props) => {
-  return (
-    <p>{ props.name } { props.exercises }</p>
-  )
-}
-
-const Total = (props) => {
-  const sum = props.parts
+const Total = ({parts}) => {
+  const sum = parts
       .map(part => part.exercises)
-      .reduce((current, previous) => current + previous, 0)
+      .reduce((sum, exercise) => sum + exercise, 0)
 
-  return (
-    <p>Number of exercises { sum }</p>
-  )
+  return <p><b>Number of exercises {sum}</b></p>
 }
 
 ReactDOM.render(<App />, document.getElementById('root'))
