@@ -1,65 +1,57 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import Course from "./components/Course";
 
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      },
-      {
-        name: 'Redux',
-        exercises: 11
-      }
-    ]
-  }
+  const courses = [
+    {
+      name: 'Half Stack application development',
+      parts: [
+        {
+          name: 'Fundamentals of React',
+          exercises: 10
+        },
+        {
+          name: 'Using props to pass data',
+          exercises: 7
+        },
+        {
+          name: 'State of a component',
+          exercises: 14
+        },
+        {
+          name: 'Redux',
+          exercises: 11
+        }
+      ]
+    },
+    {
+      name: 'Node.js',
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2
+        }
+      ]
+    }
+  ]
 
-  return <div> <Course course={course} /> </div>
-}
+  const courseRows = courses.map(course =>
+    <Course key={course.name} course={course} />
+  )
 
-// Components:
-const Course = ({course}) => {
   return (
     <div>
-      <Header name={course.name} />
-      <Content parts={course.parts} />
-      <Total parts={course.parts} />
+      <h1>Web development curriculum</h1>
+      {courseRows}
     </div>
   )
-}
-
-const Header = ({name}) => <h1>{name}</h1>
-
-const Content = ({parts}) => {
-  const partRows = parts.map(part =>
-    <Part
-      key={part.name}
-      name={part.name}
-      exercises={part.exercises}
-    />
-  )
-
-  return <div>{partRows}</div>
-}
-
-const Part = ({name, exercises}) => <p>{name} {exercises}</p>
-
-const Total = ({parts}) => {
-  const sum = parts
-      .map(part => part.exercises)
-      .reduce((sum, exercise) => sum + exercise, 0)
-
-  return <p><b>Number of exercises {sum}</b></p>
 }
 
 ReactDOM.render(<App />, document.getElementById('root'))
