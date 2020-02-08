@@ -3,7 +3,7 @@ import React from 'react'
 const PersonForm = ({
   persons, setPersons,
   newName, setNewName,
-  newPhonenumber, setNewPhonenumber }) => {
+  newNumber, setNewNumber }) => {
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -16,12 +16,12 @@ const PersonForm = ({
     
     const newPerson = {
       name: newName,
-      phonenumber: newPhonenumber,
+      number: newNumber,
     }
 
     setPersons(persons.concat(newPerson))
     setNewName("")
-    setNewPhonenumber("")
+    setNewNumber("")
   }
 
   return (
@@ -35,8 +35,8 @@ const PersonForm = ({
 
       <div>number:
         <input
-          value={newPhonenumber}
-          onChange={(event) => setNewPhonenumber(event.target.value)}
+          value={newNumber}
+          onChange={(event) => setNewNumber(event.target.value)}
         />
       </div>
       <div>

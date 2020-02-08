@@ -6,7 +6,7 @@ const Persons = ({ persons }) => {
     <Person
       key={person.name}
       name={person.name}
-      phonenumber={person.phonenumber}
+      number={person.number}
     />
   )
 
