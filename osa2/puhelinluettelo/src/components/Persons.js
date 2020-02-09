@@ -5,6 +5,7 @@ const Persons = ({ persons }) => {
   const personList = persons.map(person =>
     <Person
       key={person.name}
+      id={person.id}
       name={person.name}
       number={person.number}
     />

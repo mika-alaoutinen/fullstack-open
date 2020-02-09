@@ -1,31 +1,55 @@
 import React from 'react'
+import service from "../services/personService";
 
 const PersonForm = ({
   persons, setPersons,
   newName, setNewName,
   newNumber, setNewNumber }) => {
 
-  const addPerson = (event) => {
+  const submitForm = (event) => {
     event.preventDefault()
 
-    // Validate new person before adding:
-    if (persons.some(person => person.name === newName)) {
-      window.alert(`${newName} is already added to phonebook`)
-      return
-    }
-    
     const newPerson = {
       name: newName,
       number: newNumber,
     }
 
-    setPersons(persons.concat(newPerson))
+    // Check if user added new person or edited an existing person:
+    const existingPerson = persons.find(person => person.name === newName)
+    existingPerson === undefined
+      ? addPerson(newPerson)
+      : editPerson(existingPerson, newPerson)
+  }
+
+  const addPerson = newPerson => {
+    service.create(newPerson).then(person => {
+      const mapped = persons.concat(person)
+      refreshForm(mapped)
+    })
+  }
+
+  const editPerson = (person, editedPerson) => {
+    const confirm = window.confirm(
+      `${person.name} is already added to phonebook, replace old number with a new one?`)
+
+    if (confirm) {
+      service.update(person.id, editedPerson).then(returnedPerson => {
+        const mapped = persons.map(person =>
+          person.id !== editPerson.id ? person : returnedPerson)
+
+        refreshForm(mapped)
+      })
+    }
+  }
+
+  const refreshForm = persons => {
+    setPersons(persons)
     setNewName("")
     setNewNumber("")
   }
 
   return (
-    <form onSubmit={addPerson}>
+    <form onSubmit={submitForm}>
       <div>name:
         <input
           value={newName}
@@ -39,6 +63,7 @@ const PersonForm = ({
           onChange={(event) => setNewNumber(event.target.value)}
         />
       </div>
+
       <div>
         <button type="submit">add</button>
       </div>
