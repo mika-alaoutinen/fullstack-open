@@ -14,7 +14,7 @@ const PersonForm = ({
       number: newNumber,
     }
 
-    // Edit person's phonenumber:
+    // Check if user added new person or edited an existing person:
     const existingPerson = persons.find(person => person.name === newName)
     existingPerson === undefined
       ? addPerson(newPerson)
@@ -23,9 +23,8 @@ const PersonForm = ({
 
   const addPerson = newPerson => {
     service.create(newPerson).then(person => {
-      setPersons(persons.concat(person))
-      setNewName("")
-      setNewNumber("")
+      const mapped = persons.concat(person)
+      refreshForm(mapped)
     })
   }
 
@@ -35,13 +34,18 @@ const PersonForm = ({
 
     if (confirm) {
       service.update(person.id, editedPerson).then(returnedPerson => {
-        setPersons(persons.map(person =>
-          person.id !== editPerson.id ? person : returnedPerson))
+        const mapped = persons.map(person =>
+          person.id !== editPerson.id ? person : returnedPerson)
 
-        setNewName("")
-        setNewNumber("")
+        refreshForm(mapped)
       })
     }
+  }
+
+  const refreshForm = persons => {
+    setPersons(persons)
+    setNewName("")
+    setNewNumber("")
   }
 
   return (
