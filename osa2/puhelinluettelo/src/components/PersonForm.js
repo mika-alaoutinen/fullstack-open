@@ -6,20 +6,22 @@ const PersonForm = ({
   newName, setNewName,
   newNumber, setNewNumber }) => {
 
-  const addPerson = (event) => {
+  const submitForm = (event) => {
     event.preventDefault()
 
-    // Validate new person before adding:
-    if (persons.some(person => person.name === newName)) {
-      window.alert(`${newName} is already added to phonebook`)
-      return
-    }
-    
     const newPerson = {
       name: newName,
       number: newNumber,
     }
 
+    // Edit person's phonenumber:
+    const existingPerson = persons.find(person => person.name === newName)
+    existingPerson === undefined
+      ? addPerson()
+      : editPerson(existingPerson, newPerson)
+  }
+
+  const addPerson = newPerson => {
     service.create(newPerson).then(person => {
       setPersons(persons.concat(person))
       setNewName("")
@@ -27,8 +29,23 @@ const PersonForm = ({
     })
   }
 
+  const editPerson = (person, editedPerson) => {
+    const confirm = window.confirm(
+      `${person.name} is already added to phonebook, replace old number with a new one?`)
+
+    if (confirm) {
+      service.update(person.id, editedPerson).then(returnedPerson => {
+        setPersons(persons.map(person =>
+          person.id !== editPerson.id ? person : returnedPerson))
+
+        setNewName("")
+        setNewNumber("")
+      })
+    }
+  }
+
   return (
-    <form onSubmit={addPerson}>
+    <form onSubmit={submitForm}>
       <div>name:
         <input
           value={newName}
