@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Country = ({ name, capital, population, languages }) => {
+const Country = ({ name, capital, population, languages, flag }) => {
   const languageList = () =>
     languages.map(language =>
       <li key={language.name}>{language.name}</li>
@@ -16,6 +16,7 @@ const Country = ({ name, capital, population, languages }) => {
       <ul>
         {languageList()}
       </ul>
+      <img src={flag} height="100px" width="100px" alt={`Flag of ${name}`} />
     </div>
   )
 }
