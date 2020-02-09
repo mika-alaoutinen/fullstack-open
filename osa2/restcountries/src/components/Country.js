@@ -13,9 +13,8 @@ const Country = ({ name, capital, population, languages, flag }) => {
       <p>population {population}</p>
 
       <h3>languages</h3>
-      <ul>
-        {languageList()}
-      </ul>
+      <ul>{languageList()}</ul>
+
       <img src={flag} height="100px" width="100px" alt={`Flag of ${name}`} />
     </div>
   )

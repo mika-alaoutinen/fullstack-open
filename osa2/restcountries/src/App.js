@@ -15,13 +15,13 @@ const App = () => {
       .then(response => setCountries(response.data))
   }, [])
 
-  const filteredCountries = () => countries
-    .filter(country => country.name.toLowerCase().includes(filter))
+  const filteredCountries = () => countries.filter(
+    country => country.name.toLowerCase().includes(filter))
 
   return (
     <div>
       <Filter filter={filter} setFilter={setFilter} />
-      <Countries countries={filteredCountries()} />
+      <Countries countries={filteredCountries()} setFilter={setFilter} />
     </div>
   )
 }
