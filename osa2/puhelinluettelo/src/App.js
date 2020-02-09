@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Persons from "./components/Persons";
 import PersonFilter from "./components/PersonFilter";
 import PersonForm from "./components/PersonForm";
+import service from "./services/personService";
 
 const App = () => {
   // State management:
@@ -13,10 +14,9 @@ const App = () => {
 
   // Get data from server:
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => setPersons(response.data))
-  }, [])
+    service.getAll().then(persons =>
+      setPersons(persons))
+  })
 
   const filteredPersons = () => persons.filter(person =>
       person.name.toLowerCase().includes(filter) ||
