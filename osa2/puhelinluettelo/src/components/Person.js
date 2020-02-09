@@ -1,6 +1,6 @@
 import React from 'react'
 
 const Person = ({ name, number }) =>
-  <p>{name} {number}</p>
+  <div>{name} {number}</div>
 
 export default Person

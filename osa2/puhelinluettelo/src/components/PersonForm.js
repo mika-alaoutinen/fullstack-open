@@ -42,6 +42,7 @@ const PersonForm = ({
           onChange={(event) => setNewNumber(event.target.value)}
         />
       </div>
+
       <div>
         <button type="submit">add</button>
       </div>
