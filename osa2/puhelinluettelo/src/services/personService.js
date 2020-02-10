@@ -6,7 +6,7 @@ const getAll = () =>
          .then(response => response.data)
 
 const create = person =>
-    axios.post("localhost:2000", person)
+    axios.post(baseUrl, person)
          .then(response => response.data)
 
 const update = (id, person) =>
