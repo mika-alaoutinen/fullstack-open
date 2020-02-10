@@ -1,12 +1,14 @@
 import React from 'react'
 import personService from "../services/personService";
 
+const timeout = 5000 // timeout for messages is 5 s
+
 const PersonForm = ({
   persons, setPersons,
   newName, setNewName,
   newNumber, setNewNumber,
-  setMessage}) => {
-
+  setMessage, setError}) => {
+    
   const submitForm = (event) => {
     event.preventDefault()
 
@@ -22,26 +24,28 @@ const PersonForm = ({
       : editPerson(existingPerson, newPerson)
   }
 
-  const addPerson = newPerson => {
-    personService.create(newPerson).then(person => {
-      const mapped = persons.concat(person)
-      refreshForm(mapped)
-      showMessage(`Added ${newPerson.name}`)
-    })
-  }
+  const addPerson = newPerson => personService.create(newPerson)
+      .then(person => {
+        const mapped = persons.concat(person)
+        refreshForm(mapped)
+        showMessage(`Added ${newPerson.name}`)
+      })
+      .catch(error => showError(`Failed to create ${newPerson.name}`))
 
   const editPerson = (person, editedPerson) => {
     const confirm = window.confirm(
       `${person.name} is already added to phonebook, replace old number with a new one?`)
 
     if (confirm) {
-      personService.update(person.id, editedPerson).then(returnedPerson => {
-        const mapped = persons.map(person =>
-          person.id !== editPerson.id ? person : returnedPerson)
+      personService.update(person.id, editedPerson)
+        .then(returnedPerson => {
+          const mapped = persons.map(person =>
+            person.id !== editPerson.id ? person : returnedPerson)
 
-        refreshForm(mapped)
-        showMessage(`Edited ${person.name}'s number`)
-      })
+          refreshForm(mapped)
+          showMessage(`Edited ${person.name}'s number`)
+        })
+        .catch(error => showError(`Information of ${person.name} has already been removed from server`))
     }
   }
 
@@ -53,7 +57,13 @@ const PersonForm = ({
 
   const showMessage = message => {
     setMessage(message)
-    setTimeout(() => setMessage(null), 2000);
+    setTimeout(() => setMessage(null), timeout);
+  }
+
+  const showError = message => {
+    setError(true)
+    showMessage(message)
+    setTimeout(() => setError(false), timeout)
   }
 
   return (

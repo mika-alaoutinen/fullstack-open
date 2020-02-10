@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Notification = ({ message }) => {
+const Notification = ({ message, error }) => {
   const style = {
-    color: "green",
+    color: error ? "red" : "green",
     background: "lightgrey",
     fontSize: 18,
     borderStyle: "solid",
