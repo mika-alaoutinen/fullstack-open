@@ -1,5 +1,5 @@
-import axios from "axios";
 import React, { useEffect, useState } from 'react'
+import Notification from "./components/Notification";
 import Persons from "./components/Persons";
 import PersonFilter from "./components/PersonFilter";
 import PersonForm from "./components/PersonForm";
@@ -11,8 +11,10 @@ const App = () => {
   const [ newName, setNewName ] = useState("")
   const [ newNumber, setNewNumber ] = useState("")
   const [ filter, setFilter ] = useState("")
+  const [ message, setMessage ] = useState(null)
+  const [ error, setError ] = useState(false)
 
-  // Get data from server:
+  // Get data from server on component load:
   useEffect(() => {
     service.getAll().then(persons =>
       setPersons(persons))
@@ -25,20 +27,19 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} error={error} />
       <PersonFilter filter={filter} setFilter={setFilter} />
 
       <h3>Add new</h3>
       <PersonForm
-        persons={persons}
-        setPersons={setPersons}
-        newName={newName}
-        setNewName={setNewName}
-        newNumber={newNumber}
-        setNewNumber={setNewNumber}
+        persons={persons} setPersons={setPersons}
+        newName={newName} setNewName={setNewName}
+        newNumber={newNumber} setNewNumber={setNewNumber}
+        setMessage={setMessage} setError={setError}
       />
       
       <h3>Numbers</h3>
-      <Persons persons={filteredPersons()} />
+      <Persons persons={filteredPersons()} setMessage={setMessage} setError={setError} />
     </div>
   )
 }
