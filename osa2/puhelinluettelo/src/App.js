@@ -1,5 +1,5 @@
-import axios from "axios";
 import React, { useEffect, useState } from 'react'
+import Notification from "./components/Notification";
 import Persons from "./components/Persons";
 import PersonFilter from "./components/PersonFilter";
 import PersonForm from "./components/PersonForm";
@@ -11,6 +11,7 @@ const App = () => {
   const [ newName, setNewName ] = useState("")
   const [ newNumber, setNewNumber ] = useState("")
   const [ filter, setFilter ] = useState("")
+  const [ message, setMessage ] = useState(null)
 
   // Get data from server:
   useEffect(() => {
@@ -25,6 +26,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} />
       <PersonFilter filter={filter} setFilter={setFilter} />
 
       <h3>Add new</h3>
@@ -35,10 +37,11 @@ const App = () => {
         setNewName={setNewName}
         newNumber={newNumber}
         setNewNumber={setNewNumber}
+        setMessage={setMessage}
       />
       
       <h3>Numbers</h3>
-      <Persons persons={filteredPersons()} />
+      <Persons persons={filteredPersons()} setMessage={setMessage} />
     </div>
   )
 }

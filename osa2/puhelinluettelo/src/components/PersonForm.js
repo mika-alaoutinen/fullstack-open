@@ -1,10 +1,11 @@
 import React from 'react'
-import service from "../services/personService";
+import personService from "../services/personService";
 
 const PersonForm = ({
   persons, setPersons,
   newName, setNewName,
-  newNumber, setNewNumber }) => {
+  newNumber, setNewNumber,
+  setMessage}) => {
 
   const submitForm = (event) => {
     event.preventDefault()
@@ -22,9 +23,10 @@ const PersonForm = ({
   }
 
   const addPerson = newPerson => {
-    service.create(newPerson).then(person => {
+    personService.create(newPerson).then(person => {
       const mapped = persons.concat(person)
       refreshForm(mapped)
+      showMessage(`Added ${newPerson.name}`)
     })
   }
 
@@ -33,11 +35,12 @@ const PersonForm = ({
       `${person.name} is already added to phonebook, replace old number with a new one?`)
 
     if (confirm) {
-      service.update(person.id, editedPerson).then(returnedPerson => {
+      personService.update(person.id, editedPerson).then(returnedPerson => {
         const mapped = persons.map(person =>
           person.id !== editPerson.id ? person : returnedPerson)
 
         refreshForm(mapped)
+        showMessage(`Edited ${person.name}'s number`)
       })
     }
   }
@@ -46,6 +49,11 @@ const PersonForm = ({
     setPersons(persons)
     setNewName("")
     setNewNumber("")
+  }
+
+  const showMessage = message => {
+    setMessage(message)
+    setTimeout(() => setMessage(null), 2000);
   }
 
   return (
