@@ -8,5 +8,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Mika Alaoutinen",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
 }
