@@ -49,10 +49,10 @@ app.post('/notes', (request, response) => {
     }
 
     const note = {
-        content: body.content,
-        important: body.important || false,
-        date: new Date(),
         id: generateId(),
+        content: body.content,
+        date: new Date(),
+        important: body.important || false,
     }
 
     notes = notes.concat(note)
