@@ -11,6 +11,7 @@
     "react-dom": "^16.12.0",
     "react-scripts": "3.3.1"
   },
+
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -18,9 +19,12 @@
     "eject": "react-scripts eject",
     "server": "json-server -p3001 db.json"
   },
+
+  "proxy": "http://localhost:3001",
   "eslintConfig": {
     "extends": "react-app"
   },
+
   "browserslist": {
     "production": [
       ">0.2%",
@@ -33,6 +37,7 @@
       "last 1 safari version"
     ]
   },
+  
   "devDependencies": {
     "json-server": "^0.15.1"
   }
