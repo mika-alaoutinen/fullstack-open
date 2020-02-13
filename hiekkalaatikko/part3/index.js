@@ -1,3 +1,4 @@
+const cors = require('cors')
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
@@ -10,6 +11,7 @@ const requestLogger = (request, response, next) => {
     next()
 }
 
+app.use(cors())
 app.use(bodyParser.json())
 app.use(requestLogger)
 
