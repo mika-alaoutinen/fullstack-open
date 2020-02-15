@@ -33,24 +33,16 @@ app.get('/api/persons/:id', (request, response) => {
         .catch(error => next(error))
 })
 
-app.post('/api/persons', (request, response) => {
-    const body = request.body
-
-    // Validate request content:
-    if (!body.name) {
-        return throwError(response, 'name is missing')
-    }
-    if (!body.number) {
-        return throwError(response, 'number is missing')
-    }
-
+app.post('/api/persons', (request, response, next) => {
     const person = new Person({
-        name: body.name,
-        number: body.number,
+        name: request.body.name,
+        number: request.body.number,
     })
 
     person.save()
-        .then(savedPerson => response.json(savedPerson.toJSON()))
+        .then(savedPerson => savedPerson.toJSON())
+        .then(formattedPerson => response.json(formattedPerson))
+        .catch(error => next(error))
 })
 
 app.put('/api/persons/:id', (request, response, next) => {
@@ -76,7 +68,9 @@ const errorHandler = (error, request, response, next) => {
 
     if (error.name === 'CastError' && error.kind === 'ObjectId') {
         return throwError(response, 'malformatted id')
-    }
+    } else if (error.name === 'ValidatorError') {
+        return throwError(response, error.message)
+    } 
 
     next(error)
 }
