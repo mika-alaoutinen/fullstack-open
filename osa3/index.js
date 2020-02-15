@@ -68,7 +68,7 @@ const errorHandler = (error, request, response, next) => {
 
     if (error.name === 'CastError' && error.kind === 'ObjectId') {
         return throwError(response, 'malformatted id')
-    } else if (error.name === 'ValidatorError') {
+    } else if (error.name === 'ValidationError') {
         return throwError(response, error.message)
     } 
 

@@ -24,13 +24,15 @@ const PersonForm = ({
       : editPerson(existingPerson, newPerson)
   }
 
-  const addPerson = newPerson => personService.create(newPerson)
+  const addPerson = newPerson => {
+   personService.create(newPerson)
       .then(person => {
         const mapped = persons.concat(person)
         refreshForm(mapped)
         showMessage(`Added ${newPerson.name}`)
       })
-      .catch(error => showError(`Failed to create ${newPerson.name}`))
+      .catch(error => showError(error.response.data.error))
+  }
 
   const editPerson = (person, editedPerson) => {
     const confirm = window.confirm(
