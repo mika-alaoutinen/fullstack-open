@@ -22,8 +22,8 @@ const Person = mongoose.model('Person', personSchema)
 // Functions:
 const getPeople = () =>
     Person.find({}).then(people => {
-        console.log("phonebook:")
-        people.forEach(person => console.log(person.name + " " + person.number))
+        console.log('phonebook:')
+        people.forEach(person => console.log(person.name + ' ' + person.number))
         mongoose.connection.close()
     })
 
@@ -34,7 +34,7 @@ const addPerson = (name, number) => {
     })
 
     person.save().then(savedPerson => {
-        console.log(`added: ${savedPerson.name} ${savedPerson.number}`);
+        console.log(`added: ${savedPerson.name} ${savedPerson.number}`)
         mongoose.connection.close()
     })
 }
@@ -45,5 +45,5 @@ if (process.argv.length === 3) {
 } else if (process.argv.length === 5) {
     addPerson(process.argv[3], process.argv[4])
 } else {
-    console.log(`Wrong number of arguments: ${process.argv.length}. Give 3 or 5 arguments.`);
+    console.log(`Wrong number of arguments: ${process.argv.length}. Give 3 or 5 arguments.`)
 }

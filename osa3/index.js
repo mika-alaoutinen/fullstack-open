@@ -25,7 +25,7 @@ app.get('/api/persons', (request, response) => {
         .then(people => response.json(people.map(person => person.toJSON())))
 })
 
-app.get('/api/persons/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response, next) => {
     Person.findById(request.params.id)
         .then(person => person
             ? response.json(person.toJSON())
@@ -33,24 +33,16 @@ app.get('/api/persons/:id', (request, response) => {
         .catch(error => next(error))
 })
 
-app.post('/api/persons', (request, response) => {
-    const body = request.body
-
-    // Validate request content:
-    if (!body.name) {
-        return throwError(response, 'name is missing')
-    }
-    if (!body.number) {
-        return throwError(response, 'number is missing')
-    }
-
+app.post('/api/persons', (request, response, next) => {
     const person = new Person({
-        name: body.name,
-        number: body.number,
+        name: request.body.name,
+        number: request.body.number,
     })
 
     person.save()
-        .then(savedPerson => response.json(savedPerson.toJSON()))
+        .then(savedPerson => savedPerson.toJSON())
+        .then(formattedPerson => response.json(formattedPerson))
+        .catch(error => next(error))
 })
 
 app.put('/api/persons/:id', (request, response, next) => {
@@ -66,7 +58,7 @@ app.put('/api/persons/:id', (request, response, next) => {
 
 app.delete('/api/persons/:id', (request, response, next) => {
     Person.findByIdAndRemove(request.params.id)
-        .then(result => response.status(204).end())
+        .then(() => response.status(204).end())
         .catch(error => next(error))
 })
 
@@ -76,6 +68,8 @@ const errorHandler = (error, request, response, next) => {
 
     if (error.name === 'CastError' && error.kind === 'ObjectId') {
         return throwError(response, 'malformatted id')
+    } else if (error.name === 'ValidationError') {
+        return throwError(response, error.message)
     }
 
     next(error)
@@ -90,11 +84,11 @@ app.listen(PORT, () => {
 })
 
 const throwError = (response, text) =>
-    response.status(400).json({error: text})
+    response.status(400).json({ error: text })
 
 const postInfo = (people, response) => {
-    const numPeople = people.length;
-    const today = new Date();
+    const numPeople = people.length
+    const today = new Date()
 
     response.send(
         `<p>Phonebook has info for ${numPeople} people</p>
