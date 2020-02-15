@@ -70,7 +70,7 @@ const errorHandler = (error, request, response, next) => {
         return throwError(response, 'malformatted id')
     } else if (error.name === 'ValidationError') {
         return throwError(response, error.message)
-    } 
+    }
 
     next(error)
 }
@@ -84,11 +84,11 @@ app.listen(PORT, () => {
 })
 
 const throwError = (response, text) =>
-    response.status(400).json({error: text})
+    response.status(400).json({ error: text })
 
 const postInfo = (people, response) => {
-    const numPeople = people.length;
-    const today = new Date();
+    const numPeople = people.length
+    const today = new Date()
 
     response.send(
         `<p>Phonebook has info for ${numPeople} people</p>
