@@ -61,10 +61,7 @@ app.put('/api/notes/:id', (request, response, next) => {
 
     Note.findByIdAndUpdate(request.params.id, note, { new: true })
         .then(updatedNote => response.json(updatedNote.toJSON()))
-        .catch(error => {
-            console.log("error on update");
-            next(error)
-        })
+        .catch(error => next(error))
 })
 
 app.delete('/api/notes/:id', (request, response, next) => {

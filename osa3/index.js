@@ -27,7 +27,10 @@ app.get('/api/persons', (request, response) => {
 
 app.get('/api/persons/:id', (request, response) => {
     Person.findById(request.params.id)
-        .then(person => response.json(person.toJSON()))
+        .then(person => person
+            ? response.json(person.toJSON())
+            : response.status(404).end())
+        .catch(error => next(error))
 })
 
 app.post('/api/persons', (request, response) => {
@@ -50,13 +53,24 @@ app.post('/api/persons', (request, response) => {
         .then(savedPerson => response.json(savedPerson.toJSON()))
 })
 
-// TODO: fix
-app.delete('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    persons = persons.filter(person => person.id !== id)
-
-    response.status(204).end()
+app.delete('/api/persons/:id', (request, response, next) => {
+    Person.findByIdAndRemove(request.params.id)
+        .then(result => response.status(204).end())
+        .catch(error => next(error))
 })
+
+// Error handling:
+const errorHandler = (error, request, response, next) => {
+    console.error(error.message)
+
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+        return throwError(response, 'malformatted id')
+    }
+
+    next(error)
+}
+
+app.use(errorHandler)
 
 // Utility functions:
 const PORT = process.env.PORT || 3001
