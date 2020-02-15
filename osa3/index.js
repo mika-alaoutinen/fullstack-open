@@ -1,8 +1,11 @@
-const express = require('express')
-const cors = require('cors')
+require('dotenv').config()
 const bodyParser = require('body-parser')
-const app = express()
+const cors = require('cors')
+const express = require('express')
 // const morgan = require('morgan')
+const Person = require('./models/person')
+
+const app = express()
 
 // Middleware:
 app.use(express.static('build'))
@@ -11,49 +14,20 @@ app.use(bodyParser.json())
 // app.use(morgan(':method :url :status :res[content-length] - :response-time ms :postdata'))
 // morgan.token('postdata', (req, res) => JSON.stringify(req.body))
 
-// "Database":
-let persons = [
-    {
-        name: "Arto Hellas",
-        number: "040-123456",
-        id: 1
-    },
-    {
-        name: "Ada Lovelace",
-        number: "39-44-5323523",
-        id: 2
-    },
-    {
-        name: "Dan Abramov",
-        number: "12-43-234345",
-        id: 3
-    },
-    {
-        name: "Mary Poppendieck",
-        number: "39-23-6423122",
-        id: 4
-    },
-]
-
 // REST endpoints:
 app.get('/info', (request, response) => {
-    const numPeople = persons.length;
-    const today = new Date();
-
-    response.send(
-        `<p>Phonebook has info for ${numPeople} people</p>
-        ${today}`
-    )
+    Person.find({})
+        .then(people => postInfo(people, response))
 })
 
-app.get('/api/persons', (request, response) =>
-    response.json(persons))
+app.get('/api/persons', (request, response) => {
+    Person.find({})
+        .then(people => response.json(people.map(person => person.toJSON())))
+})
 
 app.get('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    const person = persons.find(person => person.id === id)
-
-    person ? response.json(person) : response.status(404).end()
+    Person.findById(request.params.id)
+        .then(person => response.json(person.toJSON()))
 })
 
 app.post('/api/persons', (request, response) => {
@@ -66,20 +40,17 @@ app.post('/api/persons', (request, response) => {
     if (!body.number) {
         return throwError(response, 'number is missing')
     }
-    if (persons.some(person => person.name === body.name)) {
-        return throwError(response, 'name must be unique')
-    }
 
-    const person = {
+    const person = new Person({
         name: body.name,
         number: body.number,
-        id: Math.floor(Math.random() * Math.floor(100)),
-    }
+    })
 
-    persons = persons.concat(person)
-    response.json(person)
+    person.save()
+        .then(savedPerson => response.json(savedPerson.toJSON()))
 })
 
+// TODO: fix
 app.delete('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
     persons = persons.filter(person => person.id !== id)
@@ -95,3 +66,13 @@ app.listen(PORT, () => {
 
 const throwError = (response, text) =>
     response.status(400).json({error: text})
+
+const postInfo = (people, response) => {
+    const numPeople = people.length;
+    const today = new Date();
+
+    response.send(
+        `<p>Phonebook has info for ${numPeople} people</p>
+        ${today}`
+    )
+}
