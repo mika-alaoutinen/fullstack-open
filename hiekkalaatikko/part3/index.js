@@ -22,13 +22,13 @@ app.use(bodyParser.json())
 app.get('/', (request, response) =>
     response.send('<h1>Hello World!</h1>'))
 
-app.get('/notes', (request, response) => {
+app.get('/api/notes', (request, response) => {
     Note.find({}).then(notes => {
         response.json(notes.map(note => note.toJSON()))
     })
 })
 
-app.get('/notes/:id', (request, response, next) => {
+app.get('/api/notes/:id', (request, response, next) => {
     Note.findById(request.params.id)
         .then(note => note
             ? response.json(note.toJSON())
@@ -36,7 +36,7 @@ app.get('/notes/:id', (request, response, next) => {
         .catch(error => next(error))
 })
 
-app.post('/notes', (request, response) => {
+app.post('/api/notes', (request, response) => {
     const body = request.body
 
     if (!body.content) {
@@ -53,7 +53,7 @@ app.post('/notes', (request, response) => {
         .then(savedNote => response.json(savedNote.toJSON()))
 })
 
-app.put('/notes/:id', (request, response, next) => {
+app.put('/api/notes/:id', (request, response, next) => {
     const note = {
         content: request.body.content,
         important: request.body.important,
@@ -67,7 +67,7 @@ app.put('/notes/:id', (request, response, next) => {
         })
 })
 
-app.delete('/notes/:id', (request, response, next) => {
+app.delete('/api/notes/:id', (request, response, next) => {
     Note.findByIdAndRemove(request.params.id)
         .then(result => response.status(204).end())
         .catch(error => next(error))
