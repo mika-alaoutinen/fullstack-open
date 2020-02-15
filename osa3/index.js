@@ -25,7 +25,7 @@ app.get('/api/persons', (request, response) => {
         .then(people => response.json(people.map(person => person.toJSON())))
 })
 
-app.get('/api/persons/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response, next) => {
     Person.findById(request.params.id)
         .then(person => person
             ? response.json(person.toJSON())
@@ -58,7 +58,7 @@ app.put('/api/persons/:id', (request, response, next) => {
 
 app.delete('/api/persons/:id', (request, response, next) => {
     Person.findByIdAndRemove(request.params.id)
-        .then(result => response.status(204).end())
+        .then(() => response.status(204).end())
         .catch(error => next(error))
 })
 
