@@ -36,6 +36,18 @@ const listWithOneBlog = [
     }
 ]
 
+describe('author with most blogs', () => {
+    test('return author\'s name and blog count', () => {
+        const result = listHelper.mostBlogs(blogs)
+        const expected = {
+            author: 'Robert C. Martin',
+            blogs: 3
+        }
+
+        expect(result).toEqual(expected)
+    })
+})
+
 const blogs = [
     {
         _id: '5a422a851b54a676234d17f7',
