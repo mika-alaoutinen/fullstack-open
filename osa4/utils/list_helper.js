@@ -3,4 +3,13 @@ const dummy = blogs => {
     return 1
 }
 
-module.exports = { dummy }
+const favoriteBlog = blogs =>
+    blogs.reduce((prev, current) => prev.likes > current.likes
+        ? prev
+        : current)
+
+const totalLikes = blogs =>
+    blogs.map(blog => blog.likes)
+        .reduce((sum, blogLikes) => sum + blogLikes, 0)
+
+module.exports = { dummy, favoriteBlog, totalLikes }
