@@ -36,15 +36,21 @@ const listWithOneBlog = [
     }
 ]
 
-describe('author with most blogs', () => {
+describe('find author info', () => {
     test('return author\'s name and blog count', () => {
-        const result = listHelper.mostBlogs(blogs)
         const expected = {
             author: 'Robert C. Martin',
             blogs: 3
         }
+        expect(listHelper.mostBlogs(blogs)).toEqual(expected)
+    })
 
-        expect(result).toEqual(expected)
+    test('return author with most total likes', () => {
+        const expected = {
+            author: 'Edsger W. Dijkstra',
+            likes: 17
+        }
+        expect(listHelper.mostLikes(blogs)).toEqual(expected)
     })
 })
 
