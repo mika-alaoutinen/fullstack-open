@@ -1,10 +1,9 @@
-const supertest = require('supertest')
 const mongoose = require('mongoose')
-const helper = require('./test_helper')
+const supertest = require('supertest')
 const app = require('../app')
-const api = supertest(app)
-
+const helper = require('./test_helper')
 const Note = require('../models/note')
+const api = supertest(app)
 
 beforeEach(async () => {
     await Note.remove({})
@@ -32,7 +31,7 @@ test('a specific note is within the returned notes', async () => {
     expect(contents).toContain('Browser can execute only Javascript')
 })
 
-test('a valid note can be added ', async () => {
+test('a valid note can be added', async () => {
     const newNote = {
         content: 'async/await simplifies making async calls',
         important: true,
