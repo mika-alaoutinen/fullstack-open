@@ -100,6 +100,30 @@ describe('DELETE blog', () => {
     })
 })
 
+describe('UPDATE blog', () => {
+    jest.setTimeout(30000)
+
+    test('blog can be edited', async () => {
+        const blog = {
+            title: 'Java for dummies',
+            author: 'Mika',
+            url: 'blogi.fi/java',
+            likes: 1
+        }
+
+        const blogsAtStart = await helper.blogsInDb()
+        const blogToEdit = blogsAtStart[0]
+
+        const editedBlogResponse = await api.put(baseUrl + '/' + blogToEdit.id)
+            .send(blog)
+            .expect(200)
+
+        const editedBlog = editedBlogResponse.body
+        delete editedBlog.id
+        expect(editedBlog).toEqual(blog)
+    })
+})
+
 afterAll(async () => {
     // Avoid jest open handle error:
     await new Promise(resolve => setTimeout(() => resolve(), 500))
