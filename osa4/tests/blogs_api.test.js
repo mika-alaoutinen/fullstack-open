@@ -53,6 +53,31 @@ describe('POST new blog', () => {
         const blogs = await helper.blogsInDb()
         expect(blogs.length).toBe(helper.initialBlogs.length + 1)
     })
+
+    test('default value for likes is 0', async () => {
+        const newBlog = {
+            title: 'PHP bad',
+            author: 'Mika',
+            url: 'blogi.fi/php',
+        }
+
+        const newBlogResponse = await api.post('/api/blogs').send(newBlog)
+        expect(newBlogResponse.status).toBe(201)
+        expect(newBlogResponse.type).toBe('application/json')
+
+        const blog = newBlogResponse.body
+        expect(blog.likes).toBe(0)
+    })
+
+    test.only('new blog contains title and url', async () => {
+        const invalidBlog = {
+            author: 'Mika',
+            likes: 1,
+        }
+
+        const response = await api.post('/api/blogs').send(invalidBlog)
+        expect(response.status).toBe(400)
+    })
 })
 
 afterAll(async () => {
