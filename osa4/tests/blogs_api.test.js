@@ -24,10 +24,34 @@ describe('GET blogs', () => {
         expect(response.body.length).toBe(helper.initialBlogs.length)
     })
 
-    test.only('blog entry should have an id field', async () => {
+    test('blog entry should have an id field', async () => {
         const response = await api.get('/api/blogs')
         const blogs = Array.from(response.body)
         blogs.forEach(blog => expect(blog.id).toBeDefined())
+    })
+})
+
+describe('POST new blog', () => {
+    jest.setTimeout(30000)
+
+    test.only('new blog gets saved correctly', async () => {
+        const newBlog = {
+            title: 'PHP bad',
+            author: 'Mika',
+            url: 'blogi.fi/php',
+            likes: 12
+        }
+
+        const newBlogResponse = await api.post('/api/blogs').send(newBlog)
+        expect(newBlogResponse.status).toBe(201)
+        expect(newBlogResponse.type).toBe('application/json')
+
+        const blogResponse = newBlogResponse.body
+        delete blogResponse.id
+        expect(blogResponse).toEqual(newBlog)
+
+        const blogs = await helper.blogsInDb()
+        expect(blogs.length).toBe(helper.initialBlogs.length + 1)
     })
 })
 
