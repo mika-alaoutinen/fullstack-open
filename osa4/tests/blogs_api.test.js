@@ -14,15 +14,19 @@ beforeEach(async () => {
     }
 })
 
-test('correct amount of blogs is returned as json', async () => {
-    const response = await api.get('/api/blogs')
-    expect(response.status).toBe(200)
-    expect(response.type).toBe('application/json')
-    expect(response.body.length).toBe(helper.initialBlogs.length)
-}, 30000)
+describe('GET blogs', () => {
+    jest.setTimeout(30000)
+
+    test('correct amount of blogs is returned as json', async () => {
+        const response = await api.get('/api/blogs')
+        expect(response.status).toBe(200)
+        expect(response.type).toBe('application/json')
+        expect(response.body.length).toBe(helper.initialBlogs.length)
+    })
+})
 
 afterAll(async () => {
-    mongoose.connection.close()
     // Avoid jest open handle error:
     await new Promise(resolve => setTimeout(() => resolve(), 500))
+    mongoose.disconnect()
 })
