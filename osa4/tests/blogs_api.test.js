@@ -5,6 +5,8 @@ const app = require('../app')
 const helper = require('./test_helper')
 const api = supertest(app)
 
+const baseUrl = '/api/blogs'
+
 beforeEach(async () => {
     await Blog.deleteMany({})
 
@@ -18,14 +20,14 @@ describe('GET blogs', () => {
     jest.setTimeout(30000)
 
     test('correct amount of blogs is returned as json', async () => {
-        const response = await api.get('/api/blogs')
+        const response = await api.get(baseUrl)
         expect(response.status).toBe(200)
         expect(response.type).toBe('application/json')
         expect(response.body.length).toBe(helper.initialBlogs.length)
     })
 
     test('blog entry should have an id field', async () => {
-        const response = await api.get('/api/blogs')
+        const response = await api.get(baseUrl)
         const blogs = Array.from(response.body)
         blogs.forEach(blog => expect(blog.id).toBeDefined())
     })
@@ -42,7 +44,7 @@ describe('POST new blog', () => {
             likes: 12
         }
 
-        const newBlogResponse = await api.post('/api/blogs').send(newBlog)
+        const newBlogResponse = await api.post(baseUrl).send(newBlog)
         expect(newBlogResponse.status).toBe(201)
         expect(newBlogResponse.type).toBe('application/json')
 
@@ -61,7 +63,7 @@ describe('POST new blog', () => {
             url: 'blogi.fi/php',
         }
 
-        const newBlogResponse = await api.post('/api/blogs').send(newBlog)
+        const newBlogResponse = await api.post(baseUrl).send(newBlog)
         expect(newBlogResponse.status).toBe(201)
         expect(newBlogResponse.type).toBe('application/json')
 
@@ -69,14 +71,32 @@ describe('POST new blog', () => {
         expect(blog.likes).toBe(0)
     })
 
-    test.only('new blog contains title and url', async () => {
+    test('new blog contains title and url', async () => {
         const invalidBlog = {
             author: 'Mika',
             likes: 1,
         }
 
-        const response = await api.post('/api/blogs').send(invalidBlog)
+        const response = await api.post(baseUrl).send(invalidBlog)
         expect(response.status).toBe(400)
+    })
+})
+
+describe('DELETE blog', () => {
+    jest.setTimeout(30000)
+
+    test('blog is deleted and returns 204 status code', async () => {
+        const blogsAtStart = await helper.blogsInDb()
+        const blogToDelete = blogsAtStart[0]
+
+        await api.delete(baseUrl + '/' + blogToDelete.id)
+            .expect(204)
+
+        const blogsAtEnd = await helper.blogsInDb()
+        expect(blogsAtEnd.length).toBe(helper.initialBlogs.length - 1)
+
+        const titles = blogsAtEnd.map(blog => blog.title)
+        expect(titles).not.toContain(blogToDelete.title)
     })
 })
 
