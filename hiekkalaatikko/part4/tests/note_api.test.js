@@ -6,9 +6,9 @@ const Note = require('../models/note')
 const api = supertest(app)
 
 beforeEach(async () => {
-    await Note.remove({})
+    await Note.deleteMany({})
 
-    for (const note of initialNotes) {
+    for (const note of helper.initialNotes) {
         const noteObject = new Note(note)
         await noteObject.save()
     }
@@ -86,4 +86,8 @@ test('a note can be deleted', async () => {
     expect(contents).not.toContain(noteToDelete.content)
 })
 
-afterAll(() => mongoose.connection.close()) 
+afterAll(async () => {
+    mongoose.connection.close()
+    // Avoid jest open handle error:
+    await new Promise(resolve => setTimeout(() => resolve(), 500))
+})

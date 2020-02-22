@@ -1,11 +1,13 @@
-const bodyParser = require('body-parser')
 const config = require('./utils/config')
+const blogsRouter = require('./controllers/blogs')
+const middleware = require('./utils/middleware')
+
+const bodyParser = require('body-parser')
 const cors = require('cors')
 const express = require('express')
-const app = express()
-const middleware = require('./utils/middleware')
 const mongoose = require('mongoose')
-const blogsRouter = require('./controllers/blogs')
+
+const app = express()
 
 console.log('connecting to', config.MONGODB_URL)
 mongoose.set('useFindAndModify', false)
