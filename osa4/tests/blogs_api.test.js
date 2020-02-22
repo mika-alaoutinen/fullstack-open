@@ -23,6 +23,12 @@ describe('GET blogs', () => {
         expect(response.type).toBe('application/json')
         expect(response.body.length).toBe(helper.initialBlogs.length)
     })
+
+    test.only('blog entry should have an id field', async () => {
+        const response = await api.get('/api/blogs')
+        const blogs = Array.from(response.body)
+        blogs.forEach(blog => expect(blog.id).toBeDefined())
+    })
 })
 
 afterAll(async () => {
