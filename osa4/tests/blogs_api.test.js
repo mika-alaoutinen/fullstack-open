@@ -34,7 +34,7 @@ describe('GET blogs', () => {
 describe('POST new blog', () => {
     jest.setTimeout(30000)
 
-    test.only('new blog gets saved correctly', async () => {
+    test('new blog gets saved correctly', async () => {
         const newBlog = {
             title: 'PHP bad',
             author: 'Mika',
