@@ -19,4 +19,17 @@ const errorHandler = (error, request, response, next) => {
 const throwError = (response, statusCode, message) =>
     response.status(statusCode).send({ error: message })
 
-module.exports = { unknownEndpoint, errorHandler, throwError }
+const tokenExtractor = (request, response, next) => {
+    const authorization = request.get('authorization')
+    if (authorization !== undefined) {
+        request.token = authorization && authorization.toLowerCase().startsWith('bearer ')
+            ? authorization.substring(7)
+            : null
+    }
+
+    next()
+}
+
+module.exports = {
+    unknownEndpoint, errorHandler, throwError, tokenExtractor
+}
