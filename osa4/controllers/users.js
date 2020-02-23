@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
+const middleware = require('../utils/middleware')
 const User = require('../models/user')
 
 usersRouter.get('/', async (request, response) => {
@@ -11,8 +12,15 @@ usersRouter.get('/', async (request, response) => {
 })
 
 usersRouter.post('/', async (request, response, next) => {
+    const password = request.body.password
+
+    const errorFound = validatePassword(response, password)
+    if (errorFound) {
+        return
+    }
+
     try {
-        const passwordHash = await hashPassword(request.body.password)
+        const passwordHash = await hashPassword(password)
 
         const user = new User({
             username: request.body.username,
@@ -27,9 +35,25 @@ usersRouter.post('/', async (request, response, next) => {
     }
 })
 
+// Utility functions:
 const hashPassword = async plainPassword => {
     const saltRounds = 10
     return await bcrypt.hash(plainPassword, saltRounds)
+}
+
+const validatePassword = (response, password) => {
+    let errorFound = false
+
+    if (password === undefined) {
+        errorFound = true
+        middleware.throwError(response, 400, 'missing password')
+    } else if (password.length < 3) {
+        errorFound = true
+        const message = 'password must be at least 3 characters long'
+        middleware.throwError(response, 400, message)
+    }
+
+    return errorFound
 }
 
 module.exports = usersRouter
