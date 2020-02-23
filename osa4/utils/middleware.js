@@ -1,21 +1,22 @@
 const unknownEndpoint = (request, response) => {
-    response.status(404).send({ error: 'unknown endpoint' })
+    return throwError(response, 404, 'unknown endpoint')
 }
 
 const errorHandler = (error, request, response, next) => {
     console.error(error.message)
 
     if (error.name === 'CastError' && error.kind === 'ObjectId') {
-        return throwError(response, 'malformatted id')
+        return throwError(response, 400, 'malformatted id')
     } else if (error.name === 'ValidationError') {
-        return throwError(response, error.message)
+        return throwError(response, 400, error.message)
+    } else if (error.name === 'JsonWebTokenError') {
+        return throwError(response, 401, 'invalid token')
     }
 
     next(error)
 }
 
-const throwError = (response, message) =>
-    response.status(400).send({ error: message })
+const throwError = (response, statusCode, message) =>
+    response.status(statusCode).send({ error: message })
 
-
-module.exports = { unknownEndpoint, errorHandler }
+module.exports = { unknownEndpoint, errorHandler, throwError }
