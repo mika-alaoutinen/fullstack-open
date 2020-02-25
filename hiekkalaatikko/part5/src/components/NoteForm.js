@@ -1,5 +1,5 @@
 import React from 'react'
-import noteService from "../services/notes";
+import noteService from "../services/noteService";
 
 const NoteForm = ({ notes, setNotes, newNote, setNewNote, user }) => {
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import loginService from "../services/login";
+import loginService from "../services/loginService";
 
 const LoginForm = ({ username, setUsername, password, setPassword, setUser, setErrorMessage }) => {
 

@@ -3,7 +3,7 @@ import Footer from "./components/Footer";
 import LoginForm from "./components/LoginForm";
 import Note from './components/Note'
 import NoteForm from "./components/NoteForm";
-import noteService from './services/notes'
+import noteService from './services/noteService'
 import Notification from "./components/Notification";
 
 const App = () => {
