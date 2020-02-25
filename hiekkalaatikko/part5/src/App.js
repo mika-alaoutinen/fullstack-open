@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Footer from "./components/Footer";
+import LoginForm from "./components/LoginForm";
 import Note from './components/Note'
-import loginService from "./services/login";
+import NoteForm from "./components/NoteForm";
 import noteService from './services/notes'
 import Notification from "./components/Notification";
 
@@ -19,19 +20,6 @@ const App = () => {
     noteService.getAll().then(initialNotes =>
       setNotes(initialNotes))
   })
-  
-  const handleLogin = async (event) => {
-    event.preventDefault()
-    try {
-      const user = await loginService.login({ username, password })
-      setUser(user)
-      setUsername('')
-      setPassword('')
-    } catch (exception) {
-      setErrorMessage('wrong credentials')
-      setTimeout(() => setErrorMessage(null))
-    }
-  }
   
   const notesToShow = showAll
     ? notes
@@ -59,54 +47,6 @@ const App = () => {
     />
   )
 
-  const addNote = (event) => {
-    event.preventDefault()
-
-    const noteObject = {
-      content: newNote,
-      date: new Date().toISOString(),
-      important: Math.random() > 0.5,
-    }
-
-    noteService.create(noteObject)
-      .then(returnedNote => {
-        setNotes(notes.concat(returnedNote))
-        setNewNote('')
-      })
-  }
-
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <div>username
-        <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>password
-        <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>
-  )
-
-  const noteForm = () => (
-    <form onSubmit={addNote}>
-      <input
-        value={newNote}
-        onChange={(event) => setNewNote(event.target.value)}
-      />
-      <button type="submit">save</button>
-    </form>
-  )
-
   return (
     <div>
       <h1>Notes</h1>
@@ -115,23 +55,24 @@ const App = () => {
       <h2>login</h2>
       {
         user === null
-        ? loginForm()
-        : <div>
-            <p>{user.name} logged in</p>
-            {noteForm()}
-          </div>
+        ? <LoginForm
+            username={username} setUsername={setUsername}
+            password={password} setPassword={setPassword}
+            setUser={setUser} setErrorMessage={setErrorMessage}
+          />
+        : <NoteForm notes={notes} setNotes={setNotes}
+            newNote={newNote} setNewNote={setNewNote}
+            user={user}
+          />
       }
-      
+
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? "important" : "all" }
         </button>
       </div>
 
-      <ul>
-        {rows()}
-      </ul>
-
+      <ul>{rows()}</ul>
 
       <Footer />
     </div>
