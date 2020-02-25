@@ -16,10 +16,21 @@ const App = () => {
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
   
+  // Load notes on page load:
   useEffect(() => {
     noteService.getAll().then(initialNotes =>
       setNotes(initialNotes))
   })
+
+  // Check if user credentials are in local storage:
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      noteService.setToken(user.token)
+    }
+  }, [])
   
   const notesToShow = showAll
     ? notes
@@ -38,7 +49,12 @@ const App = () => {
         setNotes(notes.filter(note => note.id !== id))
       })
   }
-    
+
+  const logout = () => {
+    window.localStorage.clear()
+    window.location.reload()
+  }
+
   const rows = () => notesToShow.map(note =>
     <Note
       key={note.id}
@@ -58,12 +74,17 @@ const App = () => {
         ? <LoginForm
             username={username} setUsername={setUsername}
             password={password} setPassword={setPassword}
-            setUser={setUser} setErrorMessage={setErrorMessage}
+            user={user} setUser={setUser}
+            setErrorMessage={setErrorMessage}
           />
-        : <NoteForm notes={notes} setNotes={setNotes}
-            newNote={newNote} setNewNote={setNewNote}
-            user={user}
-          />
+        : <div>
+            <p>{user.name} logged in</p>
+            <button onClick={() => logout()}>log out</button>
+            <NoteForm
+              notes={notes} setNotes={setNotes}
+              newNote={newNote} setNewNote={setNewNote}
+            />
+          </div>
       }
 
       <div>

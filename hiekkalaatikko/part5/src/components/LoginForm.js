@@ -1,15 +1,21 @@
 import React from 'react'
 import loginService from "../services/loginService";
+import noteService from "../services/noteService";
 
-const LoginForm = ({ username, setUsername, password, setPassword, setUser, setErrorMessage }) => {
+const LoginForm = ({ username, setUsername, password, setPassword,
+  user, setUser, setErrorMessage }) => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
+    
     try {
       const user = await loginService.login({ username, password })
+      window.localStorage.setItem('loggedNoteappUser', JSON.stringify(user)) 
+      noteService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
+      
     } catch (exception) {
       setErrorMessage('wrong credentials')
       setTimeout(() => setErrorMessage(null))

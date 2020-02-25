@@ -1,7 +1,7 @@
 import React from 'react'
 import noteService from "../services/noteService";
 
-const NoteForm = ({ notes, setNotes, newNote, setNewNote, user }) => {
+const NoteForm = ({ notes, setNotes, newNote, setNewNote }) => {
 
   const addNote = (event) => {
     event.preventDefault()
@@ -19,17 +19,13 @@ const NoteForm = ({ notes, setNotes, newNote, setNewNote, user }) => {
   }
   
   return (
-    <div>
-      <p>{user.name} logged in</p>
-
-      <form onSubmit={addNote}>
-        <input
-          value={newNote}
-          onChange={(event) => setNewNote(event.target.value)}
-        />
-        <button type="submit">save</button>
-      </form>
-    </div>
+    <form onSubmit={addNote}>
+      <input
+        value={newNote}
+        onChange={(event) => setNewNote(event.target.value)}
+      />
+      <button type="submit">save</button>
+    </form>
   )
 }
 
