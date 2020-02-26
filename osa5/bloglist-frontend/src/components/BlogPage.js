@@ -1,4 +1,5 @@
 import React from 'react'
+import BlogForm from "./BlogForm";
 import BlogList from "./BlogList"
 
 const BlogPage = ({ userName, blogs, setBlogs }) => {
@@ -15,6 +16,9 @@ const BlogPage = ({ userName, blogs, setBlogs }) => {
         {userName} logged in
         <button onClick={logout()}>logout</button>
       </p>
+
+      <BlogForm blogs={blogs} setBlogs={setBlogs} />      
+      
       <BlogList blogs={blogs} setBlogs={setBlogs} />
     </div>
   )

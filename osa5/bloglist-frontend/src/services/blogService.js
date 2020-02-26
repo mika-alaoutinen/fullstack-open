@@ -5,7 +5,7 @@ const baseUrl = '/api/blogs'
 let token = null
 const setToken = newToken => token = `bearer ${newToken}`
 
-const createHeader = async () => ({
+const createHeader = () => ({
   headers: { Authorization: token }
 })
 
@@ -14,4 +14,8 @@ const getAll = () =>
   axios.get(baseUrl, createHeader())
        .then(response => response.data)
 
-export default { getAll, setToken }
+const addBlog = newBlog =>
+  axios.post(baseUrl, newBlog, createHeader())
+       .then(response => response.data)
+
+export default { getAll, addBlog, setToken }
