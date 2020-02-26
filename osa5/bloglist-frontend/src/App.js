@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import BlogList from "./components/BlogList";
-import LoginForm from "./components/LoginForm";
-import blogService from "./services/blogService";
+import BlogPage from "./components/BlogPage";
+import LoginForm from "./components/LoginForm"
+import blogService from "./services/blogService"
 
 const App = () => {
   // State management:
@@ -21,11 +21,6 @@ const App = () => {
     }
   }, [])
   
-  const logout = () => () => {
-    window.localStorage.clear()
-    window.location.reload()
-  }
-  
   return (
     <div>
       {user === null
@@ -35,14 +30,11 @@ const App = () => {
             user={user} setUser={setUser}
             setErrorMessage={setErrorMessage}
           />
-        : <div>
-            <h2>blogs</h2>
-            <p>
-              {user.name} logged in
-              <button onClick={logout()}>logout</button>
-            </p>
-            <BlogList blogs={blogs} setBlogs={setBlogs} />
-          </div>
+        : <BlogPage
+            userName={user.name}
+            blogs={blogs}
+            setBlogs={setBlogs}
+          />
       }
     </div>
   )
