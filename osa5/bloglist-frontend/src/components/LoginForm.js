@@ -1,11 +1,14 @@
 import React from 'react'
+import Notification from "./Notification"
 import blogService from '../services/blogService'
+import noticeService from "../services/noticeService"
 import loginService from "../services/loginService"
 
 const LoginForm = ({
-  username, setUsername, password, setPassword, user, setUser, setErrorMessage }) => {
+  username, setUsername, password, setPassword, setUser,
+  message, setMessage, error, setError }) => {
 
-  const handleLogin = async (event) => {
+  const handleLogin = async event => {
     event.preventDefault()
 
     loginService.login({ username, password })
@@ -13,18 +16,18 @@ const LoginForm = ({
         window.localStorage.setItem('user', JSON.stringify(user))
         blogService.setToken(user.token)
         setUser(user)
+      })
+      .then(() => {
         setUsername('')
         setPassword('')
       })
-      .catch(error => {
-        setErrorMessage('wrong credentials')
-        setTimeout(() => setErrorMessage(null))
-      })
+      .catch(() => noticeService.showError('wrong username or password', setMessage, setError))
   }
 
   return (
     <div>
       <h1>log in to application</h1>
+      <Notification message={message} error={error} />
 
       <form onSubmit={handleLogin}>
         <div>username

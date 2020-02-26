@@ -9,7 +9,8 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [message, setMessage] = useState(null)
+  const [error, setError] = useState(false)
   
   // Check if user credentials are in local storage:
   useEffect(() => {
@@ -27,13 +28,15 @@ const App = () => {
         ? <LoginForm
             username={username} setUsername={setUsername}
             password={password} setPassword={setPassword}
-            user={user} setUser={setUser}
-            setErrorMessage={setErrorMessage}
+            setUser={setUser}
+            message={message} setMessage={setMessage}
+            error={error} setError={setError}
           />
         : <BlogPage
             userName={user.name}
-            blogs={blogs}
-            setBlogs={setBlogs}
+            blogs={blogs} setBlogs={setBlogs}
+            message={message} setMessage={setMessage}
+            error={error} setError={setError}
           />
       }
     </div>

@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import blogService from '../services/blogService'
+import noticeService from "../services/noticeService";
 
-const BlogForm = ({ blogs, setBlogs }) => {
+const BlogForm = ({ blogs, setBlogs, setMessage, setError }) => {
+
   // State management:
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
-
+  
   const resetForm = () => {
     setTitle('')
     setAuthor('')
@@ -23,9 +25,12 @@ const BlogForm = ({ blogs, setBlogs }) => {
     }
     
     blogService.addBlog(newBlog)
-      .then(blog => setBlogs(blogs.concat(blog)))
-      .then(() => resetForm())
-      .catch(error => console.log(error))
+      .then(blog => {
+        setBlogs(blogs.concat(blog))
+        noticeService.showMessage(`a new blog ${title} by ${author} added`, setMessage)
+        resetForm()
+      })
+      .catch(() => noticeService.showError('error adding blog', setMessage, setError))
   }
 
   return (
