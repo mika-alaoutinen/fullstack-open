@@ -2,6 +2,7 @@ import React from 'react'
 import BlogForm from "./BlogForm";
 import BlogList from "./BlogList"
 import Notification from "./Notification"
+import Toggleable from "./Toggleable";
 
 const BlogPage = ({
   userName, blogs, setBlogs, message, setMessage, error, setError }) => {
@@ -21,11 +22,13 @@ const BlogPage = ({
         <button onClick={logout()}>logout</button>
       </p>
 
-      <BlogForm
-        blogs={blogs} setBlogs={setBlogs}
-        setMessage={setMessage}
-        setError={setError}
-      />
+      <Toggleable buttonLabel='new note' >
+        <BlogForm
+          blogs={blogs} setBlogs={setBlogs}
+          setMessage={setMessage}
+          setError={setError}
+        />
+      </Toggleable>
 
       <BlogList blogs={blogs} setBlogs={setBlogs} />
     </div>
