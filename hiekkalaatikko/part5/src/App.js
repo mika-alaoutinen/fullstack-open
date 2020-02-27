@@ -5,6 +5,7 @@ import Note from './components/Note'
 import NoteForm from "./components/NoteForm";
 import noteService from './services/noteService'
 import Notification from "./components/Notification";
+import Toggleable from "./components/Toggleable";
 
 const App = () => {
   // State management:
@@ -43,7 +44,7 @@ const App = () => {
     noteService.update(id, changedNote)
       .then(returnedNote => setNotes(notes.map(
         note => note.id !== id ? note : returnedNote)))
-      .catch(error => {
+      .catch(() => {
         setErrorMessage(`Note '${note.content}' was already removed from server`)
         setTimeout(() => setErrorMessage(null), 2000);
         setNotes(notes.filter(note => note.id !== id))
@@ -68,22 +69,22 @@ const App = () => {
       <h1>Notes</h1>
       <Notification message={errorMessage} />
 
-      <h2>login</h2>
-      {
-        user === null
+      {user === null
         ? <LoginForm
             username={username} setUsername={setUsername}
             password={password} setPassword={setPassword}
-            user={user} setUser={setUser}
-            setErrorMessage={setErrorMessage}
+            setUser={setUser} setErrorMessage={setErrorMessage}
           />
         : <div>
             <p>{user.name} logged in</p>
             <button onClick={() => logout()}>log out</button>
-            <NoteForm
-              notes={notes} setNotes={setNotes}
-              newNote={newNote} setNewNote={setNewNote}
-            />
+
+            <Toggleable buttonLabel='new note'>
+              <NoteForm
+                notes={notes} setNotes={setNotes}
+                newNote={newNote} setNewNote={setNewNote}
+              />
+            </Toggleable>
           </div>
       }
 

@@ -19,13 +19,17 @@ const NoteForm = ({ notes, setNotes, newNote, setNewNote }) => {
   }
   
   return (
-    <form onSubmit={addNote}>
-      <input
-        value={newNote}
-        onChange={(event) => setNewNote(event.target.value)}
-      />
-      <button type="submit">save</button>
-    </form>
+    <div>
+      <h2>Create a new note</h2>
+      
+      <form onSubmit={addNote}>
+        <input
+          value={newNote}
+          onChange={(event) => setNewNote(event.target.value)}
+        />
+        <button type="submit">save</button>
+      </form>
+    </div>
   )
 }
 

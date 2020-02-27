@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import loginService from "../services/loginService"
 import noteService from "../services/noteService"
 
-const LoginForm = ({ username, setUsername, password, setPassword,
-  user, setUser, setErrorMessage }) => {
+const LoginForm = ({
+  username, setUsername, password, setPassword, setUser, setErrorMessage }) => {
 
-  const handleLogin = async (event) => {
+  // State management:
+  const [loginVisible, setLoginVisible] = useState(false)
+
+  // Login form visibility:
+  const hideWhenVisible = { display: loginVisible ? 'none' : '' }
+  const showWhenVisible = { display: loginVisible ? '' : 'none' }
+
+  const handleLogin = async event => {
     event.preventDefault()
     
     try {
@@ -23,25 +30,39 @@ const LoginForm = ({ username, setUsername, password, setPassword,
   }
 
   return (
-    <form onSubmit={handleLogin}>
-      <div>username
-        <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
+    <div>
+      <h2>login</h2>
+      
+      <div style={hideWhenVisible}>
+        <button onClick={() => setLoginVisible(true)}>log in</button>
       </div>
-      <div>password
-        <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
+
+      <div style={showWhenVisible}>
+        <form onSubmit={handleLogin}>
+          <div>username
+            <input
+              type="text"
+              value={username}
+              name="Username"
+              onChange={({ target }) => setUsername(target.value)}
+            />
+          </div>
+
+          <div>password
+            <input
+              type="password"
+              value={password}
+              name="Password"
+              onChange={({ target }) => setPassword(target.value)}
+            />
+          </div>
+
+          <button type="submit">login</button>
+        </form>
+
+        <button onClick={() => setLoginVisible(false)}>cancel</button>
       </div>
-      <button type="submit">login</button>
-    </form>
+    </div>
   )
 }
 
