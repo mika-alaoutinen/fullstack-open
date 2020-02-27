@@ -1,16 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import loginService from "../services/loginService"
+import Toggleable from "./Toggleable";
 import noteService from "../services/noteService"
 
 const LoginForm = ({
   username, setUsername, password, setPassword, setUser, setErrorMessage }) => {
-
-  // State management:
-  const [loginVisible, setLoginVisible] = useState(false)
-
-  // Login form visibility:
-  const hideWhenVisible = { display: loginVisible ? 'none' : '' }
-  const showWhenVisible = { display: loginVisible ? '' : 'none' }
 
   const handleLogin = async event => {
     event.preventDefault()
@@ -33,11 +27,7 @@ const LoginForm = ({
     <div>
       <h2>login</h2>
       
-      <div style={hideWhenVisible}>
-        <button onClick={() => setLoginVisible(true)}>log in</button>
-      </div>
-
-      <div style={showWhenVisible}>
+      <Toggleable buttonLabel='open login'>
         <form onSubmit={handleLogin}>
           <div>username
             <input
@@ -59,9 +49,7 @@ const LoginForm = ({
 
           <button type="submit">login</button>
         </form>
-
-        <button onClick={() => setLoginVisible(false)}>cancel</button>
-      </div>
+      </Toggleable>
     </div>
   )
 }
