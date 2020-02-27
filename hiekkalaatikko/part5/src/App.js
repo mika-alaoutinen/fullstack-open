@@ -64,6 +64,8 @@ const App = () => {
     />
   )
 
+  const noteFormRef = React.createRef()
+
   return (
     <div>
       <h1>Notes</h1>
@@ -79,10 +81,11 @@ const App = () => {
             <p>{user.name} logged in</p>
             <button onClick={() => logout()}>log out</button>
 
-            <Toggleable buttonLabel='new note'>
+            <Toggleable buttonLabel='new note' ref={noteFormRef}>
               <NoteForm
                 notes={notes} setNotes={setNotes}
                 newNote={newNote} setNewNote={setNewNote}
+                noteFormRef={noteFormRef}
               />
             </Toggleable>
           </div>

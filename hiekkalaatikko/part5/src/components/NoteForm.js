@@ -1,10 +1,11 @@
 import React from 'react'
 import noteService from "../services/noteService";
 
-const NoteForm = ({ notes, setNotes, newNote, setNewNote }) => {
+const NoteForm = ({ notes, setNotes, newNote, setNewNote, noteFormRef }) => {
 
   const addNote = (event) => {
     event.preventDefault()
+    noteFormRef.current.toggleVisibility()
 
     const noteObject = {
       content: newNote,
