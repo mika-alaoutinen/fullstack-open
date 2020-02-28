@@ -23,6 +23,20 @@ const Blog = ({ blog, blogs, setBlogs }) => {
     }
   }
 
+  const deleteBlog = () => () => {
+    const confirm = window.confirm(`remove blog ${blog.title} by ${blog.author}?`)
+    if (confirm) {
+      blogService.deleteBlog(blog.id)
+    }
+  }
+
+  const renderDeleteButton = () => {
+    const user = JSON.parse(window.localStorage.getItem('user'))
+    return user.username === blog.user.username
+      ? <button onClick={deleteBlog()}>remove</button>
+      : null
+  }
+
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -45,6 +59,7 @@ const Blog = ({ blog, blogs, setBlogs }) => {
           <button onClick={addLike()}>like</button>
         </div>
         <div>added by {blog.user.name}</div>
+        {renderDeleteButton()}
       </div>
       
     </div>
