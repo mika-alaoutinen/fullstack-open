@@ -1,8 +1,8 @@
 import React from 'react'
 import Notification from "./Notification"
 import blogService from '../services/blogService'
-import noticeService from "../services/noticeService"
 import loginService from "../services/loginService"
+import noticeService from "../services/noticeService"
 
 const LoginForm = ({
   username, setUsername, password, setPassword, setUser,

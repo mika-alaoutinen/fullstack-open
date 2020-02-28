@@ -13,11 +13,14 @@ const Blog = ({ blog, blogs, setBlogs }) => {
     const likedBlog = {...blog}
     likedBlog.likes += 1
 
-    const editedBlog = await blogService.editBlog(likedBlog.id, likedBlog)
-    
-    setBlogs(blogs.map(blog =>
-      blog.id === editedBlog.id ? editedBlog : blog)
-    )
+    try {
+      const editedBlog = await blogService.editBlog(likedBlog.id, likedBlog)
+
+      setBlogs(blogs.map(blog =>
+        blog.id === editedBlog.id ? editedBlog : blog))  
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const blogStyle = {
