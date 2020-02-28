@@ -18,4 +18,8 @@ const addBlog = newBlog =>
   axios.post(baseUrl, newBlog, createHeader())
        .then(response => response.data)
 
-export default { getAll, addBlog, setToken }
+const editBlog = (id, editedBlog) =>
+  axios.put(baseUrl + '/' + id, editedBlog, createHeader())
+       .then(response => response.data)
+
+export default { getAll, addBlog, editBlog, setToken }

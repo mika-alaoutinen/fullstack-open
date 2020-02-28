@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
+import blogService from "../services/blogService";
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, blogs, setBlogs }) => {
 
   // Expand and collapse blog info:
   const [visible, setVisible] = useState(false)
@@ -8,8 +9,15 @@ const Blog = ({ blog }) => {
   const showWhenVisible = { display: visible ? '' : 'none' }
   const toggleVisibility = () => setVisible(!visible)
 
-  const addLike = () => () => {
-    console.log('+1 like');
+  const addLike = () => async () => {
+    const likedBlog = {...blog}
+    likedBlog.likes += 1
+
+    const editedBlog = await blogService.editBlog(likedBlog.id, likedBlog)
+    
+    setBlogs(blogs.map(blog =>
+      blog.id === editedBlog.id ? editedBlog : blog)
+    )
   }
 
   const blogStyle = {
