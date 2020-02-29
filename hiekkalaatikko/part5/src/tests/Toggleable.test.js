@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
-import Toggleable from './Toggleable'
+import Toggleable from '../components/Toggleable'
 
 describe('<Toggleable />', () => {
   let component

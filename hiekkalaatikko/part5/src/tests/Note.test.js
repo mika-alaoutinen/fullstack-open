@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react'
-import Note from './Note'
+import Note from '../components/Note'
 
 const noteText = 'Component testing is done with react-testing-library'
 
