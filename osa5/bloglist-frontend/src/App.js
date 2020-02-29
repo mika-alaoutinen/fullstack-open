@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react'
 import BlogPage from './components/BlogPage'
 import LoginForm from './components/LoginForm'
 import blogService from './services/blogService'
+import { useField } from './hooks/index'
 
 const App = () => {
+  // Custom state management hooks:
+  const username = useField('text')
+  const password = useField('password')
+
   // State management:
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [message, setMessage] = useState(null)
   const [error, setError] = useState(false)
@@ -26,14 +29,14 @@ const App = () => {
     <div>
       {user === null
         ? <LoginForm
-          username={username} setUsername={setUsername}
-          password={password} setPassword={setPassword}
+          username={username}
+          password={password}
           setUser={setUser}
           message={message} setMessage={setMessage}
           error={error} setError={setError}
         />
         : <BlogPage
-          username={user.name}
+          username={username}
           blogs={blogs} setBlogs={setBlogs}
           message={message} setMessage={setMessage}
           error={error} setError={setError}
