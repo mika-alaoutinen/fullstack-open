@@ -6,8 +6,8 @@ import { useField } from './hooks/index'
 
 const App = () => {
   // Custom state management hooks:
-  const username = useField('text')
-  const password = useField('password')
+  const { reset: {}, ...username } = useField('text')
+  const { reset: {}, ...password } = useField('password')
 
   // State management:
   const [blogs, setBlogs] = useState([])

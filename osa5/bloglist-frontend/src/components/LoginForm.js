@@ -6,12 +6,6 @@ import loginService from '../services/loginService'
 import noticeService from '../services/noticeService'
 
 const LoginForm = ({ username, password, setUser, message, setMessage, error, setError }) => {
-
-  const uname = Object.assign({}, username)
-  delete uname.reset
-
-  const pw = Object.assign({}, password)
-  delete pw.reset
   
   const handleLogin = async event => {
     event.preventDefault()
@@ -32,11 +26,11 @@ const LoginForm = ({ username, password, setUser, message, setMessage, error, se
 
       <form onSubmit={handleLogin}>
         <div>username
-          <input { ...uname } />
+          <input { ...username } />
         </div>
 
         <div>password
-          <input { ...pw } />
+          <input { ...password } />
         </div>
 
         <button type='submit'>login</button>

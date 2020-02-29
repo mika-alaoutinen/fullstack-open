@@ -6,18 +6,9 @@ import { useField } from '../hooks/index'
 const BlogForm = ({ blogs, setBlogs, setMessage, setError }) => {
 
   // State management:
-  const title = useField('text')
-  const author = useField('text')
-  const url = useField('text')
-
-  const t = Object.assign({}, title)
-  delete t.reset
-
-  const a = Object.assign({}, author)
-  delete a.reset
-
-  const u = Object.assign({}, url)
-  delete u.reset
+  const { reset: {}, ...title } = useField('text')
+  const { reset: {}, ...author} = useField('text')
+  const { reset: {}, ...url } = useField('text')
 
   const resetForm = () => {
     title.reset()
@@ -47,13 +38,13 @@ const BlogForm = ({ blogs, setBlogs, setMessage, setError }) => {
     <form onSubmit={newBlog()}>
 
       <p>title
-        <input { ...t } />
+        <input { ...title } />
       </p>
       <p>author
-        <input { ...a } />
+        <input { ...author } />
       </p>
       <p>url
-        <input { ...u } />
+        <input { ...url } />
       </p>
 
       <button type='submit'>create</button>
