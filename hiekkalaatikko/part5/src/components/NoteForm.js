@@ -1,10 +1,11 @@
 import React from 'react'
 import noteService from "../services/noteService";
 
-const NoteForm = ({ notes, setNotes, newNote, setNewNote }) => {
+const NoteForm = ({ notes, setNotes, newNote, setNewNote, noteFormRef }) => {
 
   const addNote = (event) => {
     event.preventDefault()
+    noteFormRef.current.toggleVisibility()
 
     const noteObject = {
       content: newNote,
@@ -19,13 +20,17 @@ const NoteForm = ({ notes, setNotes, newNote, setNewNote }) => {
   }
   
   return (
-    <form onSubmit={addNote}>
-      <input
-        value={newNote}
-        onChange={(event) => setNewNote(event.target.value)}
-      />
-      <button type="submit">save</button>
-    </form>
+    <div>
+      <h2>Create a new note</h2>
+      
+      <form onSubmit={addNote}>
+        <input
+          value={newNote}
+          onChange={(event) => setNewNote(event.target.value)}
+        />
+        <button type="submit">save</button>
+      </form>
+    </div>
   )
 }
 

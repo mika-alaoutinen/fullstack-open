@@ -1,11 +1,12 @@
 import React from 'react'
 import loginService from "../services/loginService"
+import Toggleable from "./Toggleable";
 import noteService from "../services/noteService"
 
-const LoginForm = ({ username, setUsername, password, setPassword,
-  user, setUser, setErrorMessage }) => {
+const LoginForm = ({
+  username, setUsername, password, setPassword, setUser, setErrorMessage }) => {
 
-  const handleLogin = async (event) => {
+  const handleLogin = async event => {
     event.preventDefault()
     
     try {
@@ -23,25 +24,33 @@ const LoginForm = ({ username, setUsername, password, setPassword,
   }
 
   return (
-    <form onSubmit={handleLogin}>
-      <div>username
-        <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>password
-        <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>
+    <div>
+      <h2>login</h2>
+      
+      <Toggleable buttonLabel='open login'>
+        <form onSubmit={handleLogin}>
+          <div>username
+            <input
+              type="text"
+              value={username}
+              name="Username"
+              onChange={({ target }) => setUsername(target.value)}
+            />
+          </div>
+
+          <div>password
+            <input
+              type="password"
+              value={password}
+              name="Password"
+              onChange={({ target }) => setPassword(target.value)}
+            />
+          </div>
+
+          <button type="submit">login</button>
+        </form>
+      </Toggleable>
+    </div>
   )
 }
 

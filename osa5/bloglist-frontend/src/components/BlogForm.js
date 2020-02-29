@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import blogService from '../services/blogService'
-import noticeService from "../services/noticeService";
+import noticeService from '../services/noticeService'
 
 const BlogForm = ({ blogs, setBlogs, setMessage, setError }) => {
 
@@ -8,13 +8,13 @@ const BlogForm = ({ blogs, setBlogs, setMessage, setError }) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
-  
+
   const resetForm = () => {
     setTitle('')
     setAuthor('')
     setUrl('')
   }
-  
+
   const newBlog = () => event => {
     event.preventDefault()
 
@@ -23,7 +23,7 @@ const BlogForm = ({ blogs, setBlogs, setMessage, setError }) => {
       author: author,
       url: url,
     }
-    
+
     blogService.addBlog(newBlog)
       .then(blog => {
         setBlogs(blogs.concat(blog))
@@ -39,7 +39,7 @@ const BlogForm = ({ blogs, setBlogs, setMessage, setError }) => {
         <input
           type='text'
           value={title}
-          onChange={({target}) => setTitle(target.value)}
+          onChange={({ target }) => setTitle(target.value)}
         />
       </p>
 
@@ -47,7 +47,7 @@ const BlogForm = ({ blogs, setBlogs, setMessage, setError }) => {
         <input
           type='text'
           value={author}
-          onChange={({target}) => setAuthor(target.value)}
+          onChange={({ target }) => setAuthor(target.value)}
         />
       </p>
 
@@ -55,7 +55,7 @@ const BlogForm = ({ blogs, setBlogs, setMessage, setError }) => {
         <input
           type='text'
           value={url}
-          onChange={({target}) => setUrl(target.value)}
+          onChange={({ target }) => setUrl(target.value)}
         />
       </p>
 

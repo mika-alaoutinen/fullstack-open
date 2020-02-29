@@ -1,8 +1,9 @@
 import React from 'react'
-import Notification from "./Notification"
+import PropTypes from 'prop-types'
+import Notification from './Notification'
 import blogService from '../services/blogService'
-import noticeService from "../services/noticeService"
-import loginService from "../services/loginService"
+import loginService from '../services/loginService'
+import noticeService from '../services/noticeService'
 
 const LoginForm = ({
   username, setUsername, password, setPassword, setUser,
@@ -50,6 +51,18 @@ const LoginForm = ({
       </form>
     </div>
   )
+}
+
+LoginForm.propTypes = {
+  username: PropTypes.string.isRequired,
+  setUsername: PropTypes.func.isRequired,
+  password: PropTypes.string.isRequired,
+  setPassword: PropTypes.func.isRequired,
+  setUser: PropTypes.func.isRequired,
+  message: PropTypes.string,
+  setMessage: PropTypes.func.isRequired,
+  error: PropTypes.bool.isRequired,
+  setError: PropTypes.func.isRequired,
 }
 
 export default LoginForm
