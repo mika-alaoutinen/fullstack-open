@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Notification from "./Notification"
+import Notification from './Notification'
 import blogService from '../services/blogService'
-import loginService from "../services/loginService"
-import noticeService from "../services/noticeService"
+import loginService from '../services/loginService'
+import noticeService from '../services/noticeService'
 
 const LoginForm = ({
   username, setUsername, password, setPassword, setUser,

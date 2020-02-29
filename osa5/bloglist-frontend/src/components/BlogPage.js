@@ -1,8 +1,8 @@
 import React from 'react'
-import BlogForm from "./BlogForm";
-import BlogList from "./BlogList"
-import Notification from "./Notification"
-import Toggleable from "./Toggleable";
+import BlogForm from './BlogForm'
+import BlogList from './BlogList'
+import Notification from './Notification'
+import Toggleable from './Toggleable'
 
 const BlogPage = ({
   userName, blogs, setBlogs, message, setMessage, error, setError }) => {

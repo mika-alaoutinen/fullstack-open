@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import blogService from "../services/blogService";
+import blogService from '../services/blogService'
 
 const Blog = ({ blog, blogs, setBlogs }) => {
 
@@ -10,14 +10,14 @@ const Blog = ({ blog, blogs, setBlogs }) => {
   const toggleVisibility = () => setVisible(!visible)
 
   const addLike = () => async () => {
-    const likedBlog = {...blog}
+    const likedBlog = { ...blog }
     likedBlog.likes += 1
 
     try {
       const editedBlog = await blogService.editBlog(likedBlog.id, likedBlog)
 
       setBlogs(blogs.map(blog =>
-        blog.id === editedBlog.id ? editedBlog : blog))  
+        blog.id === editedBlog.id ? editedBlog : blog))
     } catch (error) {
       console.error(error)
     }
@@ -50,7 +50,7 @@ const Blog = ({ blog, blogs, setBlogs }) => {
       <div onClick={toggleVisibility} style={hideWhenVisible}>
         {blog.title} {blog.author}
       </div>
-      
+
       <div onClick={toggleVisibility} style={showWhenVisible}>
         <div>{blog.title} {blog.author}</div>
         <div>{blog.url}</div>
@@ -61,7 +61,7 @@ const Blog = ({ blog, blogs, setBlogs }) => {
         <div>added by {blog.user.name}</div>
         {renderDeleteButton()}
       </div>
-      
+
     </div>
   )
 }
