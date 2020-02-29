@@ -10,6 +10,15 @@ const BlogForm = ({ blogs, setBlogs, setMessage, setError }) => {
   const author = useField('text')
   const url = useField('text')
 
+  const t = Object.assign({}, title)
+  delete t.reset
+
+  const a = Object.assign({}, author)
+  delete a.reset
+
+  const u = Object.assign({}, url)
+  delete u.reset
+
   const resetForm = () => {
     title.reset()
     author.reset()
@@ -38,13 +47,13 @@ const BlogForm = ({ blogs, setBlogs, setMessage, setError }) => {
     <form onSubmit={newBlog()}>
 
       <p>title
-        <input { ...title } />
+        <input { ...t } />
       </p>
       <p>author
-        <input { ...author } />
+        <input { ...a } />
       </p>
       <p>url
-        <input { ...url } />
+        <input { ...u } />
       </p>
 
       <button type='submit'>create</button>

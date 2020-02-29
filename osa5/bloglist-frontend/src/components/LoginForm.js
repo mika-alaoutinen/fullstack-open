@@ -7,6 +7,12 @@ import noticeService from '../services/noticeService'
 
 const LoginForm = ({ username, password, setUser, message, setMessage, error, setError }) => {
 
+  const uname = Object.assign({}, username)
+  delete uname.reset
+
+  const pw = Object.assign({}, password)
+  delete pw.reset
+  
   const handleLogin = async event => {
     event.preventDefault()
 
@@ -25,14 +31,12 @@ const LoginForm = ({ username, password, setUser, message, setMessage, error, se
       <Notification message={message} error={error} />
 
       <form onSubmit={handleLogin}>
-        <div>
-          username
-          <input { ...username } />
+        <div>username
+          <input { ...uname } />
         </div>
 
-        <div>
-          password
-          <input { ...password } />
+        <div>password
+          <input { ...pw } />
         </div>
 
         <button type='submit'>login</button>
