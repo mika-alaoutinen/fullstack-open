@@ -26,7 +26,7 @@ const LoginForm = ({
   }
 
   return (
-    <div>
+    <div className='loginPage'>
       <h1>log in to application</h1>
       <Notification message={message} error={error} />
 

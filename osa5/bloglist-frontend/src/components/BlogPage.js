@@ -14,7 +14,7 @@ const BlogPage = ({
   }
 
   return (
-    <div>
+    <div className='blogPage'>
       <h2>blogs</h2>
       <Notification message={message} error={error} />
 
