@@ -1,10 +1,12 @@
 import React from 'react'
-import { render, fireEvent, prettyDOM } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import SimpleBlog from '../components/SimpleBlog'
 
 // Global helper variables:
 let component
+
 const likeHandler = jest.fn()
+
 const blog = {
   title: 'SimpleBlog test',
   author: 'Pekka Kana',
