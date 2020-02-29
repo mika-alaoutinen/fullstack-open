@@ -33,7 +33,7 @@ const App = () => {
           error={error} setError={setError}
         />
         : <BlogPage
-          userName={user.name}
+          username={user.name}
           blogs={blogs} setBlogs={setBlogs}
           message={message} setMessage={setMessage}
           error={error} setError={setError}
