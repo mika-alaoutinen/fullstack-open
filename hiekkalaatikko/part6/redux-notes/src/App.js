@@ -1,17 +1,12 @@
-import React from 'react';
+import React from 'react'
+import NewNote from "./components/NewNote";
+import Notes from "./components/Notes";
 
-const App = ({ store }) => {
-  return (
-    <div>
-      <ul>
-        {store.getState().map(note =>
-          <li key={note.id}>
-            {note.content} <strong>{note.important ? 'important' : ''}</strong>
-          </li>
-        )}
-      </ul>
-    </div>
-  )
-}
+const App = ({ store }) => (
+  <div>
+    <NewNote store={store} />
+    <Notes store={store} />
+  </div>
+)
 
 export default App;

@@ -9,7 +9,23 @@ const noteReducer = (state = [], action) => {
   }
 }
 
-const addNote = (state, action) => [ ...state, action.data ]
+// Redux actions:
+export const createNote = content => ({
+  type: 'NEW_NOTE',
+  data: {
+    content,
+    important: false,
+    id: generateId()
+  }
+})
+
+export const toggleImportanceOf = id => ({
+  type: 'TOGGLE_IMPORTANCE',
+  data: { id }
+})
+
+// Utility functions:
+const addNote = (state, action) => [...state, action.data]
 
 const toggleImportance = (state, action) => {
   const id = action.data.id
@@ -21,5 +37,7 @@ const toggleImportance = (state, action) => {
 
   return state.map(note => note.id === id ? changedNote : note)
 }
+
+const generateId = () => Number((Math.random() * 1000000).toFixed(0))
 
 export default noteReducer
