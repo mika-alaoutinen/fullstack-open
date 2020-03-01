@@ -22,6 +22,8 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'VOTE':
       return vote(state, action)
+    case 'NEW_ANECDOTE':
+      return [ ...state, action ]
     default:
       return state;
   }
@@ -33,6 +35,7 @@ export const addVote = id => ({
 })
 
 export const createAnecdote = content => ({
+  type: 'NEW_ANECDOTE',
   content: content,
   id: getId(),
   votes: 0,
