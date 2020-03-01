@@ -5,8 +5,7 @@ import BlogList from './BlogList'
 import Notification from './Notification'
 import Toggleable from './Toggleable'
 
-const BlogPage = ({
-  username, blogs, setBlogs, message, setMessage, error, setError }) => {
+const BlogPage = ({ username, blogs, setBlogs, message, setMessage, error, setError }) => {
 
   const logout = () => () => {
     window.localStorage.clear()
@@ -19,7 +18,7 @@ const BlogPage = ({
       <Notification message={message} error={error} />
 
       <p>
-        {username} logged in
+        {username.value} logged in
         <button onClick={logout()}>logout</button>
       </p>
 
@@ -37,7 +36,7 @@ const BlogPage = ({
 }
 
 BlogPage.propTypes = {
-  username: PropTypes.string.isRequired,
+  username: PropTypes.object.isRequired,
   blogs: PropTypes.array.isRequired,
   setBlogs: PropTypes.func.isRequired,
   message: PropTypes.string,

@@ -5,22 +5,16 @@ import blogService from '../services/blogService'
 import loginService from '../services/loginService'
 import noticeService from '../services/noticeService'
 
-const LoginForm = ({
-  username, setUsername, password, setPassword, setUser,
-  message, setMessage, error, setError }) => {
-
+const LoginForm = ({ username, password, setUser, message, setMessage, error, setError }) => {
+  
   const handleLogin = async event => {
     event.preventDefault()
 
-    loginService.login({ username, password })
+    loginService.login({ username: username.value, password: password.value })
       .then(user => {
         window.localStorage.setItem('user', JSON.stringify(user))
         blogService.setToken(user.token)
         setUser(user)
-      })
-      .then(() => {
-        setUsername('')
-        setPassword('')
       })
       .catch(() => noticeService.showError('wrong username or password', setMessage, setError))
   }
@@ -32,19 +26,11 @@ const LoginForm = ({
 
       <form onSubmit={handleLogin}>
         <div>username
-          <input
-            type='text'
-            value={username}
-            onChange={({ target }) => setUsername(target.value)}
-          />
+          <input { ...username } />
         </div>
 
         <div>password
-          <input
-            type='password'
-            value={password}
-            onChange={({ target }) => setPassword(target.value)}
-          />
+          <input { ...password } />
         </div>
 
         <button type='submit'>login</button>
@@ -54,10 +40,8 @@ const LoginForm = ({
 }
 
 LoginForm.propTypes = {
-  username: PropTypes.string.isRequired,
-  setUsername: PropTypes.func.isRequired,
-  password: PropTypes.string.isRequired,
-  setPassword: PropTypes.func.isRequired,
+  username: PropTypes.object.isRequired,
+  password: PropTypes.object.isRequired,
   setUser: PropTypes.func.isRequired,
   message: PropTypes.string,
   setMessage: PropTypes.func.isRequired,
