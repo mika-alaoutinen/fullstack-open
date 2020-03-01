@@ -1,21 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
+import noteReducer from './reducers/noteReducer'
 import { createStore } from "redux";
-
-const noteReducer = (state = [], action) => {
-  if (action.type === 'NEW_NOTE') {
-    state.push(action.data)
-    return state
-  }
-
-  return state
-}
 
 // Redux store:
 const store = createStore(noteReducer)
 
-// Test:
+// Create new notes and save them to store:
 store.dispatch({
   type: 'NEW_NOTE',
   data: {
@@ -32,6 +24,12 @@ store.dispatch({
     important: false,
     id: 2
   }
+})
+
+// Change note importance:
+store.dispatch({
+  type: 'TOGGLE_IMPORTANCE',
+  data: { id: 2 },
 })
 
 const renderApp = () => {
