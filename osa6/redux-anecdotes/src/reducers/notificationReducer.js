@@ -1,32 +1,30 @@
-const notificationReducer = (state = [], action) => {
+const notificationReducer = (state = '', action) => {
   switch (action.type) {
-    case 'VOTE':
-      return vote(state, action)
-    case 'NEW_ANECDOTE':
-      return newAnecdote(state, action)
+    case 'VOTE_NOTIFICATION':
+      return {
+        reason: action.reason,
+        content: action.content
+      }
+    case 'NEW_ANECDOTE_NOTIFICATION':
+      return {
+        reason: action.reason,
+        content: action.content
+      }
     default:
       return state
   }
 }
 
-export const addVote = id => ({
-  type: 'VOTE',
-  id: id
-})
-
-export const createAnecdote = content => ({
-  type: 'NEW_ANECDOTE',
+export const voteNotification = content => ({
+  type: 'VOTE_NOTIFICATION',
   content: content,
+  reason: 'vote'
 })
 
-const vote = (state, action) => {
-  console.log(state)
-  console.log(action)
-}
-
-const newAnecdote = (state, action) => {
-  console.log(state)
-  console.log(action)
-}
+export const newAnecdoteNotification = content => ({
+  type: 'NEW_ANECDOTE_NOTIFICATION',
+  content: content,
+  reason: 'new'
+})
 
 export default notificationReducer
