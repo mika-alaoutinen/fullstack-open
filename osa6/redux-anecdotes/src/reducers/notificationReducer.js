@@ -19,13 +19,13 @@ const notificationReducer = (state = '', action) => {
 
 export const voteNotification = content => ({
   type: 'VOTE_NOTIFICATION',
-  content: content,
+  content,
   reason: 'vote'
 })
 
 export const newAnecdoteNotification = content => ({
   type: 'NEW_ANECDOTE_NOTIFICATION',
-  content: content,
+  content,
   reason: 'new'
 })
 

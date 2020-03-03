@@ -4,15 +4,26 @@ import { addVote } from '../reducers/anecdoteReducer'
 import { resetNotification, voteNotification } from '../reducers/notificationReducer'
 
 const AnecdoteList = ({ store }) => {
-  const anecdotes = store
-    .getState().anecdotes
-    .sort((a1, a2) => a2.votes - a1.votes)
 
   const vote = (id, content) => () => {
     store.dispatch(addVote(id))
     store.dispatch(voteNotification(content))
     setTimeout(() => store.dispatch(resetNotification()), 5000)
   }
+
+  const filterAnecdotes = anecdote => {
+    const filter = store.getState().filter.toLowerCase()
+    const content = anecdote.content.toLowerCase()
+
+    if (content.includes(filter)) {
+      return anecdote
+    }
+  }
+
+  const anecdotes = store
+    .getState().anecdotes
+    .filter(filterAnecdotes)
+    .sort((a1, a2) => a2.votes - a1.votes)
 
   return (
     <div>
