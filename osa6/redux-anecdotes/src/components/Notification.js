@@ -11,12 +11,13 @@ const Notification = ({ store }) => {
   }
 
   const renderNotification = () => {
-    if (notification.reason === 'vote' && notification.content.length > 0) {
-      return `you voted '${notification.content}'`
-    }
-    
-    if (notification.reason === 'new' && notification.content.length > 0) {
-      return `new notification '${notification.content}'`
+    if (notification.content !== undefined && notification.content.length > 0) {
+      if (notification.reason === 'vote') {
+        return `you voted '${notification.content}'`
+      }
+      if (notification.reason === 'new') {
+        return `new notification '${notification.content}'`
+      }  
     }
   }
 

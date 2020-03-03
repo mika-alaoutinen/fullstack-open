@@ -10,6 +10,8 @@ const notificationReducer = (state = '', action) => {
         reason: action.reason,
         content: action.content
       }
+    case 'RESET_NOTIFICATION':
+      return ''
     default:
       return state
   }
@@ -25,6 +27,11 @@ export const newAnecdoteNotification = content => ({
   type: 'NEW_ANECDOTE_NOTIFICATION',
   content: content,
   reason: 'new'
+})
+
+export const resetNotification = () => ({
+  type: 'RESET_NOTIFICATION',
+  content: '',
 })
 
 export default notificationReducer

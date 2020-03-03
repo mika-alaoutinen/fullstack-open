@@ -1,7 +1,7 @@
 import React from 'react'
 import Anecdote from './Anecdote'
 import { addVote } from '../reducers/anecdoteReducer'
-import { voteNotification } from '../reducers/notificationReducer'
+import { resetNotification, voteNotification } from '../reducers/notificationReducer'
 
 const AnecdoteList = ({ store }) => {
   const anecdotes = store
@@ -11,7 +11,7 @@ const AnecdoteList = ({ store }) => {
   const vote = (id, content) => () => {
     store.dispatch(addVote(id))
     store.dispatch(voteNotification(content))
-    setTimeout(() => store.dispatch(voteNotification('')), 5000)
+    setTimeout(() => store.dispatch(resetNotification()), 5000)
   }
 
   return (
