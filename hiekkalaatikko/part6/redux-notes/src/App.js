@@ -3,7 +3,9 @@ import NewNote from './components/NewNote'
 import Notes from './components/Notes'
 import VisibilityFilter from './components/VisibilityFilter'
 
-const App = ({ store }) => {
+const App = (props) => {
+  const store = props.store
+
   return (
     <div>
       <NewNote store={store} />
@@ -13,4 +15,4 @@ const App = ({ store }) => {
   )
 }
 
-export default App;
+export default App
