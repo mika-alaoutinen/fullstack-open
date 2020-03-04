@@ -2,13 +2,13 @@ import React from "react";
 import { connect } from 'react-redux'
 import { createNote } from '../reducers/noteReducer'
 
-const NewNote = (props) => {
+const NewNote = ({ createNote }) => {
 
   const addNote = event => {
     event.preventDefault()
     const content = event.target.note.value
     event.target.note.value = ''
-    props.createNote(content)
+    createNote(content)
   }
 
   return (

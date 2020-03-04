@@ -3,19 +3,17 @@ import { connect } from 'react-redux'
 import Note from './Note'
 import { toggleImportanceOf } from '../reducers/noteReducer'
 
-const Notes = (props) => {
-  return (
-    <ul>
-      {props.visibleNotes.map(note =>
-        <Note
-          key={note.id}
-          note={note}
-          handleClick={() => props.toggleImportanceOf(note.id)}
-        />
-      )}
-    </ul>
-  )
-}
+const Notes = ({ visibleNotes, toggleImportanceOf }) => (
+  <ul>
+    {visibleNotes.map(note =>
+      <Note
+        key={note.id}
+        note={note}
+        handleClick={() => toggleImportanceOf(note.id)}
+      />
+    )}
+  </ul>
+)
 
 const notesToShow = ({ notes, filter }) => {
   if (filter === 'ALL') {

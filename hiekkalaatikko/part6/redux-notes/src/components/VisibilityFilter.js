@@ -2,13 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { filterChange } from '../reducers/filterReducer'
 
-const VisibilityFilter = (props) => (
+const VisibilityFilter = ({ filterChange }) => (
   <div>
     <label>all
       <input
         type="radio"
         name="filter"
-        onChange={() => props.filterChange('ALL')}
+        onChange={() => filterChange('ALL')}
       />
     </label>
 
@@ -16,7 +16,7 @@ const VisibilityFilter = (props) => (
       <input
         type="radio"
         name="filter"
-        onChange={() => props.filterChange('IMPORTANT')}
+        onChange={() => filterChange('IMPORTANT')}
       />
     </label>
 
@@ -24,7 +24,7 @@ const VisibilityFilter = (props) => (
       <input
         type="radio"
         name="filter"
-        onChange={() => props.filterChange('NONIMPORTANT')}
+        onChange={() => filterChange('NONIMPORTANT')}
       />
     </label>
   </div>
