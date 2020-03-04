@@ -29,7 +29,7 @@ const filteredAnecdotes = state => {
   const { anecdotes, filter } = state
 
   return anecdotes
-    .filter(anecdote => anecdote.content.toLowerCase().includes(filter))
+    .filter(anecdote => anecdote.content.toLowerCase().includes(filter.toLowerCase()))
     .sort((a1, a2) => a2.votes - a1.votes)
 }
 
