@@ -1,40 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore, combineReducers } from 'redux'
 import App from './App'
+import filterReducer from './reducers/filterReducer'
 import noteReducer from './reducers/noteReducer'
-import { createStore } from "redux";
+
+// Combine reducer:
+const reducer = combineReducers({
+  notes: noteReducer,
+  filter: filterReducer,
+})
 
 // Redux store:
-const store = createStore(noteReducer)
+const store = createStore(reducer)
 
-// Create new notes and save them to store:
-store.dispatch({
-  type: 'NEW_NOTE',
-  data: {
-    content: 'the app state is in redux store',
-    important: true,
-    id: 1
-  }
-})
-
-store.dispatch({
-  type: 'NEW_NOTE',
-  data: {
-    content: 'state changes are made with actions',
-    important: false,
-    id: 2
-  }
-})
-
-// Change note importance:
-store.dispatch({
-  type: 'TOGGLE_IMPORTANCE',
-  data: { id: 2 },
-})
-
-const renderApp = () => {
-  ReactDOM.render(<App store={store} />, document.getElementById('root'))
-}
-
-renderApp()
-store.subscribe(renderApp)
+ReactDOM.render(
+  <Provider store={store}> <App/> </Provider>,
+  document.getElementById('root')
+)
