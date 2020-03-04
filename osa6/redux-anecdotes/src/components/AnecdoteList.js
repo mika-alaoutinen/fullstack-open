@@ -4,7 +4,8 @@ import Anecdote from './Anecdote'
 import { addVote } from '../reducers/anecdoteReducer'
 import { resetNotification, voteNotification } from '../reducers/notificationReducer'
 
-const AnecdoteList = ({ anecdotes, addVote, resetNotification, voteNotification }) => {
+const AnecdoteList = ({
+  anecdotes, addVote, resetNotification, voteNotification }) => {
 
   const vote = (id, content) => () => {
     addVote(id)
