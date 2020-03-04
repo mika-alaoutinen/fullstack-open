@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore, combineReducers } from 'redux'
 import App from './App'
 import filterReducer from './reducers/filterReducer'
 import noteReducer from './reducers/noteReducer'
-import { Provider } from 'react-redux'
-import { createStore, combineReducers } from 'redux'
 
 // Combine reducer:
 const reducer = combineReducers({
