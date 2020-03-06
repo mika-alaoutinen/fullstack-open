@@ -3,7 +3,7 @@ const anecdoteReducer = (state = [], action) => {
     case 'VOTE':
       return vote(state, action)
     case 'NEW_ANECDOTE':
-      return [ ...state, action ]
+      return [ ...state, action.data ]
     case 'INIT_ANECDOTES':
       return action.data
     default:

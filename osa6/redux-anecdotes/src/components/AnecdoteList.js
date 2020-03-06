@@ -4,8 +4,7 @@ import Anecdote from './Anecdote'
 import { addVote } from '../reducers/anecdoteReducer'
 import { resetNotification, voteNotification } from '../reducers/notificationReducer'
 
-const AnecdoteList = ({
-  anecdotes, addVote, resetNotification, voteNotification }) => {
+const AnecdoteList = ({ visibleAnecdotes, addVote, resetNotification, voteNotification }) => {
 
   const vote = (id, content) => () => {
     addVote(id)
@@ -15,7 +14,7 @@ const AnecdoteList = ({
 
   return (
     <div>
-      {anecdotes.map(anecdote =>
+      {visibleAnecdotes.map(anecdote =>
         <Anecdote
           key={anecdote.id}
           anecdote={anecdote}
@@ -26,16 +25,14 @@ const AnecdoteList = ({
   )
 }
 
-const filteredAnecdotes = state => {
-  const { anecdotes, filter } = state
-
+const filteredAnecdotes = ({ anecdotes, filter }) => {
   return anecdotes
     .filter(anecdote => anecdote.content.toLowerCase().includes(filter.toLowerCase()))
-    .sort((a1, a2) => a2.votes - a1.votes)
+    .sort((a1, a2) => a2.votes - a1.votes)  
 }
 
 const mapStateToProps = state => ({
-    anecdotes: filteredAnecdotes(state)
+  visibleAnecdotes: filteredAnecdotes(state)
 })
 
 const mapDispatchToProps = {
