@@ -1,19 +1,7 @@
-const initialNotes = [
-  {
-    content: 'the app state is in redux store',
-    important: true,
-    id: 1
-  },
-  {
-    content: 'state changes are made with actions',
-    important: false,
-    id: 2
-  }
-]
-
-
-const noteReducer = (state = initialNotes, action) => {
+const noteReducer = (state = [], action) => {
   switch (action.type) {
+    case 'INIT_NOTES':
+      return action.data
     case 'NEW_NOTE':
       return addNote(state, action)
     case 'TOGGLE_IMPORTANCE':
@@ -24,13 +12,14 @@ const noteReducer = (state = initialNotes, action) => {
 }
 
 // Redux actions:
-export const createNote = content => ({
+export const initializeNotes = notes => ({
+  type: 'INIT_NOTES',
+  data: notes,
+})
+
+export const createNote = data => ({
   type: 'NEW_NOTE',
-  data: {
-    content,
-    important: false,
-    id: generateId()
-  }
+  data
 })
 
 export const toggleImportanceOf = id => ({
