@@ -41,6 +41,4 @@ const toggleImportance = (state, action) => {
   return state.map(note => note.id === id ? changedNote : note)
 }
 
-const generateId = () => Number((Math.random() * 1000000).toFixed(0))
-
 export default noteReducer

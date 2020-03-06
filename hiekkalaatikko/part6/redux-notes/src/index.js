@@ -16,9 +16,6 @@ const reducer = combineReducers({
 // Redux store:
 const store = createStore(reducer)
 
-noteService.getAll()
-  .then(notes => store.dispatch(initializeNotes(notes)))
-
 ReactDOM.render(
   <Provider store={store}> <App/> </Provider>,
   document.getElementById('root')
