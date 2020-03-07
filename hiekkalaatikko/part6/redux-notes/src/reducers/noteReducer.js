@@ -1,19 +1,9 @@
-const initialNotes = [
-  {
-    content: 'the app state is in redux store',
-    important: true,
-    id: 1
-  },
-  {
-    content: 'state changes are made with actions',
-    important: false,
-    id: 2
-  }
-]
+import noteService from '../services/noteService'
 
-
-const noteReducer = (state = initialNotes, action) => {
+const noteReducer = (state = [], action) => {
   switch (action.type) {
+    case 'INIT_NOTES':
+      return action.data
     case 'NEW_NOTE':
       return addNote(state, action)
     case 'TOGGLE_IMPORTANCE':
@@ -24,14 +14,21 @@ const noteReducer = (state = initialNotes, action) => {
 }
 
 // Redux actions:
-export const createNote = content => ({
-  type: 'NEW_NOTE',
-  data: {
-    content,
-    important: false,
-    id: generateId()
-  }
-})
+export const initializeNotes = () => async dispatch => {
+  const notes = await noteService.getAll()
+  dispatch({
+    type: 'INIT_NOTES',
+    data: notes,
+  })
+}
+
+export const createNote = content => async dispatch => {
+  const note = await noteService.createNew(content)
+  dispatch({
+    type: 'NEW_NOTE',
+    data: note
+  })
+}
 
 export const toggleImportanceOf = id => ({
   type: 'TOGGLE_IMPORTANCE',
@@ -51,7 +48,5 @@ const toggleImportance = (state, action) => {
 
   return state.map(note => note.id === id ? changedNote : note)
 }
-
-const generateId = () => Number((Math.random() * 1000000).toFixed(0))
 
 export default noteReducer

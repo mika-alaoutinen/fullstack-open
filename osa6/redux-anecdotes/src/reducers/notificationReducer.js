@@ -1,37 +1,29 @@
 const notificationReducer = (state = '', action) => {
   switch (action.type) {
-    case 'VOTE_NOTIFICATION':
-      return {
-        reason: action.reason,
-        content: action.content
-      }
-    case 'NEW_ANECDOTE_NOTIFICATION':
-      return {
-        reason: action.reason,
-        content: action.content
-      }
+    case 'SET_NOTIFICATION':
+      return action.notification
     case 'RESET_NOTIFICATION':
-      return ''
+      return action.notification
     default:
       return state
   }
 }
 
-export const voteNotification = content => ({
-  type: 'VOTE_NOTIFICATION',
-  content,
-  reason: 'vote'
-})
+export const setNotification = (content, timer) => async dispatch => {
+  dispatch({
+    type: 'SET_NOTIFICATION',
+    notification: {
+      content,
+      timer
+    }
+  })
+}
 
-export const newAnecdoteNotification = content => ({
-  type: 'NEW_ANECDOTE_NOTIFICATION',
-  content,
-  reason: 'new'
-})
-
-export const resetNotification = () => ({
-  type: 'RESET_NOTIFICATION',
-  content: '',
-})
+export const resetNotification = timeout => async dispatch => {
+  setTimeout(() => dispatch({
+    type: 'RESET_NOTIFICATION',
+    notification: ''
+  }), timeout);
+}
 
 export default notificationReducer
