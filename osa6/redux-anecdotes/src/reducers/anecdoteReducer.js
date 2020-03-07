@@ -43,6 +43,8 @@ const vote = (state, action) => {
     votes: anecdote.votes + 1
   }
 
+  anecdoteService.update(id, newAnecdote)
+
   return state.map(anecdote => anecdote.id === id ? newAnecdote : anecdote)
 }
 

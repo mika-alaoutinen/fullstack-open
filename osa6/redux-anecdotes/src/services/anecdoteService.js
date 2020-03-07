@@ -12,4 +12,9 @@ const create = anecdote =>
     .then(response => response.data)
     .catch(error => console.error(error))
 
-export default { getAll, create }
+const update = (id, anecdote) =>
+  axios.put(url + '/' + id, anecdote)
+    .then(response => response.data)
+    .catch(error => console.error(error))
+
+export default { getAll, create, update }
