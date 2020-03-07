@@ -1,23 +1,22 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { resetNotification } from '../reducers/notificationReducer'
 
-const Notification = ({ notification }) => {
+const Notification = ({ notification, resetNotification }) => {
+  const { content, timer } = notification
+  const timeout = timer * 1000 // convert milliseconds => seconds
   
   const style = {
-    display: notification.content ? '' : 'none',
+    display: content ? '' : 'none',
     border: 'solid',
     padding: 10,
     borderWidth: 1
   }
 
   const renderNotification = () => {
-    if (notification.content !== undefined && notification.content.length > 0) {
-      if (notification.reason === 'vote') {
-        return `you voted '${notification.content}'`
-      }
-      if (notification.reason === 'new') {
-        return `new notification '${notification.content}'`
-      }  
+    if (content !== undefined && content.length > 0) {
+      resetNotification(timeout)
+      return content
     }
   }
 
@@ -32,4 +31,6 @@ const mapStateToProps = state => ({
   notification: state.notification
 })
 
-export default connect(mapStateToProps)(Notification)
+export default connect(
+  mapStateToProps, { resetNotification })
+  (Notification)
