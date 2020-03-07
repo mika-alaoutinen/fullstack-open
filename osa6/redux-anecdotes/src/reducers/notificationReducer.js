@@ -20,15 +20,10 @@ export const setNotification = (content, timer) => async dispatch => {
 }
 
 export const resetNotification = timeout => async dispatch => {
-  setTimeout(() => {
-    dispatch({
-      type: 'RESET_NOTIFICATION',
-      notification: {
-        content: '',
-        timer: 0
-      }
-    })
-  }, timeout);
+  setTimeout(() => dispatch({
+    type: 'RESET_NOTIFICATION',
+    notification: ''
+  }), timeout);
 }
 
 export default notificationReducer
