@@ -6,9 +6,9 @@ import { resetNotification, voteNotification } from '../reducers/notificationRed
 
 const AnecdoteList = ({ visibleAnecdotes, addVote, resetNotification, voteNotification }) => {
 
-  const vote = (id, content) => () => {
-    addVote(id)
-    voteNotification(content)
+  const vote = anecdote => () => {
+    addVote(anecdote)
+    voteNotification(anecdote.content)
     setTimeout(() => { resetNotification()}, 5000);
   }
 
@@ -18,7 +18,7 @@ const AnecdoteList = ({ visibleAnecdotes, addVote, resetNotification, voteNotifi
         <Anecdote
           key={anecdote.id}
           anecdote={anecdote}
-          clickHandler={vote(anecdote.id, anecdote.content)}
+          clickHandler={vote(anecdote)}
         />
       )}
     </div>
