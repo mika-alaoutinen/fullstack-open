@@ -1,3 +1,5 @@
+import noteService from '../services/noteService'
+
 const noteReducer = (state = [], action) => {
   switch (action.type) {
     case 'INIT_NOTES':
@@ -12,15 +14,21 @@ const noteReducer = (state = [], action) => {
 }
 
 // Redux actions:
-export const initializeNotes = notes => ({
-  type: 'INIT_NOTES',
-  data: notes,
-})
+export const initializeNotes = () => async dispatch => {
+  const notes = await noteService.getAll()
+  dispatch({
+    type: 'INIT_NOTES',
+    data: notes,
+  })
+}
 
-export const createNote = data => ({
-  type: 'NEW_NOTE',
-  data
-})
+export const createNote = content => async dispatch => {
+  const note = await noteService.createNew(content)
+  dispatch({
+    type: 'NEW_NOTE',
+    data: note
+  })
+}
 
 export const toggleImportanceOf = id => ({
   type: 'TOGGLE_IMPORTANCE',
