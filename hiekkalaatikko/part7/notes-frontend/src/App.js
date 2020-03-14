@@ -4,6 +4,7 @@ import Footer from "./components/Footer"
 import Home from "./components/Home"
 import LoginForm from "./components/LoginForm"
 import NoteForm from "./components/NoteForm"
+import Note from "./components/Note"
 import Notes from "./components/Notes"
 import Notification from "./components/Notification"
 import Users from "./components/Users"
@@ -41,8 +42,9 @@ const App = () => {
     window.location.reload()
   }
 
-  const noteFormRef = React.createRef()
+  const noteById = id => notes.find(note => note.id === id)
 
+  const noteFormRef = React.createRef()
   const padding = { padding: 5 }
 
   return (
@@ -57,14 +59,14 @@ const App = () => {
           </div>
           <Route exact path="/" render={() => <Home />} />
 
-          <Route path="/notes" render={() =>
-            <Notes
-              notes={notes} setNotes={setNotes}
-              showAll={showAll} setShowAll={setShowAll}
-              setErrorMessage={setErrorMessage}
-            />}
+          <Route exact path="/notes" render={() =>
+            <Notes notes={notes} showAll={showAll} setShowAll={setShowAll} />}
           />
-          
+
+          <Route exact path="/notes/:id" render={({ match }) =>
+            <Note note={noteById(match.params.id)} />}
+          />
+
           <Route path="/users" render={() => <Users />} />
         </div>
       </Router>
