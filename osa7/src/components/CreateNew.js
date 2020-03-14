@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
 
-const CreateNew = (props) => {
+const CreateNew = ({ anecdotes, setAnecdotes }) => {
   const [author, setAuthor] = useState('')
   const [content, setContent] = useState('')
   const [info, setInfo] = useState('')
   const [notification, setNotification] = useState('')
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    props.addNew({
-      content,
-      author,
-      info,
-      votes: 0
-    })
+  const addNew = anecdote => {
+    anecdote.id = (Math.random() * 10000).toFixed(0)
+    setAnecdotes(anecdotes.concat(anecdote))
+  }
+
+  const handleSubmit = event => {
+    event.preventDefault()
+    addNew({ content, author, info, votes: 0 })
   }
 
   return (

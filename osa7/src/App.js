@@ -23,11 +23,6 @@ const App = () => {
     }
   ])
 
-  const addNew = (anecdote) => {
-    anecdote.id = (Math.random() * 10000).toFixed(0)
-    setAnecdotes(anecdotes.concat(anecdote))
-  }
-
   const anecdoteById = (id) =>
     anecdotes.find(a => a.id === id)
 
@@ -48,7 +43,7 @@ const App = () => {
       <Menu />
       <AnecdoteList anecdotes={anecdotes} />
       <About />
-      <CreateNew addNew={addNew} />
+      <CreateNew anecdotes={anecdotes} setAnecdotes={setAnecdotes} />
       <Footer />
     </div>
   )
