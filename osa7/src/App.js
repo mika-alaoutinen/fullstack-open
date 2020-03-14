@@ -1,7 +1,4 @@
 import React, { useState } from 'react'
-import About from './components/About'
-import AnecdoteList from './components/AnecdoteList'
-import CreateNew from './components/CreateNew'
 import Footer from './components/Footer'
 import Menu from './components/Menu'
 
@@ -40,10 +37,7 @@ const App = () => {
   return (
     <div>
       <h1>Software anecdotes</h1>
-      <Menu />
-      <AnecdoteList anecdotes={anecdotes} />
-      <About />
-      <CreateNew anecdotes={anecdotes} setAnecdotes={setAnecdotes} />
+      <Menu anecdotes={anecdotes} setAnecdotes={setAnecdotes} />
       <Footer />
     </div>
   )
