@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import Footer from "./components/Footer";
-import LoginForm from "./components/LoginForm";
+import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
+import Footer from "./components/Footer"
+import Home from "./components/Home"
+import LoginForm from "./components/LoginForm"
 import Note from './components/Note'
-import NoteForm from "./components/NoteForm";
-import Notification from "./components/Notification";
-import Toggleable from "./components/Toggleable";
+import NoteForm from "./components/NoteForm"
+import Notes from "./components/Notes"
+import Notification from "./components/Notification"
+import Users from "./components/Users"
+import Toggleable from "./components/Toggleable"
 import noteService from './services/noteService'
 
 const App = () => {
@@ -66,40 +70,58 @@ const App = () => {
 
   const noteFormRef = React.createRef()
 
+  const padding = { padding: 5 }
+
   return (
+    // Router-navigation:
     <div>
-      <h1>Notes</h1>
-      <Notification message={errorMessage} />
-
-      {user === null
-        ? <LoginForm
-            username={username} setUsername={setUsername}
-            password={password} setPassword={setPassword}
-            setUser={setUser} setErrorMessage={setErrorMessage}
-          />
-        : <div>
-            <p>{user.name} logged in</p>
-            <button onClick={() => logout()}>log out</button>
-
-            <Toggleable buttonLabel='new note' ref={noteFormRef}>
-              <NoteForm
-                notes={notes} setNotes={setNotes}
-                newNote={newNote} setNewNote={setNewNote}
-                noteFormRef={noteFormRef}
-              />
-            </Toggleable>
+      <Router>
+        <div>
+          <div>
+            <Link style={padding} to="/">home</Link>
+            <Link style={padding} to="/notes">notes</Link>
+            <Link style={padding} to="/users">users</Link>
           </div>
-      }
+          <Route exact path="/" render={() => <Home />} />
+          <Route path="/notes" render={() => <Notes />} />
+          <Route path="/users" render={() => <Users />} />
+        </div>
+      </Router>
 
       <div>
-        <button onClick={() => setShowAll(!showAll)}>
-          show {showAll ? "important" : "all" }
-        </button>
+        <h1>Notes</h1>
+        <Notification message={errorMessage} />
+
+        {user === null
+          ? <LoginForm
+              username={username} setUsername={setUsername}
+              password={password} setPassword={setPassword}
+              setUser={setUser} setErrorMessage={setErrorMessage}
+            />
+          : <div>
+              <p>{user.name} logged in</p>
+              <button onClick={() => logout()}>log out</button>
+
+              <Toggleable buttonLabel='new note' ref={noteFormRef}>
+                <NoteForm
+                  notes={notes} setNotes={setNotes}
+                  newNote={newNote} setNewNote={setNewNote}
+                  noteFormRef={noteFormRef}
+                />
+              </Toggleable>
+            </div>
+        }
+
+        <div>
+          <button onClick={() => setShowAll(!showAll)}>
+            show {showAll ? "important" : "all" }
+          </button>
+        </div>
+
+        <ul>{rows()}</ul>
+
+        <Footer />
       </div>
-
-      <ul>{rows()}</ul>
-
-      <Footer />
     </div>
   )
 }
