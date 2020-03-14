@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
+import { withRouter } from 'react-router-dom'
 
-const CreateNew = ({ anecdotes, setAnecdotes }) => {
+const CreateNew = ({ anecdotes, setAnecdotes, setNotification, history }) => {
   const [author, setAuthor] = useState('')
   const [content, setContent] = useState('')
   const [info, setInfo] = useState('')
-  const [notification, setNotification] = useState('')
 
   const addNew = anecdote => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
@@ -14,6 +14,8 @@ const CreateNew = ({ anecdotes, setAnecdotes }) => {
   const handleSubmit = event => {
     event.preventDefault()
     addNew({ content, author, info, votes: 0 })
+    setNotification(content)
+    history.push('/')
   }
 
   return (
@@ -36,7 +38,6 @@ const CreateNew = ({ anecdotes, setAnecdotes }) => {
       </form>
     </div>
   )
-
 }
 
-export default CreateNew
+export default withRouter(CreateNew)
