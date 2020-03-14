@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import initialAnecdotes from './data'
+import initialAnecdotes from './initialAnecdotes'
 import Footer from './components/Footer'
 import Menu from './components/Menu'
 
