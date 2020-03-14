@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-import { initialAnecdotes } from './initialAnecdotes'
+import initialAnecdotes from './data'
 import Footer from './components/Footer'
 import Menu from './components/Menu'
-
-console.log(initialAnecdotes);
 
 const App = () => {
   const [anecdotes, setAnecdotes] = useState(initialAnecdotes)
