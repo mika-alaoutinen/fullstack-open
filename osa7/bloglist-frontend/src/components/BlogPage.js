@@ -17,12 +17,12 @@ const BlogPage = ({ username, blogs, setBlogs, message, setMessage, error, setEr
       <h2>blogs</h2>
       <Notification message={message} error={error} />
 
+      <p>{username.value} logged in</p>
       <p>
-        {username.value} logged in
         <button onClick={logout()}>logout</button>
       </p>
 
-      <Toggleable buttonLabel='new note' >
+      <Toggleable buttonLabel='create new' >
         <BlogForm
           blogs={blogs} setBlogs={setBlogs}
           setMessage={setMessage}
