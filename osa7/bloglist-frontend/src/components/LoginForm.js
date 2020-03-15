@@ -1,11 +1,13 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
 import Notification from './Notification'
 import blogService from '../services/blogService'
 import loginService from '../services/loginService'
-import noticeService from '../services/noticeService'
+import { setError } from '../reducers/notificationReducer'
 
-const LoginForm = ({ username, password, setUser, message, setMessage, error, setError }) => {
+const LoginForm = ({ username, password, setUser }) => {
+  const dispatch = useDispatch()
   
   const handleLogin = async event => {
     event.preventDefault()
@@ -16,13 +18,13 @@ const LoginForm = ({ username, password, setUser, message, setMessage, error, se
         blogService.setToken(user.token)
         setUser(user)
       })
-      .catch(() => noticeService.showError('wrong username or password', setMessage, setError))
+      .catch(() => dispatch(setError('wrong username or password')))
   }
 
   return (
     <div className='loginPage'>
       <h1>log in to application</h1>
-      <Notification message={message} error={error} />
+      <Notification />
 
       <form onSubmit={handleLogin}>
         <div>username
@@ -43,10 +45,6 @@ LoginForm.propTypes = {
   username: PropTypes.object.isRequired,
   password: PropTypes.object.isRequired,
   setUser: PropTypes.func.isRequired,
-  message: PropTypes.string,
-  setMessage: PropTypes.func.isRequired,
-  error: PropTypes.bool.isRequired,
-  setError: PropTypes.func.isRequired,
 }
 
 export default LoginForm

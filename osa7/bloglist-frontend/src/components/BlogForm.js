@@ -1,6 +1,5 @@
 import React from 'react'
 import blogService from '../services/blogService'
-import noticeService from '../services/noticeService'
 import { useField } from '../hooks/index'
 
 const BlogForm = ({ blogs, setBlogs, setMessage, setError }) => {
@@ -28,10 +27,10 @@ const BlogForm = ({ blogs, setBlogs, setMessage, setError }) => {
     blogService.addBlog(newBlog)
       .then(blog => {
         setBlogs(blogs.concat(blog))
-        noticeService.showMessage(`a new blog ${title.value} by ${author.value} added`, setMessage)
+        // TODO: notification message: `a new blog ${title.value} by ${author.value} added`
         resetForm()
       })
-      .catch(() => noticeService.showError('error adding blog', setMessage, setError))
+      .catch(() => console.log('error adding blog'))
   }
 
   return (

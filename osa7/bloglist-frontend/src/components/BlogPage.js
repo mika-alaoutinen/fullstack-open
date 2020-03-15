@@ -5,7 +5,7 @@ import BlogList from './BlogList'
 import Notification from './Notification'
 import Toggleable from './Toggleable'
 
-const BlogPage = ({ username, blogs, setBlogs, message, setMessage, error, setError }) => {
+const BlogPage = ({ username, blogs, setBlogs, setMessage, setError }) => {
 
   const logout = () => () => {
     window.localStorage.clear()
@@ -15,7 +15,7 @@ const BlogPage = ({ username, blogs, setBlogs, message, setMessage, error, setEr
   return (
     <div className='blogPage'>
       <h2>blogs</h2>
-      <Notification message={message} error={error} />
+      <Notification />
 
       <p>{username.value} logged in</p>
       <p>

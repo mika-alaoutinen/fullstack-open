@@ -1,6 +1,12 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { resetError } from '../reducers/notificationReducer'
 
-const Notification = ({ message, error }) => {
+const Notification = () => {
+  const dispatch = useDispatch()
+  const notification = useSelector(state => state.notification)
+  const { message, error, timeout } = notification
+
   const style = {
     color: error ? 'red' : 'green',
     background: 'lightgrey',
@@ -11,9 +17,14 @@ const Notification = ({ message, error }) => {
     marginBottom: 10,
   }
 
-  return message === null
+  const renderMessage = () => {
+    setTimeout(() => dispatch(resetError()), timeout);
+    return <div style={style}>{message}</div>
+  }
+
+  return message === undefined || message === null
     ? null
-    : <div style={style}>{message}</div>
+    : renderMessage()
 }
 
 export default Notification
