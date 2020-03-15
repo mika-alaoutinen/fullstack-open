@@ -1,10 +1,11 @@
 import React from 'react'
 import loginService from "../services/loginService"
-import Toggleable from "./Toggleable";
 import noteService from "../services/noteService"
+import { Form } from 'react-bootstrap'
+import { Button } from './styles'
 
 const LoginForm = ({
-  username, setUsername, password, setPassword, setUser, setErrorMessage }) => {
+  username, setUsername, password, setPassword, setUser, setErrorMessage, setMessage }) => {
 
   const handleLogin = async event => {
     event.preventDefault()
@@ -16,40 +17,42 @@ const LoginForm = ({
       setUser(user)
       setUsername('')
       setPassword('')
-      
+      showLoginMessage()
+
     } catch (exception) {
       setErrorMessage('wrong credentials')
       setTimeout(() => setErrorMessage(null))
     }
   }
 
+  const showLoginMessage = () => {
+    setMessage(`welcome ${username}`)
+    setTimeout(() => setMessage(null), 5000)
+  }
+
   return (
     <div>
       <h2>login</h2>
-      
-      <Toggleable buttonLabel='open login'>
-        <form onSubmit={handleLogin}>
-          <div>username
-            <input
-              type="text"
-              value={username}
-              name="Username"
-              onChange={({ target }) => setUsername(target.value)}
-            />
-          </div>
+      <Form onSubmit={handleLogin}>
+        <Form.Group>
 
-          <div>password
-            <input
-              type="password"
-              value={password}
-              name="Password"
-              onChange={({ target }) => setPassword(target.value)}
-            />
-          </div>
+          <Form.Label>username:</Form.Label>
+          <Form.Control
+            type="text"
+            name="username"
+            onChange={({ target }) => setUsername(target.value)}
+          />
 
-          <button type="submit">login</button>
-        </form>
-      </Toggleable>
+          <Form.Label>password:</Form.Label>
+          <Form.Control
+            type="password"
+            onChange={({ target }) => setPassword(target.value)}
+          />
+
+        <Button type="submit" primary=''>login</Button>
+          {/* <Button variant="primary" type="submit">login</Button> */}
+        </Form.Group>
+      </Form>
     </div>
   )
 }
