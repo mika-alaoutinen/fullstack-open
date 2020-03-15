@@ -1,31 +1,32 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Note from './Note'
-import noteService from '../services/noteService'
+import { Table } from 'react-bootstrap'
 
 const Notes = ({ notes, showAll, setShowAll }) => {
 
   const notesToShow = showAll
     ? notes
     : notes.filter(note => note.important)
-  
-  const renderNotes = () =>
-    notesToShow.map(note => 
-      <li key={note.id}>
-        <Link to={`/notes/${note.id}`}>{note.content}</Link>
-      </li>
 
-      // <Note key={note.id} note={note} />
-    )
-  
+  const renderNotes = () => notesToShow.map(note =>
+    <tr key={note.id}>
+      <td>
+        <Link to={`/notes/${note.id}`}>{note.content}</Link>
+      </td>
+      <td>
+        {note.user === undefined || note.user === null ? '-' : note.user.name}
+      </td>
+    </tr>
+  )
+
   return (
     <div>
       <h2>Notes</h2>
-      { renderNotes() }
-
-      <button onClick={() => setShowAll(!showAll)}>
-        show {showAll ? "important" : "all" }
-      </button>
+      <Table striped>
+        <tbody>
+          {renderNotes()}
+        </tbody>
+      </Table>
     </div>
   )
 }
