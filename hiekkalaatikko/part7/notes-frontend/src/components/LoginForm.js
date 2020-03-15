@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import loginService from "../services/loginService"
 import noteService from "../services/noteService"
-import { Form, Button } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
+import { Button } from './styles'
 
 const LoginForm = ({
   username, setUsername, password, setPassword, setUser, setErrorMessage, setMessage }) => {
@@ -48,7 +49,8 @@ const LoginForm = ({
             onChange={({ target }) => setPassword(target.value)}
           />
 
-          <Button variant="primary" type="submit">login</Button>
+        <Button type="submit" primary=''>login</Button>
+          {/* <Button variant="primary" type="submit">login</Button> */}
         </Form.Group>
       </Form>
     </div>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import { Alert, Nav, Navbar } from 'react-bootstrap'
-import Footer from "./components/Footer"
+import { Alert } from 'react-bootstrap'
 import Home from "./components/Home"
 import LoginForm from "./components/LoginForm"
 import NoteForm from "./components/NoteForm"
@@ -11,6 +10,7 @@ import Notification from "./components/Notification"
 import Users from "./components/Users"
 import Toggleable from "./components/Toggleable"
 import noteService from './services/noteService'
+import { Footer } from './components/styles'
 
 const App = () => {
   // State management:
@@ -102,7 +102,9 @@ const App = () => {
           </div>
         }
 
-        <Footer />
+        <Footer>
+          <em>Note app, Department of Computer Science 2020</em>
+        </Footer>
       </div>
     </div>
   )
