@@ -2,9 +2,10 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import blogService from '../services/blogService'
 import { useField } from '../hooks/index'
+import { addBlog } from '../reducers/blogReducer'
 import { setError, setMessage } from '../reducers/notificationReducer'
 
-const BlogForm = ({ blogs, setBlogs }) => {
+const BlogForm = () => {
   const dispatch = useDispatch()
   
   // State management:
@@ -29,7 +30,7 @@ const BlogForm = ({ blogs, setBlogs }) => {
 
     blogService.addBlog(newBlog)
       .then(blog => {
-        setBlogs(blogs.concat(blog))
+        dispatch(addBlog(blog))
         dispatch(setMessage(`a new blog ${blog.title} by ${blog.author} added`))
         resetForm()
       })

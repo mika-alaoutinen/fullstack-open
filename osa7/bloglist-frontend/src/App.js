@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import BlogPage from './components/BlogPage'
 import LoginForm from './components/LoginForm'
 import blogService from './services/blogService'
+import { initBlogs } from './reducers/blogReducer'
 import { useField } from './hooks/index'
 
 const App = () => {
+  const dispatch = useDispatch()
+
   // Custom state management hooks:
-  const { reset: {}, ...username } = useField('text')
-  const { reset: {}, ...password } = useField('password')
+  const { reset: resetUsername, ...username } = useField('text')
+  const { reset: resetPassword, ...password } = useField('password')
 
   // State management:
-  const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
-  const [message, setMessage] = useState(null)
-  const [error, setError] = useState(false)
 
   // Check if user credentials are in local storage:
   useEffect(() => {
@@ -25,6 +26,11 @@ const App = () => {
     }
   }, [])
 
+  // Retrieve all blogs from the server:
+  useEffect(() => {
+    dispatch(initBlogs())
+  }, [])
+
   return (
     <div>
       {user === null
@@ -32,10 +38,8 @@ const App = () => {
           username={username}
           password={password}
           setUser={setUser}
-          message={message} setMessage={setMessage}
-          error={error} setError={setError}
         />
-        : <BlogPage username={username} blogs={blogs} setBlogs={setBlogs} />
+        : <BlogPage username={username} />
       }
     </div>
   )

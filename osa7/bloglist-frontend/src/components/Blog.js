@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import blogService from '../services/blogService'
+import { likeBlog } from '../reducers/blogReducer'
 
-const Blog = ({ blog, blogs, setBlogs }) => {
+const Blog = ({ blog }) => {
+  const dispatch = useDispatch()
 
   // Expand and collapse blog info:
   const [visible, setVisible] = useState(false)
@@ -10,17 +13,7 @@ const Blog = ({ blog, blogs, setBlogs }) => {
   const toggleVisibility = () => setVisible(!visible)
 
   const addLike = () => async () => {
-    const likedBlog = { ...blog }
-    likedBlog.likes += 1
-
-    try {
-      const editedBlog = await blogService.editBlog(likedBlog.id, likedBlog)
-
-      setBlogs(blogs.map(blog =>
-        blog.id === editedBlog.id ? editedBlog : blog))
-    } catch (error) {
-      console.error(error)
-    }
+    dispatch(likeBlog(blog))
   }
 
   const deleteBlog = () => () => {
