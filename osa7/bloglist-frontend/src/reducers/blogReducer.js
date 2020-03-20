@@ -2,6 +2,8 @@ import blogService from '../services/blogService'
 
 const blogReducer = (state = [], action) => {
   switch (action.type) {
+    case 'DELETE_BLOG':
+      return state.filter(blog => blog.id !== action.id)
     case 'INIT_BLOGS':
       return action.blogs
     case 'LIKE':
@@ -12,6 +14,14 @@ const blogReducer = (state = [], action) => {
     default:
       return state
   }
+}
+
+export const deleteBlog = id => async dispatch => {
+  await blogService.deleteBlog(id)
+  dispatch({
+    type: 'DELETE_BLOG',
+    id,
+  })
 }
 
 export const initBlogs = () => async dispatch => {

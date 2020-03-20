@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import blogService from '../services/blogService'
-import { likeBlog } from '../reducers/blogReducer'
+import { likeBlog, deleteBlog } from '../reducers/blogReducer'
 
 const Blog = ({ blog }) => {
   const dispatch = useDispatch()
@@ -12,21 +11,17 @@ const Blog = ({ blog }) => {
   const showWhenVisible = { display: visible ? '' : 'none' }
   const toggleVisibility = () => setVisible(!visible)
 
-  const addLike = () => async () => {
-    dispatch(likeBlog(blog))
-  }
-
-  const deleteBlog = () => () => {
+  const removeBlog = () => () => {
     const confirm = window.confirm(`remove blog ${blog.title} by ${blog.author}?`)
     if (confirm) {
-      blogService.deleteBlog(blog.id)
+      dispatch(deleteBlog(blog.id))
     }
   }
 
   const renderDeleteButton = () => {
     const user = JSON.parse(window.localStorage.getItem('user'))
     return user.username === blog.user.username
-      ? <button onClick={deleteBlog()}>remove</button>
+      ? <button onClick={removeBlog()}>remove</button>
       : null
   }
 
@@ -49,7 +44,7 @@ const Blog = ({ blog }) => {
         <div>{blog.url}</div>
         <div>
           {blog.likes} likes
-          <button onClick={addLike()}>like</button>
+          <button onClick={ () => dispatch(likeBlog(blog)) }>like</button>
         </div>
         <div>added by {blog.user.name}</div>
         {renderDeleteButton()}
