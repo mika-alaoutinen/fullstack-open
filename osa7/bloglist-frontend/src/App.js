@@ -32,7 +32,7 @@ const App = () => {
     <div>
       {user === null
         ? <LoginForm username={username} password={password} />
-        : <BlogPage username={user.username} />
+        : <BlogPage />
       }
     </div>
   )

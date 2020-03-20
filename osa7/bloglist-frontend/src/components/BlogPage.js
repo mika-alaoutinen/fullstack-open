@@ -1,11 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux'
 import BlogForm from './BlogForm'
 import BlogList from './BlogList'
 import Notification from './Notification'
 import Toggleable from './Toggleable'
 
-const BlogPage = ({ username }) => {
+const BlogPage = () => {
+  const username = useSelector(state => state.user.username)
 
   const logout = () => () => {
     window.localStorage.clear()
@@ -29,10 +30,6 @@ const BlogPage = ({ username }) => {
       <BlogList />
     </div>
   )
-}
-
-BlogPage.propTypes = {
-  username: PropTypes.string.isRequired,
 }
 
 export default BlogPage
