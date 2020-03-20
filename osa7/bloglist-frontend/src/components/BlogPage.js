@@ -17,7 +17,7 @@ const BlogPage = ({ username }) => {
       <h2>blogs</h2>
       <Notification />
 
-      <p>{username.value} logged in</p>
+      <p>{username} logged in</p>
       <p>
         <button onClick={logout()}>logout</button>
       </p>
@@ -32,7 +32,7 @@ const BlogPage = ({ username }) => {
 }
 
 BlogPage.propTypes = {
-  username: PropTypes.object.isRequired,
+  username: PropTypes.string.isRequired,
 }
 
 export default BlogPage
