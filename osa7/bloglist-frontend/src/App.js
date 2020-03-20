@@ -35,12 +35,7 @@ const App = () => {
           message={message} setMessage={setMessage}
           error={error} setError={setError}
         />
-        : <BlogPage
-          username={username}
-          blogs={blogs} setBlogs={setBlogs}
-          message={message} setMessage={setMessage}
-          error={error} setError={setError}
-        />
+        : <BlogPage username={username} blogs={blogs} setBlogs={setBlogs} />
       }
     </div>
   )

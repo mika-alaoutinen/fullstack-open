@@ -5,7 +5,7 @@ import BlogList from './BlogList'
 import Notification from './Notification'
 import Toggleable from './Toggleable'
 
-const BlogPage = ({ username, blogs, setBlogs, setMessage, setError }) => {
+const BlogPage = ({ username, blogs, setBlogs }) => {
 
   const logout = () => () => {
     window.localStorage.clear()
@@ -23,11 +23,7 @@ const BlogPage = ({ username, blogs, setBlogs, setMessage, setError }) => {
       </p>
 
       <Toggleable buttonLabel='create new' >
-        <BlogForm
-          blogs={blogs} setBlogs={setBlogs}
-          setMessage={setMessage}
-          setError={setError}
-        />
+        <BlogForm blogs={blogs} setBlogs={setBlogs} />
       </Toggleable>
 
       <BlogList blogs={blogs} setBlogs={setBlogs} />
@@ -39,10 +35,6 @@ BlogPage.propTypes = {
   username: PropTypes.object.isRequired,
   blogs: PropTypes.array.isRequired,
   setBlogs: PropTypes.func.isRequired,
-  message: PropTypes.string,
-  setMessage: PropTypes.func.isRequired,
-  error: PropTypes.bool.isRequired,
-  setError: PropTypes.func.isRequired
 }
 
 export default BlogPage
