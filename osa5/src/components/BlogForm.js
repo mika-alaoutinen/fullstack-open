@@ -6,14 +6,14 @@ import { useField } from '../hooks/index'
 const BlogForm = ({ blogs, setBlogs, setMessage, setError }) => {
 
   // State management:
-  const { reset: {}, ...title } = useField('text')
-  const { reset: {}, ...author} = useField('text')
-  const { reset: {}, ...url } = useField('text')
+  const { reset: resetTitle, ...title } = useField('text')
+  const { reset: resetAuthor, ...author} = useField('text')
+  const { reset: resetUrl, ...url } = useField('text')
 
   const resetForm = () => {
-    title.reset()
-    author.reset()
-    url.reset()
+    resetTitle()
+    resetAuthor()
+    resetUrl()
   }
 
   const newBlog = () => event => {

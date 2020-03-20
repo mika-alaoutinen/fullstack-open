@@ -1,18 +1,21 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import blogService from '../services/blogService'
 import { useField } from '../hooks/index'
+import { setError, setMessage } from '../reducers/notificationReducer'
 
-const BlogForm = ({ blogs, setBlogs, setMessage, setError }) => {
-
+const BlogForm = ({ blogs, setBlogs }) => {
+  const dispatch = useDispatch()
+  
   // State management:
-  const { reset: {}, ...title } = useField('text')
-  const { reset: {}, ...author} = useField('text')
-  const { reset: {}, ...url } = useField('text')
+  const { reset: resetTitle, ...title } = useField('text')
+  const { reset: resetAuthor, ...author} = useField('text')
+  const { reset: resetUrl, ...url } = useField('text')
 
   const resetForm = () => {
-    title.reset()
-    author.reset()
-    url.reset()
+    resetTitle()
+    resetAuthor()
+    resetUrl()
   }
 
   const newBlog = () => event => {
@@ -27,10 +30,10 @@ const BlogForm = ({ blogs, setBlogs, setMessage, setError }) => {
     blogService.addBlog(newBlog)
       .then(blog => {
         setBlogs(blogs.concat(blog))
-        // TODO: notification message: `a new blog ${title.value} by ${author.value} added`
+        dispatch(setMessage(`a new blog ${blog.title} by ${blog.author} added`))
         resetForm()
       })
-      .catch(() => console.log('error adding blog'))
+      .catch(() => dispatch(setError('error adding blog')))
   }
 
   return (
