@@ -1,4 +1,5 @@
 import blogService from '../services/blogService'
+import { setError, setMessage } from './notificationReducer'
 
 const blogReducer = (state = [], action) => {
   switch (action.type) {
@@ -46,11 +47,19 @@ export const likeBlog = blog => async dispatch => {
 }
 
 export const addBlog = blog => async dispatch => {
-  const newBlog = await blogService.addBlog(blog)
-  dispatch({
-    type: 'NEW_BLOG',
-    blog: newBlog
-  })
+  try {
+    const newBlog = await blogService.addBlog(blog)
+
+    dispatch({
+      type: 'NEW_BLOG',
+      blog: newBlog
+    })
+    
+    dispatch(setMessage(`a new blog ${newBlog.title} by ${newBlog.author} added`))
+
+  } catch (error) {
+    dispatch(setError('Failed to add new blog'))
+  }
 }
 
 export default blogReducer

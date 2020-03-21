@@ -1,9 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import blogService from '../../services/blogService'
 import { useField } from '../../hooks/index'
 import { addBlog } from '../../reducers/blogReducer'
-import { setError, setMessage } from '../../reducers/notificationReducer'
 
 const BlogForm = () => {
   const dispatch = useDispatch()
@@ -28,13 +26,8 @@ const BlogForm = () => {
       url: url.value,
     }
 
-    blogService.addBlog(newBlog)
-      .then(blog => {
-        dispatch(addBlog(blog))
-        dispatch(setMessage(`a new blog ${blog.title} by ${blog.author} added`))
-        resetForm()
-      })
-      .catch(() => dispatch(setError('error adding blog')))
+    dispatch(addBlog(newBlog))
+    resetForm()
   }
 
   return (
