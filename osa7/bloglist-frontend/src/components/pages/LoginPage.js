@@ -4,7 +4,7 @@ import Notification from '../common/Notification'
 import { useField } from '../../hooks/index'
 import { userLogin } from '../../reducers/userReducer'
 
-const LoginForm = () => {
+const LoginPage = () => {
   const dispatch = useDispatch()
 
   // Custom hooks to manage login input state:
@@ -36,4 +36,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default LoginPage
