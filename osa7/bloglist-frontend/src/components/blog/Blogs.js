@@ -1,6 +1,6 @@
 import React from 'react'
-import BlogForm from '../blog/BlogForm'
-import BlogList from '../blog/BlogList'
+import BlogForm from './BlogForm'
+import BlogList from './BlogList'
 import Notification from '../common/Notification'
 import Toggleable from '../common/Toggleable'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import Notification from '../common/Notification'
+import Notification from './Notification'
 import { useField } from '../../hooks/index'
 import { userLogin } from '../../reducers/loginReducer'
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import LoginPage from './components/pages/LoginPage'
+import Login from './components/common/Login'
 import Routes from './router/Routes'
 import { initBlogs } from './reducers/blogReducer'
 import { initUsers } from './reducers/userReducer'
@@ -25,7 +25,7 @@ const App = () => {
   }
 
   return user === null
-    ? <LoginPage />
+    ? <Login />
     : <Routes />
 }
 
