@@ -1,9 +1,9 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import BlogForm from './BlogForm'
-import BlogList from './BlogList'
-import Notification from './Notification'
-import Toggleable from './Toggleable'
+import BlogForm from '../blog/BlogForm'
+import BlogList from '../blog/BlogList'
+import Notification from '../common/Notification'
+import Toggleable from '../common/Toggleable'
 
 const BlogPage = () => {
   const username = useSelector(state => state.user.username)

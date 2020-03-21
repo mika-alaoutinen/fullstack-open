@@ -1,9 +1,9 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import blogService from '../services/blogService'
-import { useField } from '../hooks/index'
-import { addBlog } from '../reducers/blogReducer'
-import { setError, setMessage } from '../reducers/notificationReducer'
+import blogService from '../../services/blogService'
+import { useField } from '../../hooks/index'
+import { addBlog } from '../../reducers/blogReducer'
+import { setError, setMessage } from '../../reducers/notificationReducer'
 
 const BlogForm = () => {
   const dispatch = useDispatch()
