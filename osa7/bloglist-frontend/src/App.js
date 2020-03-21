@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import LoginPage from './components/pages/LoginPage'
 import Routes from './router/Routes'
 import { initBlogs } from './reducers/blogReducer'
-import { setUser } from './reducers/userReducer'
+import { initUsers } from './reducers/userReducer'
+import { setUser } from './reducers/loginReducer'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -12,6 +13,7 @@ const App = () => {
   useEffect(() => {
     checkLoggedUser()       // Check if user credentials are in local storage:
     dispatch(initBlogs())   // Retrieve all blogs from the server
+    dispatch(initUsers())   // Retrieve all users from the server
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const checkLoggedUser = () => {
