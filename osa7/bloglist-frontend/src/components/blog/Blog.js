@@ -1,20 +1,26 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, useParams } from 'react-router-dom'
 import { likeBlog, deleteBlog } from '../../reducers/blogReducer'
 
-const Blog = ({ blog }) => {
-  const dispatch = useDispatch()
+const Blog = () => {
+  const id = useParams().id
+  const blogs = useSelector(state => state.blogs)
+  const blog = blogs.find(blog => blog.id === id)
 
-  // Expand and collapse blog info:
-  const [visible, setVisible] = useState(false)
-  const hideWhenVisible = { display: visible ? 'none' : '' }
-  const showWhenVisible = { display: visible ? '' : 'none' }
-  const toggleVisibility = () => setVisible(!visible)
+  const dispatch = useDispatch()
+  const history = useHistory()
+
+  // click handlers:
+  const addLike = () => () => {
+    dispatch(likeBlog(blog))
+  }
 
   const removeBlog = () => () => {
     const confirm = window.confirm(`remove blog ${blog.title} by ${blog.author}?`)
     if (confirm) {
       dispatch(deleteBlog(blog.id))
+      history.push('/')
     }
   }
 
@@ -28,30 +34,26 @@ const Blog = ({ blog }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
     marginBottom: 5
   }
 
-  return (
-    <div style={blogStyle} className='blog'>
-      <div onClick={toggleVisibility} style={hideWhenVisible} className='blogHeader'>
-        {blog.title} {blog.author}
+  const renderBlog = () =>
+    <div style={blogStyle}>
+      <h2>{blog.title} {blog.author}</h2>
+
+      <div>{blog.url}</div>
+
+      <div>
+        {blog.likes} likes
+        <button onClick={addLike()}>like</button>
       </div>
 
-      <div onClick={toggleVisibility} style={showWhenVisible} className='blogBody'>
-        <div>{blog.title} {blog.author}</div>
-        <div>{blog.url}</div>
-        <div>
-          {blog.likes} likes
-          <button onClick={ () => dispatch(likeBlog(blog)) }>like</button>
-        </div>
-        <div>added by {blog.user.name}</div>
-        {renderDeleteButton()}
-      </div>
+      <div>added by {blog.user.name}</div>
 
+      {renderDeleteButton()}
     </div>
-  )
+
+  return blog ? renderBlog() : null
 }
 
 export default Blog

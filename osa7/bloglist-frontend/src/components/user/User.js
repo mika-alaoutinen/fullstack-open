@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
-const UserPage = () => {
+const User = () => {
   const id = useParams().id
   const users = useSelector(state => state.users)
   const user = users.find(user => user.id === id)
@@ -22,4 +22,4 @@ const UserPage = () => {
   return user ? renderUser() : null
 }
 
-export default UserPage
+export default User
