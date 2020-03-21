@@ -1,33 +1,28 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import Routes from '../../router/Routes'
 
 const NavigationMenu = () => {
-
-  // Navigation menu styling:
-  const navBar = {
-    backgroundColor: 'lightgrey',
-    padding: 5,
-  }
-
+  const user = useSelector(state => state.user)
+  
   const logout = () => () => {
     window.localStorage.clear()
     window.location.reload()
   }
   
-  const user = useSelector(state => state.user)
+  return (
+    <nav>
+      <Link style={{ paddingRight: 5 }} to='/'>home</Link>
+      <Link style={{ paddingRight: 5 }} to='/blogs'>blogs</Link>
+      <Link style={{ paddingRight: 5 }} to='/users'>users</Link>
 
-  const renderNavigationMenu = () =>
-    <div style={navBar} className='navigationMenu'>
-      <Routes />
-      {user.username} logged in
+      {user && <>{user.username} logged in</>}
 
       <button onClick={logout()} style={{ marginLeft: 10 }}>
         logout
       </button>
-    </div>
-
-  return user ? renderNavigationMenu() : null
+    </nav>
+  )
 }
 
 export default NavigationMenu

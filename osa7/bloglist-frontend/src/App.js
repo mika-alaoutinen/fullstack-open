@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import BlogPage from './components/pages/BlogPage'
 import LoginPage from './components/pages/LoginPage'
-import NavigationMenu from './components/common/NavigationMenu'
+import Routes from './router/Routes'
 import { initBlogs } from './reducers/blogReducer'
 import { setUser } from './reducers/userReducer'
 
@@ -23,16 +22,9 @@ const App = () => {
     }
   }
 
-  return (
-    <div>
-      <NavigationMenu />
-      
-      {user === null
-        ? <LoginPage />
-        : <BlogPage />
-      }
-    </div>
-  )
+  return user === null
+    ? <LoginPage />
+    : <Routes />
 }
 
 export default App

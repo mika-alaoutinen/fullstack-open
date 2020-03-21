@@ -1,26 +1,27 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import BlogPage from '../components/pages/BlogPage'
+import NavigationMenu from '../components/common/NavigationMenu'
 import UsersPage from '../components/pages/UsersPage'
 
-const Routes = () => (
-  <Router>
-    <div style={{ display: 'inline' }}>
-      <Link style={{ paddingRight: 5 }} to='/'>home</Link>
-      <Link style={{ paddingRight: 5 }} to='/blogs'>blogs</Link>
-      <Link style={{ paddingRight: 5 }} to='/users'>users</Link>
-    </div>
+const Routes = () => {
+  const navBar = {
+    backgroundColor: 'lightgrey',
+    padding: 10,
+  }
 
-    <Switch>
-      <Route exact path='/blogs' render={() =>
-        <BlogPage />}
-      />
+  return (
+    <Router>
+      <div style={navBar}>
+        <NavigationMenu />
+      </div>
 
-      <Route exact path='/users' render={() =>
-        <UsersPage />}
-      />
-    </Switch>
-  </Router>
-)
+      <Switch>
+        <Route path='/blogs' component={BlogPage} />
+        <Route path='/users' component={UsersPage} />
+      </Switch>
+    </Router>
+  )
+}
 
 export default Routes
