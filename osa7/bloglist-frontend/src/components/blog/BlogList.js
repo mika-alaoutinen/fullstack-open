@@ -18,8 +18,8 @@ const BlogList = () => {
       .map(addLink)
 
   const addLink = blog =>
-    <div style={style}>
-      <Link key={blog.id} to={`/blogs/${blog.id}`}>
+    <div key={blog.id} style={style}>
+      <Link to={`/blogs/${blog.id}`}>
         {blog.title}
       </Link>
     </div>
