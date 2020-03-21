@@ -18,7 +18,7 @@ const Notification = () => {
   }
 
   const renderMessage = () => {
-    setTimeout(() => dispatch(resetError()), timeout);
+    setTimeout(() => dispatch(resetError()), timeout)
     return <div style={style}>{message}</div>
   }
 

@@ -2,17 +2,17 @@ import blogService from '../services/blogService'
 
 const blogReducer = (state = [], action) => {
   switch (action.type) {
-    case 'DELETE_BLOG':
-      return state.filter(blog => blog.id !== action.id)
-    case 'INIT_BLOGS':
-      return action.blogs
-    case 'LIKE':
-      return state.map(blog =>
-        blog.id === action.blog.id ? action.blog : blog)
-    case 'NEW_BLOG':
-      return [ ...state, action.blog ]
-    default:
-      return state
+  case 'DELETE_BLOG':
+    return state.filter(blog => blog.id !== action.id)
+  case 'INIT_BLOGS':
+    return action.blogs
+  case 'LIKE':
+    return state.map(blog =>
+      blog.id === action.blog.id ? action.blog : blog)
+  case 'NEW_BLOG':
+    return [ ...state, action.blog ]
+  default:
+    return state
   }
 }
 

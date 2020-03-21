@@ -7,10 +7,10 @@ import { setError, setMessage } from '../reducers/notificationReducer'
 
 const BlogForm = () => {
   const dispatch = useDispatch()
-  
+
   // State management for the form fields:
   const { reset: resetTitle, ...title } = useField('text')
-  const { reset: resetAuthor, ...author} = useField('text')
+  const { reset: resetAuthor, ...author } = useField('text')
   const { reset: resetUrl, ...url } = useField('text')
 
   const resetForm = () => {

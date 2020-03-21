@@ -6,11 +6,11 @@ import { userLogin } from '../reducers/userReducer'
 
 const LoginForm = () => {
   const dispatch = useDispatch()
-  
+
   // Custom hooks to manage login input state:
   const { reset: resetUsername, ...username } = useField('text')
   const { reset: resetPassword, ...password } = useField('password')
-  
+
   const handleLogin = event => {
     event.preventDefault()
     dispatch(userLogin(username, password))

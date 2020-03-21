@@ -12,14 +12,14 @@ const App = () => {
   useEffect(() => {
     checkLoggedUser()       // Check if user credentials are in local storage:
     dispatch(initBlogs())   // Retrieve all blogs from the server
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps  
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const checkLoggedUser = () => {
     const loggedUser = window.localStorage.getItem('user')
     if (loggedUser) {
       const user = JSON.parse(loggedUser)
       dispatch(setUser(user))
-    }    
+    }
   }
 
   return (
