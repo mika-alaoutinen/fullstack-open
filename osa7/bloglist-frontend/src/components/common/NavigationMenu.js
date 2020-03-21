@@ -4,12 +4,12 @@ import { useSelector } from 'react-redux'
 
 const NavigationMenu = () => {
   const user = useSelector(state => state.user)
-  
+
   const logout = () => () => {
     window.localStorage.clear()
     window.location.reload()
   }
-  
+
   return (
     <nav>
       <Link style={{ paddingRight: 5 }} to='/'>home</Link>

@@ -6,7 +6,7 @@ const User = () => {
   const id = useParams().id
   const users = useSelector(state => state.users)
   const user = users.find(user => user.id === id)
-  
+
   const renderUser = () => (
     <div>
       <h2>{user.name}</h2>
@@ -14,7 +14,7 @@ const User = () => {
       <ul>{renderBlogs()}</ul>
     </div>
   )
-  
+
   const renderBlogs = () => user.blogs.map(blog =>
     <li key={blog.id}>{blog.title}</li>
   )

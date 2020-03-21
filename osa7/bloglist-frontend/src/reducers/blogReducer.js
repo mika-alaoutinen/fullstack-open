@@ -54,7 +54,7 @@ export const addBlog = blog => async dispatch => {
       type: 'NEW_BLOG',
       blog: newBlog
     })
-    
+
     dispatch(setMessage(`a new blog ${newBlog.title} by ${newBlog.author} added`))
 
   } catch (error) {

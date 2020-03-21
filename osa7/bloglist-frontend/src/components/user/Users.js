@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 const UsersPage = () => {
   const users = useSelector(state => state.users)
-  
+
   const renderTableBody = () => users.map(user =>
     <tr key={user.id}>
       <td>
