@@ -10,8 +10,13 @@ const NavigationMenu = () => {
     window.location.reload()
   }
 
+  const navBar = {
+    backgroundColor: 'lightgrey',
+    padding: 10,
+  }
+
   return (
-    <nav>
+    <nav style={navBar}>
       <Link style={{ paddingRight: 5 }} to='/'>home</Link>
       <Link style={{ paddingRight: 5 }} to='/blogs'>blogs</Link>
       <Link style={{ paddingRight: 5 }} to='/users'>users</Link>
