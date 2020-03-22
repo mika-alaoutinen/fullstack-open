@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
+import BlogComments from './BlogComments'
 import { likeBlog, deleteBlog } from '../../reducers/blogReducer'
 
 const Blog = () => {
@@ -31,11 +32,6 @@ const Blog = () => {
       : null
   }
 
-  const renderComments = () =>
-    blog.comments.map(comment =>
-      <li key={comment}>{comment}</li>
-    )
-
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -57,8 +53,7 @@ const Blog = () => {
 
       {renderDeleteButton()}
 
-      <h3>comments</h3>
-      <ul>{renderComments()}</ul>
+      <BlogComments blog={blog} />
     </div>
 
   return blog ? renderBlog() : null

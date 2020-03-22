@@ -29,4 +29,11 @@ const deleteBlog = id =>
   axios.delete(baseUrl + '/' + id, createHeader())
     .catch(error => console.error(error))
 
-export default { getAll, addBlog, editBlog, deleteBlog, setToken }
+const addComment = (id, comment) =>
+  axios.post(`${baseUrl}/${id}/comments`, comment, createHeader())
+    .then(response => response.data)
+    .catch(error => console.error(error))
+
+export default {
+  getAll, addBlog, editBlog, deleteBlog, addComment, setToken
+}

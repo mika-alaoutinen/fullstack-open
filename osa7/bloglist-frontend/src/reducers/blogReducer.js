@@ -3,18 +3,27 @@ import { setError, setMessage } from './notificationReducer'
 
 const blogReducer = (state = [], action) => {
   switch (action.type) {
+  case 'ADD_COMMENT':
+    return mapBlogs(state, action)
   case 'DELETE_BLOG':
     return state.filter(blog => blog.id !== action.id)
   case 'INIT_BLOGS':
     return action.blogs
   case 'LIKE':
-    return state.map(blog =>
-      blog.id === action.blog.id ? action.blog : blog)
+    return mapBlogs(state, action)
   case 'NEW_BLOG':
     return [ ...state, action.blog ]
   default:
     return state
   }
+}
+
+export const addComment = (id, comment) => async dispatch => {
+  const updatedBlog = await blogService.addComment(id, comment)
+  dispatch({
+    type: 'ADD_COMMENT',
+    blog: updatedBlog
+  })
 }
 
 export const deleteBlog = id => async dispatch => {
@@ -61,5 +70,12 @@ export const addBlog = blog => async dispatch => {
     dispatch(setError('Failed to add new blog'))
   }
 }
+
+// Utility function for returning updated blogs:
+const mapBlogs = (state, action) =>
+  state.map(blog => blog.id === action.blog.id
+    ? action.blog
+    : blog
+  )
 
 export default blogReducer
