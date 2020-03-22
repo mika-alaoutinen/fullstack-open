@@ -3,35 +3,19 @@ import { setError, setMessage } from './notificationReducer'
 
 const blogReducer = (state = [], action) => {
   switch (action.type) {
-  case 'ADD_COMMENT':
-    return mapBlogs(state, action)
-  case 'DELETE_BLOG':
-    return state.filter(blog => blog.id !== action.id)
   case 'INIT_BLOGS':
     return action.blogs
-  case 'LIKE':
-    return mapBlogs(state, action)
   case 'NEW_BLOG':
     return [ ...state, action.blog ]
+  case 'DELETE_BLOG':
+    return state.filter(blog => blog.id !== action.id)
+  case 'LIKE':
+    return mapBlogs(state, action)
+  case 'ADD_COMMENT':
+    return mapBlogs(state, action)
   default:
     return state
   }
-}
-
-export const addComment = (id, comment) => async dispatch => {
-  const updatedBlog = await blogService.addComment(id, comment)
-  dispatch({
-    type: 'ADD_COMMENT',
-    blog: updatedBlog
-  })
-}
-
-export const deleteBlog = id => async dispatch => {
-  await blogService.deleteBlog(id)
-  dispatch({
-    type: 'DELETE_BLOG',
-    id,
-  })
 }
 
 export const initBlogs = () => async dispatch => {
@@ -39,6 +23,27 @@ export const initBlogs = () => async dispatch => {
   dispatch({
     type: 'INIT_BLOGS',
     blogs
+  })
+}
+
+export const addBlog = blog => async dispatch => {
+  try {
+    const newBlog = await blogService.addBlog(blog)
+    dispatch({
+      type: 'NEW_BLOG',
+      blog: newBlog
+    })
+    dispatch(setMessage(`a new blog ${newBlog.title} by ${newBlog.author} added`))
+  } catch (error) {
+    dispatch(setError('Failed to add new blog'))
+  }
+}
+
+export const deleteBlog = id => async dispatch => {
+  await blogService.deleteBlog(id)
+  dispatch({
+    type: 'DELETE_BLOG',
+    id,
   })
 }
 
@@ -55,20 +60,12 @@ export const likeBlog = blog => async dispatch => {
   })
 }
 
-export const addBlog = blog => async dispatch => {
-  try {
-    const newBlog = await blogService.addBlog(blog)
-
-    dispatch({
-      type: 'NEW_BLOG',
-      blog: newBlog
-    })
-
-    dispatch(setMessage(`a new blog ${newBlog.title} by ${newBlog.author} added`))
-
-  } catch (error) {
-    dispatch(setError('Failed to add new blog'))
-  }
+export const addComment = (id, comment) => async dispatch => {
+  const updatedBlog = await blogService.addComment(id, comment)
+  dispatch({
+    type: 'ADD_COMMENT',
+    blog: updatedBlog
+  })
 }
 
 // Utility function for returning updated blogs:
