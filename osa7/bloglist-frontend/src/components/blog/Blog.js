@@ -31,6 +31,11 @@ const Blog = () => {
       : null
   }
 
+  const renderComments = () =>
+    blog.comments.map(comment =>
+      <li key={comment}>{comment}</li>
+    )
+
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -51,6 +56,9 @@ const Blog = () => {
       <div>added by {blog.user.name}</div>
 
       {renderDeleteButton()}
+
+      <h3>comments</h3>
+      <ul>{renderComments()}</ul>
     </div>
 
   return blog ? renderBlog() : null
