@@ -30,6 +30,22 @@ blogsRouter.post('/', async (request, response, next) => {
     }
 })
 
+blogsRouter.post('/:id/comments', async (request, response, next) => {
+    try {
+        const blog = await Blog
+            .findById(request.params.id)
+            .populate('user', { username: 1, name: 1, id: 1 })
+
+        blog.comments = blog.comments.concat(request.body.comment)
+        const savedBlog = await blog.save()
+
+        response.status(201)
+        response.json(savedBlog.toJSON())
+    } catch (exception) {
+        next(exception)
+    }
+})
+
 blogsRouter.put('/:id', async (request, response, next) => {
     const blog = {
         title: request.body.title,
