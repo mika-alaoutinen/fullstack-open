@@ -6,7 +6,7 @@ import { Button, Input } from '../styles/styles'
 
 const BlogComments = ({ blog }) => {
   const dispatch = useDispatch()
-  
+
   // State management for the form field:
   const { reset: resetComment, ...comment } = useField('text')
 
@@ -16,7 +16,7 @@ const BlogComments = ({ blog }) => {
     dispatch(addComment(blog.id, newComment))
     resetComment()
   }
-  
+
   const renderComments = () =>
     blog.comments.map(comment =>
       <li key={comment}>{comment}</li>
@@ -33,7 +33,7 @@ const BlogComments = ({ blog }) => {
 
       <ul>{renderComments()}</ul>
     </div>
-    
+
   )
 }
 
