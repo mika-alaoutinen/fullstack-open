@@ -1,18 +1,21 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { Td, Th } from '../styles/styles'
 
 const UsersPage = () => {
   const users = useSelector(state => state.users)
 
   const renderTableBody = () => users.map(user =>
     <tr key={user.id}>
-      <td>
+      <Td>
         <Link to={`/users/${user.id}`}>
           {user.name}
         </Link>
-      </td>
-      <td>{user.blogs.length}</td>
+      </Td>
+      <Td>
+        {user.blogs.length}
+      </Td>
     </tr>
   )
 
@@ -23,8 +26,8 @@ const UsersPage = () => {
       <table>
         <thead>
           <tr>
-            <th></th>
-            <th>blogs created</th>
+            <Th></Th>
+            <Th>blogs created</Th>
           </tr>
         </thead>
 

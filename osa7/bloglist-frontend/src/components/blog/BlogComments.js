@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { addComment } from '../../reducers/blogReducer'
 import { useField } from '../../hooks/index'
+import { Button, Input } from '../styles/styles'
 
 const BlogComments = ({ blog }) => {
   const dispatch = useDispatch()
@@ -26,8 +27,8 @@ const BlogComments = ({ blog }) => {
       <h3>comments</h3>
 
       <form onSubmit={newComment()}>
-        <input { ...comment } />
-        <button type='submit'>add comment</button>
+        <Input { ...comment } />
+        <Button type='submit'>add comment</Button>
       </form>
 
       <ul>{renderComments()}</ul>

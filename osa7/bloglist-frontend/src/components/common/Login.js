@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import Notification from './Notification'
 import { useField } from '../../hooks/index'
 import { userLogin } from '../../reducers/loginReducer'
+import { Button, Input } from '../styles/styles'
 
 const LoginPage = () => {
   const dispatch = useDispatch()
@@ -23,14 +24,14 @@ const LoginPage = () => {
 
       <form onSubmit={handleLogin}>
         <div>username
-          <input { ...username } />
+          <Input { ...username } />
         </div>
 
         <div>password
-          <input { ...password } />
+          <Input { ...password } />
         </div>
 
-        <button type='submit'>login</button>
+        <Button type='submit'>login</Button>
       </form>
     </div>
   )

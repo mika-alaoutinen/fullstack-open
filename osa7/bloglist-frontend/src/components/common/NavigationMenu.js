@@ -1,6 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { Button, Nav, StyledLink } from '../styles/styles'
 
 const NavigationMenu = () => {
   const user = useSelector(state => state.user)
@@ -10,23 +10,18 @@ const NavigationMenu = () => {
     window.location.reload()
   }
 
-  const navBar = {
-    backgroundColor: 'lightgrey',
-    padding: 10,
-  }
-
   return (
-    <nav style={navBar}>
-      <Link style={{ paddingRight: 5 }} to='/'>home</Link>
-      <Link style={{ paddingRight: 5 }} to='/blogs'>blogs</Link>
-      <Link style={{ paddingRight: 5 }} to='/users'>users</Link>
+    <Nav>
+      <StyledLink to='/'>home</StyledLink>
+      <StyledLink to='/blogs'>blogs</StyledLink>
+      <StyledLink to='/users'>users</StyledLink>
 
       {user && <>{user.username} logged in</>}
 
-      <button onClick={logout()} style={{ marginLeft: 10 }}>
+      <Button onClick={logout()} style={{ marginLeft: 10 }}>
         logout
-      </button>
-    </nav>
+      </Button>
+    </Nav>
   )
 }
 

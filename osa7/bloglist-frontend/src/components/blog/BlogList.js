@@ -1,16 +1,9 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Blogs, StyledLink } from '../styles/styles'
 
 const BlogList = () => {
   const blogs = useSelector(state => state.blogs)
-
-  const style = {
-    border: 'solid',
-    borderWidth: 1,
-    margin: 2,
-    padding: 5,
-  }
 
   const sortedBlogs = () =>
     blogs
@@ -18,11 +11,11 @@ const BlogList = () => {
       .map(addLink)
 
   const addLink = blog =>
-    <div key={blog.id} style={style}>
-      <Link to={`/blogs/${blog.id}`}>
+    <Blogs key={blog.id}>
+      <StyledLink to={`/blogs/${blog.id}`}>
         {blog.title}
-      </Link>
-    </div>
+      </StyledLink>
+    </Blogs>
 
   return blogs === undefined ? [] : sortedBlogs()
 }

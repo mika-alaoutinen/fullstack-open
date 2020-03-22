@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { Li } from '../styles/styles'
 
 const User = () => {
   const id = useParams().id
@@ -16,7 +17,7 @@ const User = () => {
   )
 
   const renderBlogs = () => user.blogs.map(blog =>
-    <li key={blog.id}>{blog.title}</li>
+    <Li key={blog.id}>{blog.title}</Li>
   )
 
   return user ? renderUser() : null

@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useField } from '../../hooks/index'
 import { addBlog } from '../../reducers/blogReducer'
+import { Button, Input } from '../styles/styles'
 
 const BlogForm = () => {
   const dispatch = useDispatch()
@@ -34,16 +35,16 @@ const BlogForm = () => {
     <form onSubmit={newBlog()}>
 
       <p>title
-        <input { ...title } />
+        <Input { ...title } />
       </p>
       <p>author
-        <input { ...author } />
+        <Input { ...author } />
       </p>
       <p>url
-        <input { ...url } />
+        <Input { ...url } />
       </p>
 
-      <button type='submit'>create</button>
+      <Button type='submit'>create</Button>
     </form>
   )
 }
