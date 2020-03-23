@@ -1,0 +1,19 @@
+{
+  "name": "puhelinluettelo-gql",
+  "version": "0.0.1",
+  "description": "GraphQL-toteutus osien 2 ja 3 puhelinluettelosta",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mika Alaoutinen",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server": "^2.11.0",
+    "graphql": "^14.6.0",
+    "nodemon": "^2.0.2",
+    "uuid": "^7.0.2"
+  }
+}
