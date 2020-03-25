@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useMutation } from '@apollo/client'
-
-import { ALL_PERSONS, EDIT_NUMBER } from '../graphql/queries'
+import { EDIT_NUMBER } from '../graphql/queries'
 
 const PhoneForm = ({ setError }) => {
   const [name, setName] = useState('')

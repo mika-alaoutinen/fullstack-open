@@ -32,9 +32,7 @@ const App = () => {
         books={bookQuery.data.allBooks}
       />
 
-      <NewBook
-        show={page === 'add'}
-      />
+      <NewBook show={page === 'add'} />
 
     </div>
   )

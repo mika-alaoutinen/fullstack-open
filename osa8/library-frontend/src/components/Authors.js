@@ -1,4 +1,5 @@
 import React from 'react'
+import UpdateAuthor from './UpdateAuthor'
 
 const Authors = ({ show, authors }) => {
   if (!show) {
@@ -30,6 +31,7 @@ const Authors = ({ show, authors }) => {
         </tbody>
       </table>
 
+      <UpdateAuthor />
     </div>
   )
 }
