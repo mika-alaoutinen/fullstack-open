@@ -1,11 +1,9 @@
 import React from 'react'
 
-const Books = ({ showPage }) => {
-  if (!showPage) {
+const Books = ({ show, books }) => {
+  if (!show) {
     return null
   }
-
-  const books = []
 
   const renderBooks = () => books.map(b =>
     <tr key={b.title}>
