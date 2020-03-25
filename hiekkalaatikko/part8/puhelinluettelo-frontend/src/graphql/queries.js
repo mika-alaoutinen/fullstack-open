@@ -2,7 +2,7 @@ import { gql  } from '@apollo/client'
 
 export const ALL_PERSONS = gql`
   query {
-    allPersons  {
+    allPersons {
       name
       phone
       id

@@ -1,11 +1,9 @@
 import React from 'react'
 
-const Authors = ({ showPage }) => {
-  if (!showPage) {
+const Authors = ({ show, authors }) => {
+  if (!show) {
     return null
   }
-
-  const authors = []
 
   const renderAuthors = () => authors.map(author =>
     <tr key={author.name}>
