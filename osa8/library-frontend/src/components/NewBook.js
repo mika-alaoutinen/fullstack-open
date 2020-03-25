@@ -11,16 +11,20 @@ const NewBook = (props) => {
     return null
   }
 
-  const submit = async (event) => {
-    event.preventDefault()
-    
-    console.log('add book...')
-
+  const resetFields = () => {
     setTitle('')
     setPublished('')
     setAuhtor('')
     setGenres([])
     setGenre('')
+  }
+
+  const submit = async (event) => {
+    event.preventDefault()
+    
+    console.log('add book...')
+
+    resetFields()
   }
 
   const addGenre = () => {
@@ -31,28 +35,28 @@ const NewBook = (props) => {
   return (
     <div>
       <form onSubmit={submit}>
-        <div>
-          title
+        <div>title
           <input
             value={title}
             onChange={({ target }) => setTitle(target.value)}
           />
         </div>
-        <div>
-          author
+
+        <div>author
           <input
             value={author}
             onChange={({ target }) => setAuhtor(target.value)}
           />
         </div>
-        <div>
-          published
+
+        <div>published
           <input
             type='number'
             value={published}
             onChange={({ target }) => setPublished(target.value)}
           />
         </div>
+
         <div>
           <input
             value={genre}
@@ -60,9 +64,8 @@ const NewBook = (props) => {
           />
           <button onClick={addGenre} type="button">add genre</button>
         </div>
-        <div>
-          genres: {genres.join(' ')}
-        </div>
+
+        <div>genres: {genres.join(' ')}</div>
         <button type='submit'>create book</button>
       </form>
     </div>
