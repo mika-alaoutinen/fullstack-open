@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { EDIT_AUTHOR } from '../graphql/queries'
 
-const UpdateAuthor = () => {
+const UpdateAuthor = ({ authors }) => {
   const [name, setName] = useState('')
   const [birthyear, setBirthyear] = useState('')
   const [changeBirthyear, result] = useMutation(EDIT_AUTHOR)
@@ -20,18 +20,20 @@ const UpdateAuthor = () => {
     setBirthyear('')
   }
 
+  const renderSelectList = () => authors.map(author =>
+    <option key={author.id}>
+      {author.name}
+    </option>
+  )
+  
   return (
     <div>
       <h3>Set birthyear</h3>
 
       <form onSubmit={submit}>
-        <div>
-          name
-          <input
-            value={name}
-            onChange={({ target }) => setName(target.value)}
-          />
-        </div>
+        <select value={name} onChange={({ target }) => setName(target.value)}>
+          {renderSelectList()}
+        </select>
 
         <div>
           born
