@@ -22,7 +22,7 @@ const resolvers = {
   },
 
   Author: {
-    bookCount: root => authorsBookCount(root.name),
+    bookCount: root => authorsBookCount(root._id),
   },
 }
 
@@ -50,10 +50,8 @@ const updateAuthor = async (author, { setBornTo }) => {
   }
 }
 
-const authorsBookCount = async ({ authorName }) => {
-  // books.filter(b => b.author === root.name).length,
-  const books = await Book.find({ author: authorName })
-  console.log('authorsBookCount', books)
+const authorsBookCount = async authorId => {
+  const books = await Book.find({ author: authorId })
   return books.length
 }
 
@@ -72,7 +70,11 @@ const addNewBook = async newBook => {
     }
 
     const savedBook = await book.save()
-    return savedBook.populate('author', { name: 1, born: 1, bookCount: 1 })
+
+    return await Book
+      .findById(savedBook._id)
+      .populate('author', { name: 1, born: 1, bookCount: 1 })
+
   } catch (error) {
     console.log(error.message, newBook) // add error handling middleware
   }
@@ -81,22 +83,21 @@ const addNewBook = async newBook => {
 const filterBooks = async ({ author, genre }) => {
   return !author && !genre
     ? await Book.find({}).populate('author', { name: 1, born: 1, bookCount: 1 })
-    : findByAuthor(author)
-    // : await Book.find({ $or:
-    //   [
-    //     { author: author },
-    //     { genres: { $in: [ genre ] } }
-    //   ]
-    // }).populate('author', { name: 1, born: 1, bookCount: 1 })
+    : await findBooksByAuthorOrGenre(author, genre)
 }
 
-const findByAuthor = async (authorName) => {
+const findBooksByAuthorOrGenre = async (authorName, genre) => {
   const author = await Author.findOne({ name: authorName })
-  const books = await Book
-    .find({ author: author._id })
-    .populate('author', { name: 1, born: 1, bookCount: 1 })
+  const id = author ? author._id : null
 
-  return books
+  return await Book
+    .find({ $or:
+      [
+        { author: id },
+        { genres: { $in: [ genre ] } }
+      ]
+    })
+    .populate('author', { name: 1, born: 1, bookCount: 1 })
 }
 
 module.exports = { resolvers }
