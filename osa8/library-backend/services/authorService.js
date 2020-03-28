@@ -1,4 +1,5 @@
 const Author = require('../models/author')
+const { UserInputError } = require('apollo-server')
 
 const findAllAuthors = async () =>
   await Author.find({})
@@ -12,14 +13,14 @@ const createAuthor = async newAuthor => {
   try {
     await author.save()
   } catch (error) {
-    console.log(error.message, newAuthor) // add error handling middleware
+    throw new UserInputError(error.message, { invalidArgs: newAuthor })
   }
 
   return author
 }
 
 const updateAuthor = async (authorName, newBirthDate) => {
-  const author = await Author.findOne({ name: authorName }) // or args.id?
+  const author = await Author.findOne({ name: authorName })
 
   if (!author) {
     return null
@@ -30,7 +31,7 @@ const updateAuthor = async (authorName, newBirthDate) => {
   try {
     return await author.save()
   } catch (error) {
-    console.log(error.message, author) // add error handling middleware
+    throw new UserInputError(error.message, { invalidArgs: { authorName, newBirthDate } })
   }
 }
 

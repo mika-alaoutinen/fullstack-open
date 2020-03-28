@@ -1,5 +1,6 @@
-const { createAuthor, findAuthorByName } = require('./authorService')
 const Book = require('../models/book')
+const { UserInputError } = require('apollo-server')
+const { createAuthor, findAuthorByName } = require('./authorService')
 
 const findAllBooks = async (author, genre) => {
   return !author && !genre
@@ -29,7 +30,7 @@ const createBook = async newBook => {
       .populate('author', { name: 1, born: 1, bookCount: 1 })
 
   } catch (error) {
-    console.log(error.message, newBook) // add error handling middleware
+    throw new UserInputError(error.message, { invalidArgs: newBook })
   }
 }
 
