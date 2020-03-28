@@ -1,5 +1,5 @@
 const config = require('./utils/config')
-const jwt = require('jsonwebtoken')
+// const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 const { ApolloServer } = require('apollo-server')
 const { resolvers } = require('./graphql/resolvers')
