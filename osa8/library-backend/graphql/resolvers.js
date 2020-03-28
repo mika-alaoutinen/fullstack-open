@@ -1,55 +1,102 @@
-const uuid = require('uuid/v1')
-let authors = require('../data/authors')
-let books = require('../data/books')
+const Author = require('../models/author')
+const Book = require('../models/book')
 
 const resolvers = {
   Mutation: {
-    addBook: (root, args) => addNewBook(args),
+    // Authors:
+    addAuthor: (root, args) => addNewAuthor(args),
     editAuthor: (root, args) => {
-      const author = authors.find(a => a.name === args.name)
+      const author = Author.findOne({ name: args.name }) // or args.id?
       return author ? updateAuthor(author, args) : null
     },
+
+    // Books:
+    addBook: (root, args) => addNewBook(args),
   },
 
   Query: {
-    authorCount: () => authors.length,
-    bookCount: () => books.length,
-    allAuthors: () => authors,
+    authorCount: () => Author.collection.countDocuments(),
+    bookCount: () => Book.collection.countDocuments(),
+    allAuthors: () => Author.find({}),
     allBooks: (root, args) => filterBooks(args),
   },
 
   Author: {
-    bookCount: root => books.filter(b => b.author === root.name).length,
+    bookCount: root => authorsBookCount(root.name),
+  },
+}
+
+// Utility functions:
+// Author:
+const addNewAuthor = async newAuthor => {
+  const author = new Author({ ...newAuthor })
+
+  try {
+    await author.save()
+  } catch (error) {
+    console.log(error.message, newAuthor) // add error handling middleware
+  }
+
+  return author
+}
+
+const updateAuthor = async (author, { setBornTo }) => {
+  author.born = setBornTo
+
+  try {
+    return await author.save()
+  } catch (error) {
+    console.log(error.message, author) // add error handling middleware
   }
 }
 
-// Utility functions
-const addNewBook = newBook => {
-  const book = { ...newBook, id: uuid() }
+const authorsBookCount = async ({ authorName }) => {
+  // books.filter(b => b.author === root.name).length,
+  const books = await Book.find({ author: authorName })
+  console.log('authorsBookCount', books)
+  return books.length
+}
 
-  if (!authors.includes(book.author)) {
-    const newAuthor = {
-      name: book.author,
-      born: null,
-      id: uuid(),
+// Book:
+const addNewBook = async newBook => {
+  const author = await Author.findOne({ name: newBook.author })
+  const book = new Book({ ...newBook, author: author._id })
+
+  try {
+    if (!author) {
+      const newAuthor = new Author({
+        name: book.author,
+        born: null,
+      })
+      await newAuthor.save()
     }
 
-    authors.push(newAuthor)
+    const savedBook = await book.save()
+    return savedBook.populate('author', { name: 1, born: 1, bookCount: 1 })
+  } catch (error) {
+    console.log(error.message, newBook) // add error handling middleware
   }
-
-  books.push(book)
-  return book
 }
 
-const updateAuthor = (author, { name, setBornTo }) => {
-  const updatedAuthor = { ...author, born: setBornTo }
-  authors = authors.map(a => a.name === name ? updatedAuthor : a)
-  return updatedAuthor
+const filterBooks = async ({ author, genre }) => {
+  return !author && !genre
+    ? await Book.find({}).populate('author', { name: 1, born: 1, bookCount: 1 })
+    : findByAuthor(author)
+    // : await Book.find({ $or:
+    //   [
+    //     { author: author },
+    //     { genres: { $in: [ genre ] } }
+    //   ]
+    // }).populate('author', { name: 1, born: 1, bookCount: 1 })
 }
 
-const filterBooks = ({ author, genre }) =>
-  !author && !genre
-    ? books
-    : books.filter(b => b.author === author || b.genres.includes(genre))
+const findByAuthor = async (authorName) => {
+  const author = await Author.findOne({ name: authorName })
+  const books = await Book
+    .find({ author: author._id })
+    .populate('author', { name: 1, born: 1, bookCount: 1 })
+
+  return books
+}
 
 module.exports = { resolvers }

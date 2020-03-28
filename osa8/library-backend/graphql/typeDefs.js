@@ -17,17 +17,22 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    addAuthor(
+      name: String!
+      born: Int
+    ): Author
+
+    editAuthor(
+      name: String!
+      setBornTo: Int!
+    ): Author
+
     addBook(
       title: String!
       author: String!
       published: Int!
       genres: [String!]!
-      ): Book
-
-    editAuthor(
-      name: String!
-      setBornTo: Int!
-      ): Author
+    ): Book
   }
 
   type Query {
