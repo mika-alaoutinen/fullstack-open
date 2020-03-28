@@ -1,9 +1,9 @@
 const config = require('./utils/config')
-// const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 const { ApolloServer } = require('apollo-server')
 const { resolvers } = require('./graphql/resolvers')
 const { typeDefs } = require('./graphql/typeDefs')
+const { authenticate } = require('./services/userService')
 
 mongoose.set('useFindAndModify', false)
 
@@ -18,6 +18,7 @@ mongoose.connect(config.MONGODB_URL, {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: async ({ request }) => authenticate(request)
 })
 
 server.listen()

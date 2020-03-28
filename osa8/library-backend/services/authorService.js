@@ -1,11 +1,11 @@
 const Author = require('../models/author')
-const { UserInputError } = require('apollo-server')
+const { AuthenticationError, UserInputError } = require('apollo-server')
 
 const findAllAuthors = async () =>
   await Author.find({})
 
 const findAuthorByName = async name =>
-  await Author.findOne({ name: name })
+  await Author.findOne({ name })
 
 const createAuthor = async newAuthor => {
   const author = new Author({ ...newAuthor })
@@ -20,8 +20,12 @@ const createAuthor = async newAuthor => {
 }
 
 const updateAuthor = async (authorName, newBirthDate) => {
-  const author = await Author.findOne({ name: authorName })
+  // TODO: operaation voi tehdä vain, jos on autentikoitunut:
+  // if (!context.currentUser) {
+  //   throw new AuthenticationError('not authenticated')
+  // }
 
+  const author = await Author.findOne({ name: authorName })
   if (!author) {
     return null
   }
