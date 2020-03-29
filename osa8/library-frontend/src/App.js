@@ -20,7 +20,7 @@ const App = () => {
   const bookGenresQuery = useQuery(DISTINCT_GENRES)
   const favoriteGenreQuery = useQuery(USERS_FAVORITE_GENRE)
 
-  if (authorQuery.loading || bookQuery.loading) {
+  if (authorQuery.loading || bookQuery.loading || bookGenresQuery.loading || favoriteGenreQuery.loading) {
     return <div>loading</div>
   }
 
