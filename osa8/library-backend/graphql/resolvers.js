@@ -1,5 +1,5 @@
 const { authorCount, createAuthor, findAllAuthors, updateAuthor } = require('../services/authorService')
-const { authorsBookCount, bookCount, createBook, findAllBooks } = require('../services/bookService')
+const { authorsBookCount, bookCount, createBook, findDistinctGenres, findAllBooks } = require('../services/bookService')
 const { createUser, login } = require('../services/userService')
 
 const resolvers = {
@@ -16,6 +16,7 @@ const resolvers = {
     bookCount: () => bookCount(),
     allAuthors: () => findAllAuthors(),
     allBooks: (root, args) => findAllBooks(args),
+    genres: () => findDistinctGenres(),
     me: (root, args, context) => context.currentUser,
   },
 

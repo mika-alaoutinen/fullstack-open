@@ -45,6 +45,11 @@ const authorsBookCount = async authorId => {
   return books.length
 }
 
+const findDistinctGenres = async () => {
+  const genres = await Book.distinct('genres')
+  return genres.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+}
+
 // Utility functions:
 const findBooksByAuthorOrGenre = async (authorName, genre) => {
   const author = await findAuthorByName(authorName)
@@ -61,5 +66,5 @@ const findBooksByAuthorOrGenre = async (authorName, genre) => {
 }
 
 module.exports = {
-  bookCount, findAllBooks, createBook, authorsBookCount
+  bookCount, findAllBooks, createBook, authorsBookCount, findDistinctGenres
 }

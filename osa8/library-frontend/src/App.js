@@ -5,7 +5,7 @@ import Books from './components/Books'
 import LoginForm from './components/LoginForm'
 import NewBook from './components/NewBook'
 import ErrorNotification from './components/ErrorNotification'
-import { ALL_AUTHORS, ALL_BOOKS } from './graphql/queries'
+import { ALL_AUTHORS, ALL_BOOKS, DISTINCT_GENRES } from './graphql/queries'
 
 const App = () => {
   const client = useApolloClient()
@@ -16,6 +16,7 @@ const App = () => {
 
   const authorQuery = useQuery(ALL_AUTHORS)
   const bookQuery = useQuery(ALL_BOOKS)
+  const bookGenresQuery = useQuery(DISTINCT_GENRES)
 
   if (authorQuery.loading || bookQuery.loading) {
     return <div>loading</div>
@@ -68,7 +69,8 @@ const App = () => {
 
       <Books
         show={page === 'books'}
-        books={bookQuery.data.allBooks}
+        allBooks={bookQuery.data.allBooks}
+        genres={bookGenresQuery.data.genres}
       />
 
       { token
