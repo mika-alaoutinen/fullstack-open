@@ -38,9 +38,8 @@ const NewBook = ({ show }) => {
     setGenre('')
   }
 
-  return (
-    <div>
-      <form onSubmit={submit}>
+  return show
+    ? <form onSubmit={submit}>
         <div>title
           <input
             value={title}
@@ -74,8 +73,8 @@ const NewBook = ({ show }) => {
         <div>genres: {genres.join(' ')}</div>
         <button type='submit'>create book</button>
       </form>
-    </div>
-  )
+
+    : null
 }
 
 export default NewBook

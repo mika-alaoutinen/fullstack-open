@@ -18,6 +18,15 @@ const App = () => {
   if (authorQuery.loading || bookQuery.loading) {
     return <div>loading</div>
   }
+  
+  const renderNavButtons = () => {
+    const pages = [ 'authors', 'books', 'add', 'login']
+    return pages.map(page =>
+      <button key={page} onClick={() => setPage(page)}>
+        {page}
+      </button>
+    )
+  }
 
   return (
     <div>
@@ -27,10 +36,7 @@ const App = () => {
       />
 
       <div className='navigationButtons'>
-        <button onClick={() => setPage('authors')}>authors</button>
-        <button onClick={() => setPage('books')}>books</button>
-        <button onClick={() => setPage('add')}>add book</button>
-        <button onClick={() => setPage('login')}>login</button>
+        {renderNavButtons()}
       </div>
 
       <Authors

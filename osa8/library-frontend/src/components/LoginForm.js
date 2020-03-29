@@ -10,10 +10,6 @@ const LoginForm = ({ show, setToken, setMessage }) => {
     onError: (error) => setMessage(error.graphQLErrors[0].message)
   })
 
-  if (!show) {
-    return null
-  }
-
   const handleLogin = event => {
     event.preventDefault()
     console.log('login')
@@ -21,8 +17,8 @@ const LoginForm = ({ show, setToken, setMessage }) => {
     // send login info
   }
 
-  return (
-    <div className='loginPage'>
+  return show
+    ? <div className='loginPage'>
       <h2>Login</h2>
 
       <form onSubmit={handleLogin}>
@@ -37,7 +33,8 @@ const LoginForm = ({ show, setToken, setMessage }) => {
         <button type='submit'>login</button>
       </form>
     </div>
-  )
+
+  : null
 }
 
 export default LoginForm

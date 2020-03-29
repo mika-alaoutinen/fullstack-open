@@ -1,9 +1,6 @@
 import React from 'react'
 
 const Books = ({ show, books }) => {
-  if (!show) {
-    return null
-  }
 
   const renderBooks = () => books.map(book =>
     <tr key={book.title}>
@@ -13,8 +10,8 @@ const Books = ({ show, books }) => {
     </tr>
   )
 
-  return (
-    <div>
+  return show
+    ? <div>
       <h2>books</h2>
 
       <table>
@@ -30,7 +27,8 @@ const Books = ({ show, books }) => {
         </tbody>
       </table>
     </div>
-  )
+
+  : null
 }
 
 export default Books

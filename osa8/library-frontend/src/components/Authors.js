@@ -2,9 +2,6 @@ import React from 'react'
 import UpdateAuthor from './UpdateAuthor'
 
 const Authors = ({ show, authors }) => {
-  if (!show) {
-    return null
-  }
 
   const renderAuthors = () => authors.map(author =>
     <tr key={author.name}>
@@ -14,8 +11,8 @@ const Authors = ({ show, authors }) => {
     </tr>
   )
 
-  return (
-    <div>
+  return show
+    ? <div>
       <h2>authors</h2>
 
       <table>
@@ -33,7 +30,8 @@ const Authors = ({ show, authors }) => {
 
       <UpdateAuthor authors={authors} />
     </div>
-  )
+    
+  : null
 }
 
 export default Authors
