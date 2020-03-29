@@ -5,7 +5,8 @@ import Books from './components/Books'
 import LoginForm from './components/LoginForm'
 import NewBook from './components/NewBook'
 import ErrorNotification from './components/ErrorNotification'
-import { ALL_AUTHORS, ALL_BOOKS, DISTINCT_GENRES } from './graphql/queries'
+import Recommendations from './components/Recommendations'
+import { ALL_AUTHORS, ALL_BOOKS, DISTINCT_GENRES, USERS_FAVORITE_GENRE } from './graphql/queries'
 
 const App = () => {
   const client = useApolloClient()
@@ -17,6 +18,7 @@ const App = () => {
   const authorQuery = useQuery(ALL_AUTHORS)
   const bookQuery = useQuery(ALL_BOOKS)
   const bookGenresQuery = useQuery(DISTINCT_GENRES)
+  const favoriteGenreQuery = useQuery(USERS_FAVORITE_GENRE)
 
   if (authorQuery.loading || bookQuery.loading) {
     return <div>loading</div>
@@ -37,7 +39,7 @@ const App = () => {
   } 
 
   const renderLoggedInButtons = () => {
-    const pages = ['authors', 'books', 'add']
+    const pages = ['authors', 'books', 'add', 'recommend']
     return (
       <>
         {renderNavButtons(pages)}
@@ -74,10 +76,17 @@ const App = () => {
       />
 
       { token
-        ? <NewBook
-          show={page === 'add'}
-          setMessage={setMessage}
-        />
+        ? <>
+          <NewBook
+            show={page === 'add'}
+            setMessage={setMessage}
+          />
+
+          <Recommendations
+            show={page === 'recommend'}
+            genre={favoriteGenreQuery.data.me.favoriteGenre}
+          />
+        </>
 
         : <LoginForm
           show={page === 'login'}
