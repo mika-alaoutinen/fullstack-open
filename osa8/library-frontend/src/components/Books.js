@@ -5,11 +5,11 @@ const Books = ({ show, books }) => {
     return null
   }
 
-  const renderBooks = () => books.map(b =>
-    <tr key={b.title}>
-      <td>{b.title}</td>
-      <td>{b.author}</td>
-      <td>{b.published}</td>
+  const renderBooks = () => books.map(book =>
+    <tr key={book.title}>
+      <td>{book.title}</td>
+      <td>{book.author.name}</td>
+      <td>{book.published}</td>
     </tr>
   )
 
