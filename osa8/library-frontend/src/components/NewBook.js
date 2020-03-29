@@ -16,10 +16,6 @@ const NewBook = ({ show, setMessage }) => {
     ],
   })
 
-  if (!show) {
-    return null
-  }
-
   const resetFields = () => {
     setTitle('')
     setAuthor('')
