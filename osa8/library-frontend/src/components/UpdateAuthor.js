@@ -37,7 +37,7 @@ const UpdateAuthor = ({ authors }) => {
 
         <div>
           born
-        <input
+          <input
             value={birthyear}
             onChange={({ target }) => setBirthyear(Number(target.value))}
           />
