@@ -19,23 +19,22 @@ const createAuthor = async newAuthor => {
   return author
 }
 
-const updateAuthor = async (authorName, newBirthDate) => {
-  // TODO: operaation voi tehdä vain, jos on autentikoitunut:
-  // if (!context.currentUser) {
-  //   throw new AuthenticationError('not authenticated')
-  // }
+const updateAuthor = async ({ name, setBornTo }, context) => {
+  if (!context.currentUser) {
+    throw new AuthenticationError('not authenticated')
+  }
 
-  const author = await Author.findOne({ name: authorName })
+  const author = await Author.findOne({ name })
   if (!author) {
     return null
   }
 
-  author.born = newBirthDate
+  author.born = setBornTo
 
   try {
     return await author.save()
   } catch (error) {
-    throw new UserInputError(error.message, { invalidArgs: { authorName, newBirthDate } })
+    throw new UserInputError(error.message, { invalidArgs: { name, setBornTo } })
   }
 }
 

@@ -2,7 +2,7 @@ const Book = require('../models/book')
 const { AuthenticationError, UserInputError } = require('apollo-server')
 const { createAuthor, findAuthorByName } = require('./authorService')
 
-const findAllBooks = async (author, genre) => {
+const findAllBooks = async ({ author, genre }) => {
   return !author && !genre
     ? await Book
       .find({})
@@ -10,11 +10,10 @@ const findAllBooks = async (author, genre) => {
     : await findBooksByAuthorOrGenre(author, genre)
 }
 
-const createBook = async (newBook) => {
-  // TODO: operaation voi tehdä vain, jos on autentikoitunut:
-  // if (!context.currentUser) {
-  //   throw new AuthenticationError('not authenticated')
-  // }
+const createBook = async (newBook, context) => {
+  if (!context.currentUser) {
+    throw new AuthenticationError('not authenticated')
+  }
 
   let author = await findAuthorByName(newBook.author)
 

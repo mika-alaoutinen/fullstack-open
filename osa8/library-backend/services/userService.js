@@ -3,9 +3,7 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 const { UserInputError } = require('apollo-server')
 
-const authenticate = async ({ request }) => {
-  console.log('request', request)
-
+const authenticate = async request => {
   const authentication = request
     ? request.headers.authorization
     : null
@@ -18,21 +16,20 @@ const authenticate = async ({ request }) => {
   }
 }
 
-const createUser = async username => {
-  console.log('create user', username)
-  const user = new User({ username })
+const createUser = async newUser => {
+  const user = new User({ ...newUser })
 
   try {
     return await user.save()
   } catch (error) {
-    throw new UserInputError(error.message, { invalidArgs: username })
+    throw new UserInputError(error.message, { invalidArgs: newUser })
   }
 }
 
-const login = async (username, password) => {
-  console.log('login', username)
+const login = async ({ username, password }) => {
   const user = await User.findOne({ username })
 
+  // Hard coded password for all users:
   if (!user || password !== 'secret') {
     throw new UserInputError('wrong credentials')
   }

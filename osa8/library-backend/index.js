@@ -18,7 +18,7 @@ mongoose.connect(config.MONGODB_URL, {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: async ({ request }) => authenticate(request)
+  context: async ({ req }) => authenticate(req)
 })
 
 server.listen()
