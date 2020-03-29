@@ -44,7 +44,7 @@ const App = () => {
           {renderNavButtons(pages)}
           <button onClick={handleLogout()}>logout</button>
         </div>
-        <NewBook show={page === 'add'} />
+        <NewBook show={page === 'add'} setMessage={setMessage} />
       </div>
     )
   }
