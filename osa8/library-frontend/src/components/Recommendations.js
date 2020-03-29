@@ -13,14 +13,14 @@ const Recommendations = ({ show, genre }) => {
     if (books.length === 0) {
       booksQuery({ variables: { genre } })
     }
-  }, [books])
-  
+  }, [books]) // eslint-disable-line react-hooks/exhaustive-deps
+
   // Save books received from server:
   useEffect(() => {
     if (result.data) {
       setBooks(result.data.allBooks)
     }
-  }, [result])
+  }, [result]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return show
     ? <div>

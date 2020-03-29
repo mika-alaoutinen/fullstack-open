@@ -15,7 +15,7 @@ const Books = ({ show, allBooks, genres }) => {
     }
   }, [result])
 
-  const renderGenreButtons = () => genres.map(genre => 
+  const renderGenreButtons = () => genres.map(genre =>
     <button key={genre} onClick={() => selectGenre(genre)}>
       {genre}
     </button>

@@ -10,7 +10,7 @@ import { ALL_AUTHORS, ALL_BOOKS, DISTINCT_GENRES, USERS_FAVORITE_GENRE } from '.
 
 const App = () => {
   const client = useApolloClient()
-  
+
   const [page, setPage] = useState('authors')
   const [message, setMessage] = useState(null)
   const [token, setToken] = useState(null)
@@ -36,7 +36,7 @@ const App = () => {
         {page}
       </button>
     )
-  } 
+  }
 
   const renderLoggedInButtons = () => {
     const pages = ['authors', 'books', 'add', 'recommend']

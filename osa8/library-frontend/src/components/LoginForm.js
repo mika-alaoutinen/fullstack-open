@@ -18,7 +18,7 @@ const LoginForm = ({ show, setToken, setMessage }) => {
       localStorage.setItem('user-token', token)
     }
   }, [result.data]) // eslint-disable-line
-  
+
   const handleLogin = event => {
     event.preventDefault()
     login({ variables: { username: username.value, password: password.value } })

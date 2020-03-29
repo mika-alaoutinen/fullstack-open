@@ -25,7 +25,7 @@ const UpdateAuthor = ({ authors }) => {
       {author.name}
     </option>
   )
-  
+
   return (
     <div>
       <h3>Set birthyear</h3>

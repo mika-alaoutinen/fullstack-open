@@ -30,8 +30,8 @@ const Authors = ({ show, authors }) => {
 
       <UpdateAuthor authors={authors} />
     </div>
-    
-  : null
+
+    : null
 }
 
 export default Authors
