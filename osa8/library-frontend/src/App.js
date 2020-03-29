@@ -35,40 +35,26 @@ const App = () => {
     )
   } 
 
-  const renderLoggedInView = () => {
+  const renderLoggedInButtons = () => {
     const pages = ['authors', 'books', 'add']
-
     return (
-      <div className='loggedInView'>
-        <div className='navigationButtons'>
-          {renderNavButtons(pages)}
-          <button onClick={handleLogout()}>logout</button>
-        </div>
-        <NewBook show={page === 'add'} setMessage={setMessage} />
-      </div>
+      <>
+        {renderNavButtons(pages)}
+        <button onClick={handleLogout()}>logout</button>
+      </>
     )
   }
 
-  const renderLoggedOutView = () => {
+  const renderLoggedOutButtons = () => {
     const pages = ['authors', 'books', 'login']
-    
-    return (
-      <div className='loggedOutView'>
-        <div className='navigationButtons'>
-          { renderNavButtons(pages) }
-        </div>
-        <LoginForm
-          show={page === 'login'}
-          setToken={setToken}
-          setMessage={setMessage}
-        />
-      </div>
-    ) 
+    return renderNavButtons(pages)
   }
 
   return (
     <div>
-      { token ? renderLoggedInView() : renderLoggedOutView() }
+      <div className='navigationButtons'>
+        { token ? renderLoggedInButtons() : renderLoggedOutButtons() }
+      </div>
 
       <ErrorNotification
         message={message}
@@ -84,6 +70,19 @@ const App = () => {
         show={page === 'books'}
         books={bookQuery.data.allBooks}
       />
+
+      { token
+        ? <NewBook
+          show={page === 'add'}
+          setMessage={setMessage}
+        />
+
+        : <LoginForm
+          show={page === 'login'}
+          setToken={setToken}
+          setMessage={setMessage}
+        />
+      }
     </div>
   )
 }
