@@ -39,6 +39,7 @@ const typeDefs = gql`
     bookCount: Int!
     allAuthors: [Author!]!
     allBooks(author: String genre: String): [Book!]!
+    genres: [String]!
     me: User
   }
 `

@@ -1,36 +1,44 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useLazyQuery } from '@apollo/client'
+import { ALL_BOOKS } from '../graphql/queries'
+import BooksTable from './BooksTable'
 
-const Books = ({ show, books }) => {
-  if (!show) {
-    return null
+const Books = ({ show, allBooks, genres }) => {
+  // Get books by genre:
+  const [booksQuery, result] = useLazyQuery(ALL_BOOKS)
+  const [booksByGenre, setBooksByGenre] = useState(allBooks)
+  const [selectedGenre, setSelectedGenre] = useState(null)
+
+  useEffect(() => {
+    if (result.data) {
+      setBooksByGenre(result.data.allBooks)
+    }
+  }, [result])
+
+  const renderGenreButtons = () => genres.map(genre =>
+    <button key={genre} onClick={() => selectGenre(genre)}>
+      {genre}
+    </button>
+  )
+
+  const selectGenre = genre => {
+    booksQuery({ variables: { genre } })
+    setSelectedGenre(genre)
   }
 
-  const renderBooks = () => books.map(b =>
-    <tr key={b.title}>
-      <td>{b.title}</td>
-      <td>{b.author}</td>
-      <td>{b.published}</td>
-    </tr>
-  )
-
-  return (
-    <div>
+  return show
+    ? <div>
       <h2>books</h2>
 
-      <table>
-        <tbody>
-          <tr>
-            <th></th>
-            <th>author</th>
-            <th>published</th>
-          </tr>
+      <div>
+        in genre <b>{selectedGenre}</b>
+      </div>
 
-          {renderBooks()}
-
-        </tbody>
-      </table>
+      <BooksTable books={booksByGenre} />
+      {renderGenreButtons()}
     </div>
-  )
+
+  : null
 }
 
 export default Books
