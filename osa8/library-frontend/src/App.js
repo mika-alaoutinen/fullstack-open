@@ -24,6 +24,22 @@ const App = () => {
     return <div>loading</div>
   }
 
+  const updateCacheWith = addedBook => {
+    const includedIn = (set, object) =>
+      set
+        .map(book => book.id)
+        .includes(object.id)  
+
+    const dataInStore = client.readQuery({ query: ALL_BOOKS })
+    
+    if (!includedIn(dataInStore.allBooks, addedBook)) {
+      client.writeQuery({
+        query: ALL_BOOKS,
+        data: { allBooks : dataInStore.allBooks.concat(addedBook) }
+      })
+    }   
+  }
+
   const handleLogout = () => () => {
     setToken(null)
     localStorage.clear()
@@ -67,6 +83,7 @@ const App = () => {
       <Authors
         show={page === 'authors'}
         authors={authorQuery.data.allAuthors}
+        setMessage={setMessage}
       />
 
       <Books
@@ -80,6 +97,7 @@ const App = () => {
           <NewBook
             show={page === 'add'}
             setMessage={setMessage}
+            updateCacheWith={updateCacheWith}
           />
 
           <Recommendations

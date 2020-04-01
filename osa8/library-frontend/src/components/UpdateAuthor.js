@@ -2,10 +2,19 @@ import React, { useEffect, useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { EDIT_AUTHOR } from '../graphql/queries'
 
-const UpdateAuthor = ({ authors }) => {
+const UpdateAuthor = ({ authors, setMessage }) => {
   const [name, setName] = useState('')
   const [birthyear, setBirthyear] = useState('')
-  const [changeBirthyear, result] = useMutation(EDIT_AUTHOR)
+  const [changeBirthyear, result] = useMutation(EDIT_AUTHOR, {
+    onError: error => setMessage(error.graphQLErrors[0].message)
+  })
+
+  // Init value for select element on page load:
+  useEffect(() => {
+    if (!name) {
+      setName(authors[0].name)
+    }
+  }, [name])
 
   useEffect(() => {
     if (result.data && !result.data.editAuthor) {
@@ -16,6 +25,7 @@ const UpdateAuthor = ({ authors }) => {
   const submit = async event => {
     event.preventDefault()
     changeBirthyear({ variables: { name, setBornTo: birthyear } })
+    
     setName('')
     setBirthyear('')
   }

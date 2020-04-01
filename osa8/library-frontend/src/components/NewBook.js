@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { useMutation } from '@apollo/client'
-import { ALL_BOOKS, CREATE_BOOK } from '../graphql/queries'
+import { useMutation, useSubscription } from '@apollo/client'
+import { BOOK_ADDED, CREATE_BOOK } from '../graphql/queries'
 
-const NewBook = ({ show, setMessage }) => {
+const NewBook = ({ show, setMessage, updateCacheWith }) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [published, setPublished] = useState('')
@@ -11,9 +11,15 @@ const NewBook = ({ show, setMessage }) => {
 
   const [createBook] = useMutation(CREATE_BOOK, {
     onError: error => setMessage(error.graphQLErrors[0].message),
-    refetchQueries: [
-      { query: ALL_BOOKS }
-    ],
+    update: response => updateCacheWith(response.data.addBook)
+  })
+
+  useSubscription(BOOK_ADDED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      const addedBook = subscriptionData.data.bookAdded
+      updateCacheWith(addedBook)      
+      setMessage(`new book "${addedBook.title}" added`)
+    }
   })
 
   const resetFields = () => {

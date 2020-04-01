@@ -1,6 +1,8 @@
 const Book = require('../models/book')
-const { AuthenticationError, UserInputError } = require('apollo-server')
+const { AuthenticationError, UserInputError, PubSub } = require('apollo-server')
 const { createAuthor, findAuthorByName } = require('./authorService')
+
+const pubsub = new PubSub()
 
 const findAllBooks = async ({ author, genre }) => {
   return !author && !genre
@@ -28,10 +30,12 @@ const createBook = async (newBook, context) => {
 
   try {
     const savedBook = await book.save()
-
-    return await Book
+    const addedBook = await Book
       .findById(savedBook._id)
       .populate('author', { name: 1, born: 1, bookCount: 1 })
+
+    pubsub.publish('BOOK_ADDED', { bookAdded: addedBook })
+    return addedBook
 
   } catch (error) {
     throw new UserInputError(error.message, { invalidArgs: newBook })
@@ -50,6 +54,8 @@ const findDistinctGenres = async () => {
   return genres.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
 }
 
+const subscribeBookAdded = () => pubsub.asyncIterator(['BOOK_ADDED'])
+
 // Utility functions:
 const findBooksByAuthorOrGenre = async (authorName, genre) => {
   const author = await findAuthorByName(authorName)
@@ -66,5 +72,10 @@ const findBooksByAuthorOrGenre = async (authorName, genre) => {
 }
 
 module.exports = {
-  bookCount, findAllBooks, createBook, authorsBookCount, findDistinctGenres
+  bookCount,
+  findAllBooks,
+  createBook,
+  authorsBookCount,
+  findDistinctGenres,
+  subscribeBookAdded,
 }

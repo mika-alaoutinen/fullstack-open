@@ -42,6 +42,10 @@ const typeDefs = gql`
     genres: [String]!
     me: User
   }
+
+  type Subscription {
+    bookAdded: Book!
+  }
 `
 
 module.exports = { typeDefs }
