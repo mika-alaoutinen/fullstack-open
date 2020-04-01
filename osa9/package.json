@@ -1,0 +1,11 @@
+{
+  "name": "bmi-calculator",
+  "version": "1.0.0",
+  "description": "Full Stack Open osa 9b",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mika Alaoutinen",
+  "license": "MIT"
+}
