@@ -1,5 +1,5 @@
 const { authorCount, createAuthor, findAllAuthors, updateAuthor } = require('../services/authorService')
-const { authorsBookCount, bookCount, createBook, findDistinctGenres, findAllBooks } = require('../services/bookService')
+const { authorsBookCount, bookCount, createBook, findDistinctGenres, findAllBooks, subscribeBookAdded } = require('../services/bookService')
 const { createUser, login } = require('../services/userService')
 
 const resolvers = {
@@ -22,6 +22,12 @@ const resolvers = {
 
   Author: {
     bookCount: root => authorsBookCount(root._id),
+  },
+
+  Subscription: {
+    bookAdded: {
+      subscribe: () => subscribeBookAdded(),
+    }
   },
 }
 
