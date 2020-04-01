@@ -1,7 +1,7 @@
 import React from 'react'
 import UpdateAuthor from './UpdateAuthor'
 
-const Authors = ({ show, authors }) => {
+const Authors = ({ show, authors, setMessage }) => {
 
   const renderAuthors = () => authors.map(author =>
     <tr key={author.name}>
@@ -28,7 +28,10 @@ const Authors = ({ show, authors }) => {
         </tbody>
       </table>
 
-      <UpdateAuthor authors={authors} />
+      <UpdateAuthor
+        authors={authors}
+        setMessage={setMessage}
+      />
     </div>
 
     : null

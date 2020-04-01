@@ -67,6 +67,7 @@ const App = () => {
       <Authors
         show={page === 'authors'}
         authors={authorQuery.data.allAuthors}
+        setMessage={setMessage}
       />
 
       <Books
