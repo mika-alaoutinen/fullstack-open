@@ -1,4 +1,4 @@
-const calculateBmi = (height: number, weight: number): string => {
+export const calculateBmi = (height: number, weight: number): string => {
   if (height === 0) {
     throw new Error('Height cannot be 0');
   }
@@ -20,5 +20,3 @@ const bmiAsText = (bmi: number) => {
   else if (bmi > 40) return 'Obese Class III (Very severely obese)';
   else throw new Error(`What is this BMI? ${bmi}`)
 }
-
-console.log(calculateBmi(173, 76));
