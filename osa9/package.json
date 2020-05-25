@@ -4,12 +4,13 @@
   "author": "Mika Alaoutinen",
   "license": "MIT",
   "description": "Full Stack Open osa 9b",
-  "main": "index.js",
+  "main": "index.ts",
   
   "scripts": {
     "calculateBmi": "ts-node bmiCalculator.ts",
     "calculateExercises": "ts-node exerciseCalculator.ts",
     "dev": "ts-node-dev index.ts",
+    "start": "ts-node index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
 
