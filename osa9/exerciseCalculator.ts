@@ -1,4 +1,4 @@
-interface Result {
+export interface Result {
   periodLength: number,
   trainingDays: number,
   success: boolean,
@@ -8,7 +8,7 @@ interface Result {
   average: number,
 }
 
-const calculateExercises = (targetHours: number, excerciseHours: Array<number>): Result => {
+export const calculateExercises = (targetHours: number, excerciseHours: Array<number>): Result => {
   const calculateRating = (target: number, result: number): number => {
     const performance = result - target;
     if (performance > 0) return 3;
@@ -23,7 +23,7 @@ const calculateExercises = (targetHours: number, excerciseHours: Array<number>):
   return {
     periodLength: excerciseHours.length,
     trainingDays: excerciseHours.filter(number => number !== 0).length,
-    success: average < targetHours,
+    success: average > targetHours,
     rating: rating,
     ratingDescription: descriptions[ rating - 1 ],
     target: targetHours,
@@ -42,9 +42,3 @@ const parseArguments = (args: Array<string>) => {
 
   return { target, excerciseHours }
 }
-
-// Driver code:
-const args = process.argv.slice(2);
-const { target, excerciseHours } = parseArguments(args);
-const result = calculateExercises(target, excerciseHours);
-console.log(result);
