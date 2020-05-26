@@ -7,7 +7,7 @@ export const calculateBmi = (height: number, weight: number): string => {
   const bmi = weight / (heightCm * heightCm);
 
   return bmiAsText(bmi);
-}
+};
 
 const bmiAsText = (bmi: number) => {
   if (bmi <= 15) return 'Very severely underweight';
@@ -18,5 +18,5 @@ const bmiAsText = (bmi: number) => {
   else if (bmi <= 35) return 'Obese Class I (Moderately obese)';
   else if (bmi <= 40) return 'Obese Class II (Severely obese)';
   else if (bmi > 40) return 'Obese Class III (Very severely obese)';
-  else throw new Error(`What is this BMI? ${bmi}`)
-}
+  else throw new Error(`What is this BMI? ${bmi}`);
+};

@@ -26,8 +26,17 @@ app.get('/hello', (_req, res) => {
 app.get('/bmi', (_req, res) => {
     const height = _req.query.height;
     const weight = _req.query.weight;
+    if (!height || !weight) {
+        throw new Error('height or weight is undefined');
+    }
+    
     const bmiResponse = createBmiResponse(height, weight);
     res.send(bmiResponse);
+});
+
+app.get('/exercises', (req, res) => {
+    const { dailyExercises, target } = req.body
+    
 });
 
 // Utility functions:
