@@ -2,11 +2,11 @@ import React from 'react';
 import Content from './components/Content'
 import Header from './components/Header'
 import Total from './components/Total'
-import courseParts from './data/courseParts.json';
+import courseParts from './data/courseParts';
 
-const App = () => {
+const App: React.FC = () => {
   const courseName = 'Half Stack application development';
-  
+
   return (
     <div>
       <Header courseName={courseName} />
