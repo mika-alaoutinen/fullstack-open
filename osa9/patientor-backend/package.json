@@ -1,0 +1,31 @@
+{
+  "name": "patientor",
+  "version": "1.0.0",
+  "description": "Full Stack Open osa 9c TypeScript backend",
+  "main": "index.ts",
+  "author": "Mika Alaoutinen",
+  "license": "ISC",
+  "scripts": {
+    "dev": "ts-node-dev ./src/index.ts",
+    "lint": "eslint --ext .ts .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node build/index.js",
+    "tsc": "tsc"
+  },
+  "dependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/uuid": "^8.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "uuid": "^8.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.6",
+    "@types/node": "^13.9.8",
+    "@typescript-eslint/eslint-plugin": "^3.0.2",
+    "@typescript-eslint/parser": "^3.0.2",
+    "eslint": "^7.1.0",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.9.3"
+  }
+}
