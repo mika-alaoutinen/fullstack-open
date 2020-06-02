@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Gender, NewPatient } from './types';
+import { Entry, Gender, NewPatient } from './types';
 
 export const toNewPatient = (object: any): NewPatient =>
   ({
@@ -8,6 +8,7 @@ export const toNewPatient = (object: any): NewPatient =>
     ssn: parseSSN(object.ssn),
     gender: parseGender(object.gender),
     occupation: parseOccupation(object.occupation),
+    entries: parseEntries(object.entries)
   });
 
   const parseName = (name: any): string => {
@@ -43,6 +44,10 @@ export const toNewPatient = (object: any): NewPatient =>
       throw new Error(`Incorrect or missing occupation ${occupation}`)
     }
     return occupation;
+  }
+
+  const parseEntries = (entries: any): Entry[] => {
+    return entries ? entries : []
   }
 
 // Type guards:
