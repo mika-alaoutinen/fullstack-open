@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { Container, Table, Button } from "semantic-ui-react";
 
 import { PatientFormValues } from "../AddPatientModal/AddPatientForm";
@@ -41,6 +42,7 @@ const PatientListPage: React.FC = () => {
       <Container textAlign="center">
         <h3>Patient list</h3>
       </Container>
+      
       <Table celled>
         <Table.Header>
           <Table.Row>
@@ -50,10 +52,13 @@ const PatientListPage: React.FC = () => {
             <Table.HeaderCell>Health Rating</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
+
         <Table.Body>
           {Object.values(patients).map((patient: Patient) => (
             <Table.Row key={patient.id}>
-              <Table.Cell>{patient.name}</Table.Cell>
+              <Table.Cell as={Link} to={`/patients/${patient.id}`}>
+                {patient.name}
+              </Table.Cell>
               <Table.Cell>{patient.gender}</Table.Cell>
               <Table.Cell>{patient.occupation}</Table.Cell>
               <Table.Cell>
@@ -63,12 +68,14 @@ const PatientListPage: React.FC = () => {
           ))}
         </Table.Body>
       </Table>
+
       <AddPatientModal
         modalOpen={modalOpen}
         onSubmit={submitNewPatient}
         error={error}
         onClose={closeModal}
       />
+
       <Button onClick={() => openModal()}>Add New Patient</Button>
     </div>
   );
