@@ -1,21 +1,47 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { Button } from 'semantic-ui-react';
+import { Icon } from "semantic-ui-react";
 
-import { Patient } from '../types';
+import { Patient, Gender } from '../types';
 import { apiBaseUrl } from '../constants';
-import { useStateValue } from '../state';
 
 const PatientDetailsPage: React.FC = () => {
-  const [{ patients }, dispatch ] = useStateValue();
   const { id } = useParams<{ id: string }>();
-  console.log('id', id);
-  
+  const [ patient, setPatient ] = useState<Patient>();
 
+  useEffect(() => {
+    if (!patient) {
+      getPatientFromBackend()
+    }
+  }, []);
+
+  const getPatientFromBackend = (): void => {
+    axios.get<Patient>(`${apiBaseUrl}/patients/${id}`)
+      .then(result => result.data)
+      .then(patient => setPatient(patient));
+  }
+
+  // Don't render component if patient is null
+  if (!patient) {
+    return null;
+  }
+  
+  const renderGenderIcon = () => {
+    if (patient.gender === Gender.Male) {
+      return <Icon name="mars" />
+    } else if (patient.gender === Gender.Female) {
+      return <Icon name="venus" />
+    } else {
+      return <Icon name="genderless" />
+    }
+  }
+  
   return (
     <div>
-      <h3>Nimi</h3>
+      <h3>{patient.name} {renderGenderIcon()}</h3>
+      <div>{patient.ssn}</div>
+      <div>{patient.occupation}</div>
     </div>
   );
 }
