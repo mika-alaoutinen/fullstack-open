@@ -12,10 +12,6 @@ const HospitalEntryDetails: React.FC<{ entry: HospitalEntry }> = ({ entry }) => 
       .then(texts => setDiagnosesTexts(texts))
   }, []);
 
-  const renderDiagnosesTexts = () => diagnosesTexts.map(text =>
-    <li key={text.substr(0, 6)}>{text}</li>
-  );
-  
   return (
     <div>
       <div>
@@ -26,21 +22,17 @@ const HospitalEntryDetails: React.FC<{ entry: HospitalEntry }> = ({ entry }) => 
       <div>{entry.description}</div>
 
       <br />
-      { diagnosesTexts.length > 0
-        ? <div>
-            <p><b>Diagnoses:</b></p>
-            <ul>{renderDiagnosesTexts()}</ul>
-          </div>
-        : <></>
-      }
-
       { diagnosesTexts.length > 0 &&
         <div>
           <p><b>Diagnoses:</b></p>
-          <ul>{renderDiagnosesTexts()}</ul>
+          <ul>
+            {diagnosesTexts.map(text =>
+              <li key={text.substr(0, 6)}>{text}</li>
+            )}
+          </ul>
         </div>
       }
-      
+
       <div>
         <b>discharge:</b> {entry.discharge.date} - {entry.discharge.criteria}
       </div>
