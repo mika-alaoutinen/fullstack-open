@@ -6,14 +6,14 @@ const router = express.Router();
 
 router.get('/', (_req, res) => {
   res.send(patientService.getPatients());
-})
+});
 
 router.get('/:id', (_req, res) => {
   const patient = patientService.getPatient(_req.params.id);
   patient
     ? res.send(patient)
     : res.sendStatus(404);
-})
+});
 
 router.post('/', (_req, res) => {
   try {
@@ -23,6 +23,6 @@ router.post('/', (_req, res) => {
   } catch (error) {
     res.status(400).send(error.message);
   }
-})
+});
 
 export default router;
