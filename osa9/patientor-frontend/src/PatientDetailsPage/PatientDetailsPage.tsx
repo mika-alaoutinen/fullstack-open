@@ -14,8 +14,9 @@ const PatientDetailsPage: React.FC = () => {
     if (!patient) {
       getPatientFromBackend()
     }
-  }, []);
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps  
+  }, [setPatient]);
+  
   const getPatientFromBackend = (): void => {
     axios.get<Patient>(`${apiBaseUrl}/patients/${id}`)
       .then(result => result.data)
