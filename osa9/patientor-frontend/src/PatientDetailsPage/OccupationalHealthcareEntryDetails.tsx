@@ -1,16 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Icon, Segment } from "semantic-ui-react";
+import React from 'react';
+import { Icon, Segment } from 'semantic-ui-react';
 
-import diagnosisService from '../services/diagnosisService';
+import Diagnoses from './Diagnoses';
 import { OccupationalHealthcareEntry } from '../types';
 
 const OccupationalHealthcareEntryDetails: React.FC<{ entry: OccupationalHealthcareEntry }> = ({ entry }) => {
-  const [ diagnosesTexts, setDiagnosesTexts ] = useState<string[]>([]);
-
-  useEffect(() => {
-    diagnosisService.findDiagnosisTexts(entry.diagnosisCodes)
-      .then(texts => setDiagnosesTexts(texts))
-  }, []);
 
   return (
     <Segment>
@@ -23,16 +17,7 @@ const OccupationalHealthcareEntryDetails: React.FC<{ entry: OccupationalHealthca
       <div>{entry.description}</div>
 
       <br />
-      { diagnosesTexts.length > 0 &&
-        <div>
-          <h4>Diagnoses:</h4>
-          <ul>
-            {diagnosesTexts.map(text =>
-              <li key={text.substr(0, 6)}>{text}</li>
-            )}
-          </ul>
-        </div>
-      }
+      <Diagnoses codes={entry.diagnosisCodes} />
 
       {entry.sickLeave &&
         <>
@@ -40,6 +25,7 @@ const OccupationalHealthcareEntryDetails: React.FC<{ entry: OccupationalHealthca
           <p>from {entry.sickLeave.startDate} to {entry.sickLeave.endDate}</p>
         </>
       }
+
     </Segment>
   );
 };

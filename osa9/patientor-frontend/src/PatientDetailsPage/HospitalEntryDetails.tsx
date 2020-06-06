@@ -1,16 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Icon, Segment } from "semantic-ui-react";
+import React from 'react';
+import { Icon, Segment } from 'semantic-ui-react';
 
-import diagnosisService from '../services/diagnosisService';
+import Diagnoses from './Diagnoses';
 import { HospitalEntry } from '../types';
 
 const HospitalEntryDetails: React.FC<{ entry: HospitalEntry }> = ({ entry }) => {
-  const [ diagnosesTexts, setDiagnosesTexts ] = useState<string[]>([]);
-  
-  useEffect(() => {
-    diagnosisService.findDiagnosisTexts(entry.diagnosisCodes)
-      .then(texts => setDiagnosesTexts(texts))
-  }, []);
 
   return (
     <Segment>
@@ -22,16 +16,7 @@ const HospitalEntryDetails: React.FC<{ entry: HospitalEntry }> = ({ entry }) => 
       <div>{entry.description}</div>
 
       <br />
-      { diagnosesTexts.length > 0 &&
-        <div>
-          <p><b>Diagnoses:</b></p>
-          <ul>
-            {diagnosesTexts.map(text =>
-              <li key={text.substr(0, 6)}>{text}</li>
-            )}
-          </ul>
-        </div>
-      }
+      <Diagnoses codes={entry.diagnosisCodes} />
 
       <div>
         <b>discharge:</b> {entry.discharge.date} - {entry.discharge.criteria}
