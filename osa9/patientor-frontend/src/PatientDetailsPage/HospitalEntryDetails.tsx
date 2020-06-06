@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Icon } from "semantic-ui-react";
+import { Icon, Segment } from "semantic-ui-react";
 
 import diagnosisService from '../services/diagnosisService';
 import { HospitalEntry } from '../types';
@@ -13,7 +13,7 @@ const HospitalEntryDetails: React.FC<{ entry: HospitalEntry }> = ({ entry }) => 
   }, []);
 
   return (
-    <div>
+    <Segment>
       <div>
         <b>{entry.date}</b>
         <Icon name='hospital'/>
@@ -36,7 +36,7 @@ const HospitalEntryDetails: React.FC<{ entry: HospitalEntry }> = ({ entry }) => 
       <div>
         <b>discharge:</b> {entry.discharge.date} - {entry.discharge.criteria}
       </div>
-    </div>
+    </Segment>
   );
 };
 
