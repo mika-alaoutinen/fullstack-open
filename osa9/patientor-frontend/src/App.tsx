@@ -9,7 +9,7 @@ import { useStateValue } from "./state";
 import { Patient } from "./types";
 
 import PatientDetailsPage from "./PatientDetailsPage/PatientDetailsPage";
-import PatientListPage from "./PatientListPage";
+import PatientListPage from "./PatientListPage/PatientListPage";
 
 const App: React.FC = () => {
   const [, dispatch] = useStateValue();
