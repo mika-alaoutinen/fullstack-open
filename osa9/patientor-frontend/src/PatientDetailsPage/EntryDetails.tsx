@@ -1,33 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 
-import { apiBaseUrl } from '../constants';
-import { Diagnosis, Entry } from '../types';
+import HealthCheckEntryDetails from './HealthCheckEntryDetails';
+import HospitalEntryDetails from './HospitalEntryDetails';
+import OccupationalHealthcareEntryDetails from './OccupationalHealthcareEntryDetails';
+import { Entry } from '../types';
+import { assertNever } from '../utils';
 
 const EntryDetails: React.FC<{ entry: Entry }> = ({ entry }) => {
-  const [ diagnosesInfo, setDiagnosesInfo ] = useState<Diagnosis[]>([]);
-
-  useEffect(() => {
-    // Retrieve Diagnosis data from backend:
-    axios.get<Diagnosis[]>(`${apiBaseUrl}/diagnoses`)
-      .then(result => result.data)
-      .then(diagnoses => setDiagnosesInfo(diagnoses));
-  }, [])
-
-  const renderDiagnoses = () => entry.diagnosisCodes
-    ? entry.diagnosisCodes.map(code =>
-      <li key={code}>
-        {code} {diagnosesInfo.find(diagnosis => diagnosis.code === code)?.name}
-      </li>
-    )
-    : <p>No diagnoses</p>;
-
-  return (
-    <div>
-      <div>{entry.date} {entry.description}</div>
-      <ul>{renderDiagnoses()}</ul>
-    </div>
-  );
+  
+  switch (entry.type) {
+    case 'HealthCheck':
+      return <HealthCheckEntryDetails entry={entry} />
+    case 'Hospital':
+      return <HospitalEntryDetails entry={entry} />
+    case 'OccupationalHealthcare':
+      return <OccupationalHealthcareEntryDetails entry={entry} />
+    default:
+      return assertNever(entry);
+  }
 };
 
 export default EntryDetails;

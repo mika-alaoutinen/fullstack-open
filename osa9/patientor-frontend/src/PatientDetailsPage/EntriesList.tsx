@@ -10,7 +10,7 @@ const EntriesList: React.FC<{ entries: Entry[]}> = ({ entries }) => {
   
   return (
     <div>
-      <h4>entries</h4>
+      <h3>entries</h3>
       {renderEntries()}
     </div>
   );

@@ -41,7 +41,7 @@ const PatientDetailsPage: React.FC = () => {
 
   return (
     <div>
-      <h3>{patient.name} {renderGenderIcon()}</h3>
+      <h2>{patient.name} {renderGenderIcon()}</h2>
       <div>ssn: {patient.ssn}</div>
       <div>occupation: {patient.occupation}</div>
       <br />
