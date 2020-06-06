@@ -5,7 +5,7 @@ export enum Gender {
   Other = 'other',
 }
 
-export enum HealthCheckRating {
+enum HealthCheckRating {
   'Healthy' = 0,
   'LowRisk' = 1,
   'HighRisk' = 2,

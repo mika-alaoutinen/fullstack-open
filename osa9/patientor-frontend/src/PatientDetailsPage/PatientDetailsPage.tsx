@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Icon } from "semantic-ui-react";
 
+import EntriesList from './EntriesList';
 import { Patient, Gender } from '../types';
 import { apiBaseUrl } from '../constants';
 
@@ -14,7 +15,7 @@ const PatientDetailsPage: React.FC = () => {
     if (!patient) {
       getPatientFromBackend()
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setPatient]);
   
   const getPatientFromBackend = (): void => {
@@ -37,12 +38,14 @@ const PatientDetailsPage: React.FC = () => {
       return <Icon name="genderless" />
     }
   }
-  
+
   return (
     <div>
       <h3>{patient.name} {renderGenderIcon()}</h3>
-      <div>{patient.ssn}</div>
-      <div>{patient.occupation}</div>
+      <div>ssn: {patient.ssn}</div>
+      <div>occupation: {patient.occupation}</div>
+      <br />
+      <EntriesList entries={patient.entries} />
     </div>
   );
 }
