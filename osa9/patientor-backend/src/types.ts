@@ -5,7 +5,7 @@ export enum Gender {
   Other = 'other',
 }
 
-enum HealthCheckRating {
+export enum HealthCheckRating {
   'Healthy' = 0,
   'LowRisk' = 1,
   'HighRisk' = 2,
@@ -27,18 +27,19 @@ interface BaseEntry {
   diagnosisCodes?: Array<Diagnosis['code']>;
 }
 
-interface HealthCheckEntry extends BaseEntry {
+export interface HealthCheckEntry extends BaseEntry {
   type: 'HealthCheck';
   healthCheckRating: HealthCheckRating;
 }
 
-interface HospitalEntry extends BaseEntry {
+export interface HospitalEntry extends BaseEntry {
   type: 'Hospital';
   discharge: Discharge;
 }
 
-interface OccupationalHealthcareEntry extends BaseEntry {
+export interface OccupationalHealthcareEntry extends BaseEntry {
   type: 'OccupationalHealthcare';
+  employerName: string;
   sickLeave?: SickLeave;
 }
 
@@ -52,7 +53,7 @@ interface SickLeave {
   endDate: string;
 }
 
-interface Patient {
+export interface Patient {
   id: string,
   name: string,
   dateOfBirth: string,
@@ -63,7 +64,14 @@ interface Patient {
 }
 
 // types
-export type Entry = HospitalEntry | OccupationalHealthcareEntry | HealthCheckEntry;
+export type Entry = HealthCheckEntry | HospitalEntry | OccupationalHealthcareEntry;
+export type NewEntry = DistributiveOmit<Entry, 'id'>
+
 export type NewPatient = Omit<Patient, 'id'>;
 export type PatientWithoutSSN = Omit<Patient, 'ssn'>;
 export type PublicPatient = Omit<Patient, 'ssn' | 'entries' >;
+
+// A stupid hack to get around TypeScript's type system limitations
+type DistributiveOmit<T, K extends keyof any> = T extends any
+  ? Omit<T, K>
+  : never;
