@@ -17,10 +17,7 @@ type SelectFieldProps = {
 };
 
 export const SelectField: React.FC<SelectFieldProps> = ({
-  name,
-  label,
-  options
-}: SelectFieldProps) => (
+  name, label, options }: SelectFieldProps) => (
   <Form.Field>
     <label>{label}</label>
     <Field as="select" name={name} className="ui dropdown">
@@ -38,11 +35,7 @@ interface TextProps extends FieldProps {
   placeholder: string;
 }
 
-export const TextField: React.FC<TextProps> = ({
-  field,
-  label,
-  placeholder
-}) => (
+export const TextField: React.FC<TextProps> = ({ field, label, placeholder }) => (
   <Form.Field>
     <label>{label}</label>
     <Field placeholder={placeholder} {...field} />
@@ -73,11 +66,7 @@ export const NumberField: React.FC<NumberProps> = ({ field, label, min, max }) =
   </Form.Field>
 );
 
-export const DiagnosisSelection = ({
-  diagnoses,
-  setFieldValue,
-  setFieldTouched
-}: {
+export const DiagnosisSelection = ({ diagnoses, setFieldValue, setFieldTouched }: {
   diagnoses: Diagnosis[];
   setFieldValue: FormikProps<{ diagnosisCodes: string[] }>["setFieldValue"];
   setFieldTouched: FormikProps<{ diagnosisCodes: string[] }>["setFieldTouched"];
