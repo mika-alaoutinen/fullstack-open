@@ -4,4 +4,4 @@ import { Diagnosis } from '../types';
 const getDiagnoses = (): Array<Diagnosis> =>
   diagnosisData;
 
-export default { getDiagnoses }
+export default { getDiagnoses };
