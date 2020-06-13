@@ -33,6 +33,7 @@ const PatientDetailsPage: React.FC = () => {
   };
 
   const submitNewEntry = async (values: Entry) => {
+    // TODO: add submit logic
     console.log('submit entry');
   };
   
