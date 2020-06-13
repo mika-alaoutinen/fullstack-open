@@ -1,8 +1,8 @@
 import React from 'react';
 import { Field, Formik, Form } from "formik";
 
-import { DiagnosisSelection, GenderOption, NumberField, SelectField, TextField } from "../components/FormField";
-import { Entry, HealthCheckEntry, HealthCheckRating } from '../types';
+import { DiagnosisSelection, NumberField, TextField } from "../components/FormField";
+import { HealthCheckEntry } from '../types';
 import { useStateValue } from '../state';
 import { todaysDate } from '../utils';
 import { Button, Grid } from 'semantic-ui-react';
