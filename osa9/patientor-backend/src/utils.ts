@@ -72,7 +72,7 @@ const parseGender = (gender: any): Gender => {
 };
 
 const parseHealthCheckRating = (healthRating: any): HealthCheckRating => {
-  if (!healthRating || isHealthCheckRating(healthRating)) {
+  if (healthRating === undefined || !isHealthCheckRating(healthRating)) {
     throw new Error(`Incorrect or missing health check rating ${healthRating}`);
   }
   return healthRating;
@@ -91,6 +91,6 @@ const isGender = (param: any): param is Gender =>
 
 const isHealthCheckRating = (param: any): param is HealthCheckRating =>
   Object.values(HealthCheckRating).includes(param);
-  
+
 const isString = (text: any): text is string =>
   typeof text === 'string' || text instanceof String;
