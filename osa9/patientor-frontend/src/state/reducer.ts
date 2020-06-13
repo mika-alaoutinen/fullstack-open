@@ -20,7 +20,7 @@ export type Action =
     }
   | {
       type: "ADD_ENTRY";
-      payload: Entry;
+      payload: Entry
     }
   | {
       type: "ERROR"
@@ -37,9 +37,12 @@ export const addPatient = async (values: PatientFormValues): Promise<Action> => 
 
 export const addEntry = async (id: string, entry: Entry): Promise<Action> => {
   const savedEntry: Entry|void = await entryService.addEntry(id, entry);
-
+  
   return savedEntry
-    ? ({ type: 'ADD_ENTRY', payload: savedEntry, })
+    ? ({
+      type: 'ADD_ENTRY',
+      payload: savedEntry
+    })
     : ({ type: 'ERROR' });
 };
 
@@ -63,11 +66,6 @@ export const setDiagnosesList = async (): Promise<Action> => {
 
 // The reducer:
 export const reducer = (state: State, action: Action): State => {
-  console.log('state');
-  console.log(state);
-
-  console.log('action', action);
-  
   switch (action.type) {
     case "SET_PATIENT_LIST":
       return {

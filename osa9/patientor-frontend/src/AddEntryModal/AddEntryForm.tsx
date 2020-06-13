@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, Formik, Form } from "formik";
 
-import { DiagnosisSelection, GenderOption, SelectField, TextField } from "../components/FormField";
+import { DiagnosisSelection, GenderOption, NumberField, SelectField, TextField } from "../components/FormField";
 import { Entry, HealthCheckEntry, HealthCheckRating } from '../types';
 import { useStateValue } from '../state';
 import { todaysDate } from '../utils';
@@ -24,7 +24,7 @@ const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
         specialist: '',
         diagnosisCodes: [],
         description: '',
-        healthCheckRating: HealthCheckRating.Healthy
+        healthCheckRating: 0
       }}
       onSubmit={onSubmit}
       validate={values => {
@@ -52,12 +52,24 @@ const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
               name='specialist'
               component={TextField}
             />
-
             <DiagnosisSelection
               setFieldValue={setFieldValue}
               setFieldTouched={setFieldTouched}
               diagnoses={Object.values(diagnoses)}
             />
+            <Field
+              label='Description'
+              placeholder='Description'
+              name='description'
+              component={TextField}
+            />
+          <Field
+            label="healthCheckRating"
+            name="healthCheckRating"
+            component={NumberField}
+            min={0}
+            max={3}
+          />
 
             <Grid>
               <Grid.Column floated='left' width={5}>
