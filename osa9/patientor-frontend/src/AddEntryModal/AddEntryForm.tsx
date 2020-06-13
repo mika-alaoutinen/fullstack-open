@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, Formik, Form } from "formik";
 
-import { DiagnosisSelection, GenderOption, SelectField, TextField } from "../AddPatientModal/FormField";
+import { DiagnosisSelection, GenderOption, SelectField, TextField } from "../components/FormField";
 import { Entry, HealthCheckEntry, HealthCheckRating } from '../types';
 import { useStateValue } from '../state';
 import { todaysDate } from '../utils';
