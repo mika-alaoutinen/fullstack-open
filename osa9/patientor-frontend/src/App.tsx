@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
-import axios from "axios";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { Button, Divider, Header, Container } from "semantic-ui-react";
 
-import { apiBaseUrl } from "./constants";
+import pingService from './services/pingService';
 import { setPatientList } from "./state/reducer";
 import { useStateValue } from "./state";
-import { Patient } from "./types";
 
 import PatientDetailsPage from "./PatientDetailsPage/PatientDetailsPage";
 import PatientListPage from "./PatientListPage/PatientListPage";
@@ -15,15 +13,10 @@ const App: React.FC = () => {
   const [, dispatch] = useStateValue();
 
   useEffect(() => {
-    axios.get<void>(`${apiBaseUrl}/ping`);
+    pingService.ping();
 
     const fetchPatientList = async () => {
-      try {
-        const { data: patientListFromApi } = await axios.get<Patient[]>(`${apiBaseUrl}/patients`);
-        dispatch(setPatientList(patientListFromApi));
-      } catch (e) {
-        console.error(e);
-      }
+      dispatch(await setPatientList());
     };
     fetchPatientList();
   }, [dispatch]);

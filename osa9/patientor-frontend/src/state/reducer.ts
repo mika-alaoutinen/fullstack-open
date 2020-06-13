@@ -1,5 +1,7 @@
-import { State } from "./state";
-import { Patient } from "../types";
+import { State } from './state';
+import { Patient } from '../types';
+import patientService from '../services/patientService';
+import { PatientFormValues } from '../AddPatientModal/AddPatientForm';
 
 export type Action =
   | {
@@ -9,18 +11,28 @@ export type Action =
   | {
       type: "ADD_PATIENT";
       payload: Patient;
+    }
+  | {
+      type: "ERROR"
     };
 
 // Action creators:
-export const addPatient = (patient: Patient): Action => ({
-  type: 'ADD_PATIENT',
-  payload: patient,
-});
+export const addPatient = async (values: PatientFormValues): Promise<Action> => {
+  const patient: Patient|void = await patientService.addPatient(values);
 
-export const setPatientList = (patientList: Patient[]): Action => ({
-  type: 'SET_PATIENT_LIST',
-  payload: patientList,
-});
+  return patient
+    ? ({ type: 'ADD_PATIENT', payload: patient })
+    : ({ type: 'ERROR' })
+};
+
+export const setPatientList = async (): Promise<Action> => {
+  const patients: Patient[]|void = await patientService.getPatients();
+
+  return ({
+    type: 'SET_PATIENT_LIST',
+    payload: patients ? patients : []
+  })
+};
 
 // The reducer:
 export const reducer = (state: State, action: Action): State => {
@@ -41,6 +53,8 @@ export const reducer = (state: State, action: Action): State => {
           [action.payload.id]: action.payload
         }
       };
+    case "ERROR":
+      return state;
     default:
       return state;
   }

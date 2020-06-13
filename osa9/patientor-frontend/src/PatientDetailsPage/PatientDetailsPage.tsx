@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { Button, Icon } from 'semantic-ui-react';
 
 import AddEntryModal from '../AddEntryModal/AddEntryModal';
 import EntriesList from './EntriesList';
+import patientService from '../services/patientService';
 import { Patient, Gender, Entry } from '../types';
-import { apiBaseUrl } from '../constants';
 
 const PatientDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [ patient, setPatient ] = useState<Patient>();
+  const [ patient, setPatient ] = useState<Patient|void>();
   const [ modalOpen, setModalOpen ] = useState<boolean>(false);
   const [ error, setError ] = useState<string | undefined>();
 
@@ -22,8 +21,7 @@ const PatientDetailsPage: React.FC = () => {
   }, [setPatient]);
   
   const getPatientFromBackend = (): void => {
-    axios.get<Patient>(`${apiBaseUrl}/patients/${id}`)
-      .then(result => result.data)
+    patientService.getPatient(id)
       .then(patient => setPatient(patient));
   }
 
