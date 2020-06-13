@@ -12,6 +12,14 @@ interface Props {
   onCancel: () => void;
 }
 
+const validateDate = (date: string): boolean => {
+  const regEx = /^\d{4}-\d{2}-\d{2}$/;
+  if (date.match(regEx)) {
+    return true;
+  }
+  return false;
+}
+
 const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
   const [{ diagnoses }] = useStateValue();
 
@@ -29,10 +37,22 @@ const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
       onSubmit={onSubmit}
       validate={values => {
         const requiredError = 'Field is required';
+        const invalidHealthCheckRating = 'Invalid value for health check rating';
         const errors: { [field: string]: string } = {};
-        if (!values.date) {
+
+        if (!validateDate(values.date)) {
           errors.date = requiredError;
         }
+        if (!values.specialist) {
+          errors.specialist = requiredError;
+        }
+        if (!values.description) {
+          errors.description = requiredError;
+        }
+        if (![0, 1, 2, 3].includes(values.healthCheckRating)) {
+          errors.healthCheckRating = invalidHealthCheckRating;
+        }
+      
         return errors;
       }}
       >
