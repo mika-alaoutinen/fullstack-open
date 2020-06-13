@@ -65,7 +65,7 @@ export interface Patient {
 
 // types
 export type Entry = HealthCheckEntry | HospitalEntry | OccupationalHealthcareEntry;
-export type NewEntry = DistributiveOmit<Entry, 'id'>
+export type NewEntry = DistributiveOmit<Entry, 'id'>;
 
 export type NewPatient = Omit<Patient, 'id'>;
 export type PatientWithoutSSN = Omit<Patient, 'ssn'>;

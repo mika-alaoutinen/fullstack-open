@@ -64,4 +64,10 @@ interface SickLeave {
 }
 
 // types
-export type Entry = | HospitalEntry | OccupationalHealthcareEntry | HealthCheckEntry;
+export type Entry = HealthCheckEntry | HospitalEntry | OccupationalHealthcareEntry;
+export type NewEntry = DistributiveOmit<Entry, 'id'>;
+
+// A stupid hack to get around TypeScript's type system limitations
+type DistributiveOmit<T, K extends keyof any> = T extends any
+  ? Omit<T, K>
+  : never;
