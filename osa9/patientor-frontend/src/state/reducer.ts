@@ -6,25 +6,11 @@ import { PatientFormValues } from '../AddPatientModal/AddPatientForm';
 import diagnosisService from '../services/diagnosisService';
 
 export type Action =
-  | {
-      type: "SET_PATIENT_LIST";
-      payload: Patient[];
-    }
-  | {
-      type: "SET_DIAGNOSES_LIST";
-      payload: Diagnosis[];
-    }
-  | {
-      type: "ADD_PATIENT";
-      payload: Patient;
-    }
-  | {
-      type: "ADD_ENTRY";
-      payload: Patient[]
-    }
-  | {
-      type: "ERROR"
-    };
+  | { type: "SET_PATIENT_LIST", payload: Patient[] }
+  | { type: "SET_DIAGNOSES_LIST", payload: Diagnosis[] }
+  | { type: "ADD_PATIENT", payload: Patient }
+  | { type: "ADD_ENTRY", payload: Patient }
+  | { type: "ERROR" }
 
 // Action creators:
 export const addPatient = async (values: PatientFormValues): Promise<Action> => {
@@ -35,20 +21,14 @@ export const addPatient = async (values: PatientFormValues): Promise<Action> => 
     : ({ type: 'ERROR' });
 };
 
+// Ei aavistustakaan, miten tämän saisi toimimaan.
 export const addEntry = async (id: string, entry: Entry): Promise<Action> => {
-  const savedEntry: Entry|void = await entryService.addEntry(id, entry);
-  const patients: Patient[]|void = await patientService.getPatients();
+  await entryService.addEntry(id, entry);
+  const patient: Patient|void = await patientService.getPatient(id);
 
-  return ({
-    type: 'SET_PATIENT_LIST',
-    payload: patients ? patients : []
-  });
-  // return savedEntry
-  //   ? ({
-  //     type: 'ADD_ENTRY',
-  //     payload: savedEntry
-  //   })
-  //   : ({ type: 'ERROR' });
+  return patient
+    ? ({ type: 'ADD_ENTRY', payload: patient })
+    : ({ type: 'ERROR' });
 };
 
 export const setPatientList = async (): Promise<Action> => {
@@ -96,9 +76,7 @@ export const reducer = (state: State, action: Action): State => {
           [action.payload.id]: action.payload
         }
       };
-    case "ADD_ENTRY":
     case "ERROR":
-      return state;
     default:
       return state;
   }

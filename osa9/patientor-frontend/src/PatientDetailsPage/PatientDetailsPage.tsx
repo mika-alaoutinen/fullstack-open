@@ -7,28 +7,18 @@ import EntriesList from './EntriesList';
 import entryService from '../services/entryService';
 import patientService from '../services/patientService';
 import { Patient, Gender, Entry } from '../types';
-import { useStateValue } from "../state";
-import { addEntry } from '../state/reducer';
 
 const PatientDetailsPage: React.FC = () => {
-  const [, dispatch] = useStateValue();
   const { id } = useParams<{ id: string }>();
-
   const [ patient, setPatient ] = useState<Patient|void>();
   const [ modalOpen, setModalOpen ] = useState<boolean>(false);
   const [ error, setError ] = useState<string | undefined>();
 
   useEffect(() => {
-    if (!patient) {
-      getPatientFromBackend()
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setPatient]);
-  
-  const getPatientFromBackend = async (): Promise<void> => {
     patientService.getPatient(id)
       .then(patient => setPatient(patient));
-  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setPatient]);
 
   const openModal = (): void => setModalOpen(true);
 
@@ -38,10 +28,8 @@ const PatientDetailsPage: React.FC = () => {
   };
 
   const submitNewEntry = async (entry: Entry): Promise<void> => {
-    // dispatch(await addEntry(id, entry));
     await entryService.addEntry(id, entry);
-    patientService.getPatient(id)
-      .then(patient => setPatient(patient));
+    setPatient(await patientService.getPatient(id));
     closeModal();
   };
   
