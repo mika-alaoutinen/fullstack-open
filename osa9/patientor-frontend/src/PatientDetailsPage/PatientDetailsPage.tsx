@@ -4,13 +4,14 @@ import { Button, Icon } from 'semantic-ui-react';
 
 import AddEntryModal from '../AddEntryModal/AddEntryModal';
 import EntriesList from './EntriesList';
+import entryService from '../services/entryService';
 import patientService from '../services/patientService';
 import { Patient, Gender, Entry } from '../types';
 import { useStateValue } from "../state";
 import { addEntry } from '../state/reducer';
 
 const PatientDetailsPage: React.FC = () => {
-  const [{ patients }, dispatch] = useStateValue();
+  const [, dispatch] = useStateValue();
   const { id } = useParams<{ id: string }>();
 
   const [ patient, setPatient ] = useState<Patient|void>();
@@ -37,7 +38,10 @@ const PatientDetailsPage: React.FC = () => {
   };
 
   const submitNewEntry = async (entry: Entry): Promise<void> => {
-    dispatch(await addEntry(id, entry));
+    // dispatch(await addEntry(id, entry));
+    await entryService.addEntry(id, entry);
+    patientService.getPatient(id)
+      .then(patient => setPatient(patient));
     closeModal();
   };
   

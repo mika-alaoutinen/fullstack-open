@@ -20,7 +20,7 @@ export type Action =
     }
   | {
       type: "ADD_ENTRY";
-      payload: Entry
+      payload: Patient[]
     }
   | {
       type: "ERROR"
@@ -37,13 +37,18 @@ export const addPatient = async (values: PatientFormValues): Promise<Action> => 
 
 export const addEntry = async (id: string, entry: Entry): Promise<Action> => {
   const savedEntry: Entry|void = await entryService.addEntry(id, entry);
-  
-  return savedEntry
-    ? ({
-      type: 'ADD_ENTRY',
-      payload: savedEntry
-    })
-    : ({ type: 'ERROR' });
+  const patients: Patient[]|void = await patientService.getPatients();
+
+  return ({
+    type: 'SET_PATIENT_LIST',
+    payload: patients ? patients : []
+  });
+  // return savedEntry
+  //   ? ({
+  //     type: 'ADD_ENTRY',
+  //     payload: savedEntry
+  //   })
+  //   : ({ type: 'ERROR' });
 };
 
 export const setPatientList = async (): Promise<Action> => {
@@ -92,7 +97,6 @@ export const reducer = (state: State, action: Action): State => {
         }
       };
     case "ADD_ENTRY":
-      return state;
     case "ERROR":
       return state;
     default:
