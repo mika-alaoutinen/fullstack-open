@@ -6,9 +6,13 @@ import AddEntryModal from '../AddEntryModal/AddEntryModal';
 import EntriesList from './EntriesList';
 import patientService from '../services/patientService';
 import { Patient, Gender, Entry } from '../types';
+import { useStateValue } from "../state";
+import { addEntry } from '../state/reducer';
 
 const PatientDetailsPage: React.FC = () => {
+  const [{ patients }, dispatch] = useStateValue();
   const { id } = useParams<{ id: string }>();
+
   const [ patient, setPatient ] = useState<Patient|void>();
   const [ modalOpen, setModalOpen ] = useState<boolean>(false);
   const [ error, setError ] = useState<string | undefined>();
@@ -20,7 +24,7 @@ const PatientDetailsPage: React.FC = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setPatient]);
   
-  const getPatientFromBackend = (): void => {
+  const getPatientFromBackend = async (): Promise<void> => {
     patientService.getPatient(id)
       .then(patient => setPatient(patient));
   }
@@ -32,9 +36,9 @@ const PatientDetailsPage: React.FC = () => {
     setError(undefined);
   };
 
-  const submitNewEntry = async (values: Entry) => {
-    // TODO: add submit logic
-    console.log('submit entry');
+  const submitNewEntry = async (entry: Entry): Promise<void> => {
+    dispatch(await addEntry(id, entry));
+    closeModal();
   };
   
   // Don't render component if patient is null

@@ -8,7 +8,7 @@ let diagnoses: Diagnosis[] = [];
  * Retrieves diagnosis data from backend
  * @returns {Array<Diagnosis>} diagnosis data.
  */
-const getDiagnosisData = async () =>
+const getDiagnoses = async () =>
   diagnoses.length === 0
     ? axios.get<Diagnosis[]>(`${apiBaseUrl}/diagnoses`)
       .then(result => result.data)
@@ -24,10 +24,10 @@ const findDiagnosisTexts = async (codes: string[] | undefined): Promise<string[]
     return [];
   }
 
-  const data: Diagnosis[] = await getDiagnosisData();
+  const data: Diagnosis[] = await getDiagnoses();
   return data
     .filter(diagnosis => codes.includes(diagnosis.code))
     .map(diagnosis => `${diagnosis.code} ${diagnosis.name}`)
 }
 
-export default { findDiagnosisTexts };
+export default { findDiagnosisTexts, getDiagnoses };

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { Button, Divider, Header, Container } from "semantic-ui-react";
 
 import pingService from './services/pingService';
-import { setPatientList } from "./state/reducer";
+import { setDiagnosesList, setPatientList } from "./state/reducer";
 import { useStateValue } from "./state";
 
 import PatientDetailsPage from "./PatientDetailsPage/PatientDetailsPage";
@@ -19,6 +19,12 @@ const App: React.FC = () => {
       dispatch(await setPatientList());
     };
     fetchPatientList();
+
+    const fetchDiagnosesList = async () => {
+      dispatch(await setDiagnosesList());
+    };
+    fetchDiagnosesList();
+    
   }, [dispatch]);
 
   return (
